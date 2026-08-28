@@ -559,10 +559,9 @@ let saved = []; try { saved = JSON.parse(localStorage.getItem('splice-saved2') |
 function persistSaved(){ try { localStorage.setItem('splice-saved2', JSON.stringify(saved)); } catch(e){} }
 
 let mode = 'all'; // all | miss | saved | basics | moves | lines | gloss
-let basicsStarted = false;
 let deck = [], pos = 0, right = 0, answered = 0, streak = 0, locked = false;
 let wrong = {}, runMode = 'all';
-const QUIZ = ['all','miss','basics'];
+const QUIZ = ['all','miss','practice'];
 
 const ALL = () => DATA.concat(BASICS);
 const BYID = {}; ALL().forEach(d => BYID[d.id] = d);
@@ -588,7 +587,8 @@ function newDeck(fresh){
   if (mode === 'moves'){ paint(); renderMoves(); return; }
   if (mode === 'gloss'){ paint(); renderGloss(); return; }
   if (mode === 'lines'){ paint(); renderLines(); return; }
-  if (mode === 'basics' && !basicsStarted){ paint(); renderBasics(); return; }
+  if (mode === 'basics'){ paint(); renderBasics(); return; }
+  if (mode === 'flash'){ paint(); startFlash(); return; }
   runMode = mode;
   if (!fresh){
     const got = loadRun(mode);
@@ -599,23 +599,25 @@ function newDeck(fresh){
     }
   }
   const pool = mode === 'miss' ? ALL().filter(d => (misses[d.id]||0) > 0)
-    : mode === 'basics' ? BASICS.slice() : DATA.slice();
+    : mode === 'practice' ? BASICS.slice() : DATA.slice();
   deck = shuffle(pool); pos = 0; right = 0; answered = 0; streak = 0; wrong = {};
   clearRun(mode); saveRun();
   paint(); render();
 }
 function paint(){
-  $('scoreline').textContent = answered ? ((runMode === 'miss' ? 'misses \u00b7 ' : '') + right + ' of ' + answered + ' right') : 'no answers yet';
+  $('scoreline').textContent = answered ? ((runMode === 'miss' ? 'misses \u00b7 ' : runMode === 'practice' ? 'practice \u00b7 ' : '') + right + ' of ' + answered + ' right') : 'no answers yet';
   const box = $('modes'); box.innerHTML = '';
   const mk = (label, key, disabled) => {
     const b = document.createElement('button');
     b.className = 'chip'; b.textContent = label;
     b.setAttribute('aria-pressed', String(mode === key));
     b.disabled = !!disabled;
-    b.onclick = () => { mode = (mode === key && key !== 'all') ? 'all' : key; basicsStarted = false; flashActive = false; newDeck(); };
+    b.onclick = () => { mode = (mode === key && key !== 'all') ? 'all' : key; flashActive = false; newDeck(); };
     box.appendChild(b);
   };
   mk('Basics', 'basics');
+  mk('Practice', 'practice');
+  mk('Flashcards', 'flash');
   mk('Drill', 'all');
   mk('Moves', 'moves');
   mk('Lines', 'lines');
@@ -1007,9 +1009,9 @@ function renderFlash(){
   const stage = $('stage');
   if (!flashQueue.length){
     flashActive = false;
-    stage.innerHTML = '<div class="card done"><h2>All ' + flashTotal + ' terms,</h2><p>Run them again, or practice the scan.</p>' +
-      '<button class="next" id="againbtn">Back to Basics</button></div>';
-    $('againbtn').onclick = () => { renderBasics(); };
+    stage.innerHTML = '<div class="card done"><h2>All ' + flashTotal + ' terms,</h2><p>Run them again, or switch to Practice.</p>' +
+      '<button class="next" id="againbtn">Run them again</button></div>';
+    $('againbtn').onclick = () => { startFlash(); };
     $('againbtn').focus({preventScroll:true});
     return;
   }
@@ -1052,16 +1054,12 @@ function renderBasics(){
     }
     h += '</p><p class="ex-cite">— ' + ex.cite + '</p></div>';
   }
-  h += '<div class="actions"><span class="hint">Hover the sentences, then drill</span>' +
-    '<span style="display:flex; gap:10px"><button class="next" id="basicsflash">Flashcards</button>' +
-    '<button class="next" id="basicsgo">Practice</button></span></div>';
+
 
   card.innerHTML = h;
   stage.innerHTML = ''; stage.appendChild(card);
   hookTips(card);
   document.addEventListener('click', hideTip);
-  $('basicsgo').onclick = () => { basicsStarted = true; hideTip(); newDeck(); };
-  $('basicsflash').onclick = () => { hideTip(); startFlash(); };
 }
 function renderSaved(){
   const stage = $('stage');
@@ -1102,7 +1100,7 @@ document.addEventListener('keydown', e => {
 });
 if (!loadRun('all')){
   if (loadRun('miss') && missTotal()) mode = 'miss';
-  else if (loadRun('basics')){ mode = 'basics'; basicsStarted = true; }
+  else if (loadRun('practice')) mode = 'practice';
 }
 newDeck();
 </script>
