@@ -106,7 +106,7 @@
   .sv-actions{display:flex; gap:8px}
   .ex{margin:22px 0 2px}
   .ex .sentence{font-size:20px; line-height:1.6}
-  .hov{border-bottom:1.5px dotted var(--accent); cursor:help; border-radius:2px; padding:0 1px}
+  .hov{border-bottom:1.5px dotted var(--accent); cursor:help; border-radius:2px}
   .hov:hover,.hov.on{background:var(--accent-soft)}
   #tip{position:fixed; z-index:50; max-width:330px; background:var(--tip-bg); color:var(--tip-ink);
     padding:10px 13px; border-radius:8px; font:400 13.5px/1.5 'Archivo',sans-serif; display:none;
@@ -996,13 +996,11 @@ const GLOSS = [
 {k:'simile', t:'simile', d:'A comparison that shows its wiring: “like” or “as.”', ex:'“My soul has grown deep like the rivers.” — Hughes'},
 {k:'metaphor', t:'metaphor', d:'A comparison with the wiring hidden — one thing simply said to be the other.', ex:'“Sinatra with a cold is Picasso without paint” — Talese'},
 {k:'understatement', t:'understatement', d:'Saying less than the situation calls for, and letting the gap do the work.', ex:'“The art of losing isn’t hard to master” — Bishop'},
-{k:'rhetq', t:'rhetorical question', d:'A question not fishing for an answer — it makes its point by asking.', ex:'“Isn’t it pretty to think so?” — Hemingway'},
-{k:'lede', t:'lede', d:'Journalism’s spelling for the opening sentence of a piece — the one that has to do the most work.', ex:'“Gary Robinson died hungry.” — Edna Buchanan’s classic.'},
-{k:'kicker', t:'kicker', d:'Journalism: the closing line — the one the reader leaves with. Often short, often a turn.', ex:'The short sentence and the dash before the last words, in Moves, are kicker machinery.'}
+{k:'rhetq', t:'rhetorical question', d:'A question not fishing for an answer — it makes its point by asking.', ex:'“Isn’t it pretty to think so?” — Hemingway'}
 ];
 const GLOSSMAP = {}; GLOSS.forEach(g => GLOSSMAP[g.k] = g);
 const TERMRE = new RegExp('\\b(' + [
- 'comma splices?','compound predicates?','conjunctive adverbs?','periodic sentences?','pivot words?','prepositional phrases?','prepositions?','conjunctions?','joining words?','infinitives?','imperatives?','hyphens?','scare quotes','parallel structure','chiasmus','similes?','metaphors?','understatement','rhetorical questions?','ledes?','kickers?','direct address','passive voice','active voice','predicates?',
+ 'comma splices?','compound predicates?','conjunctive adverbs?','periodic sentences?','pivot words?','prepositional phrases?','prepositions?','conjunctions?','joining words?','infinitives?','imperatives?','hyphens?','scare quotes','parallel structure','chiasmus','similes?','metaphors?','understatement','rhetorical questions?','direct address','passive voice','active voice','predicates?',
  'polysyndeton','asyndeton','epistrophe','anaphora','tricolons?','interjections?',
  'semicolons?','appositives?','modifiers?','participles?','gerunds?','pronouns?','antecedents?','fragments?','splices?','run-ons?','restrictive','nonrestrictive','colons?','dash(?:es)?'
 ].join('|') + ')\\b', 'gi');
@@ -1031,8 +1029,6 @@ function termKey(m){
   if (s.startsWith('metaphor')) return 'metaphor';
   if (s.startsWith('understatement')) return 'understatement';
   if (s.startsWith('rhetorical')) return 'rhetq';
-  if (s.startsWith('lede')) return 'lede';
-  if (s.startsWith('kicker')) return 'kicker';
   if (s.startsWith('direct address')) return 'directaddress';
   if (s.startsWith('passive') || s.startsWith('active')) return 'voice';
   if (s.startsWith('predicate')) return 'predicate';
@@ -1126,8 +1122,7 @@ const GLOSS_GROUPS = [
  ['Words', ['noun','verb','adjective','adverb','pronoun','antecedent','article','preposition','conjunction','infinitive','modifier','participle','gerund','interjection','pivotword']],
  ['Sentences', ['subject','predicate','object','sentence','statement','phrase','compoundpred','fragment','runon','splice','pinned','restrictive','appositive','imperative','tense','voice','directaddress','periodic']],
  ['Punctuation', ['semicolon','colon','dash','hyphen','ellipsismark','scarequotes']],
- ['Patterns', ['parallel','anaphora','epistrophe','asyndeton','polysyndeton','tricolon','chiasmus','simile','metaphor','understatement','rhetq']],
- ['The trade', ['lede','kicker']]
+ ['Patterns', ['parallel','anaphora','epistrophe','asyndeton','polysyndeton','tricolon','chiasmus','simile','metaphor','understatement','rhetq']]
 ];
 function renderGloss(){
   const stage = $('stage');
@@ -1196,7 +1191,10 @@ function renderBasics(){
     h += '<div class="ex"><p class="sentence">';
     for (const p of ex.parts){
       if (p.length === 1) h += p[0];
-      else h += '<span class="hov" tabindex="0" data-t="' + p[1] + '" data-x="' + p[2].replace(/"/g,'&quot;') + '">' + p[0] + '</span>';
+      else {
+        const sp = p[0].match(/^(\s*)([\s\S]*?)(\s*)$/);
+        h += sp[1] + '<span class="hov" tabindex="0" data-t="' + p[1] + '" data-x="' + p[2].replace(/"/g,'&quot;') + '">' + sp[2] + '</span>' + sp[3];
+      }
     }
     h += '</p><p class="ex-cite">— ' + ex.cite + '</p></div>';
   }
