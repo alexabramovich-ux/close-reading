@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   :root{
-    --paper:#57068C; --card:#FFFFFF; --ink:#1D1C1A; --muted:#4E4A44; --faint:#7A756D;
+    --paper:#57068C; --card:#FFFFFF; --ink:#1D1C1A; --muted:#38352F; --faint:#59544C;
     --onground:#FFFFFF; --onground-muted:#DCC6EF; --chip-on-bg:#FFFFFF; --chip-on-ink:#57068C;
     --tip-bg:#1D1C1A; --tip-ink:#FAFAF8;
     --line:#E5E2DA; --line-strong:#CFCBC1;
@@ -170,7 +170,7 @@ const DATA = [
  at:'Larissa MacFarquhar, &ldquo;Present Waking Life,&rdquo; The New Yorker, 2005'},
 {id:'bd6', s:'&ldquo;Penis with a thesaurus.&rdquo;',
  q:'Classify it.', o:['A fragment — no verb','A complete sentence','A run-on','Two statements fused'], a:0,
- w:'No verb — nothing happens — so it’s a fragment: a piece of a sentence wearing a period. Here that’s on purpose. A verdict with no verb leaves nothing to argue with.',
+ w:'No verb — nothing happens — so it’s a fragment: a piece of a sentence wearing a period. Here that’s on purpose: with no verb, there’s nothing left to argue with.',
  at:'David Foster Wallace, quoted in Patricia Lockwood, &ldquo;Malfunctioning Sex Robot,&rdquo; LRB, 2019'},
 {id:'bd7', s:'“He is a kind of confidence man, <b>preying</b> on people’s vanity, ignorance, or loneliness, <b>gaining</b> their trust and <b>betraying</b> them without remorse.”',
  q:'Do “preying” and “gaining” start new sentences?', o:['No — participles trailing off the main statement','Yes — splices','Only because of the final “and”','Yes — three sentences'], a:0,
@@ -440,11 +440,59 @@ const MOVES = [
  {s:'“Clooney, who is unusual in being both very famous and, apparently, at ease with the fact<b>—he can sometimes look like a spokesman for celebrity itself—</b>was sitting on a long pale sofa, alongside Sarah Larson, his girlfriend.”', at:'Ian Parker, “Somebody Has to Be in Control,” The New Yorker, 2008'},
  {s:'“Edna Buchanan covered the murder for the Herald<b>—there are policemen in Miami who say that it wouldn’t be a murder without her—</b>and her story began with what the fried-chicken faction still regards as the classic Edna lead: ‘Gary Robinson died hungry.’”', at:'Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'},
  {s:'“He dipped into a couple of books: a Proust biography…, a novel by Jean Rhys that he recently came across in a secondhand bookstore<b>—he’s not a systematic reader</b>.”', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'}]},
-{name:'The short sentence as verdict', d:'A very short sentence — sometimes a fragment — placed where a long one was expected. It reads as a verdict.',
+{name:'The short sentence', d:'A very short sentence — sometimes a fragment — placed where a long one was expected. It sounds final.',
  ex:[
  {s:'“<b>Gary Robinson died hungry.</b>”', at:'Edna Buchanan’s lede, in Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'},
  {s:'“The man came to the village on a moped. Youssouf Malé watched him. <b>A man on a moped was unusual.</b>”', at:'Michael Finkel, “Is Youssouf Malé a Slave?,” The New York Times Magazine, 2001'},
- {s:'“<b>Penis with a thesaurus.</b>”', at:'David Foster Wallace, quoted in Patricia Lockwood, “Malfunctioning Sex Robot,” LRB, 2019'}]}
+ {s:'“<b>Penis with a thesaurus.</b>”', at:'David Foster Wallace, quoted in Patricia Lockwood, “Malfunctioning Sex Robot,” LRB, 2019'}]},
+{name:'The colon', d:'A complete statement on the left; then the colon hands over what that statement promised — a list, a name, another statement.',
+ ex:[
+ {s:'“He dipped into a couple of <b>books:</b> a Proust biography that he bought five years ago but just started reading because it suddenly occurred to him to do so, a novel by Jean Rhys that he recently came across in a secondhand bookstore—he’s not a systematic reader.”', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'},
+ {s:'“She’s a rare <b>combination:</b> a thin, long-limbed beauty with a trained analytic mind who dresses with cunning understatement.”', at:'Joan Juliet Buck, “A Rose in the Desert,” Vogue, 2011'},
+ {s:'“Edna Buchanan covered the murder for the Herald—there are policemen in Miami who say that it wouldn’t be a murder without her—and her story began with what the fried-chicken faction still regards as the classic Edna <b>lead: ‘Gary Robinson died hungry.’</b>”', at:'Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'}]},
+{name:'The appositive', d:'A phrase set beside a noun to rename it — no verb of its own, so it can never stand alone. The comma in front of it is often mistaken for a splice.',
+ ex:[
+ {s:'“It is raining, and Mikhail Baryshnikov is standing in a courtyard in <b>Riga, the capital of Latvia,</b> pointing up at two corner windows of an old stucco building that was probably yellow once.”', at:'Joan Acocella, “The Soloist,” The New Yorker, 1998'},
+ {s:'“It’s late <b>already, five or five-thirty</b>.”', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'},
+ {s:'“It’s pure Tucker <b>Carlson, a move</b> I’ve seen hundreds of times in the over 40 hours of Tucker Carlson Tonight clips I’ve watched on Fox News in recent months.”', at:'Lyz Lenz, “The Mystery of Tucker Carlson,” Columbia Journalism Review, 2018'}]},
+{name:'The dash before the last words', d:'A dash holds one beat, and the sentence’s final words land after it.',
+ ex:[
+ {s:'“Sinatra with a cold is Picasso without paint, Ferrari without fuel <b>— only worse</b>.”', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
+ {s:'“A big, burly guy, he had a macho strain in him<b>—a pugilistic vision of intellectual life</b>.”', at:'Alex Ross, on Richard Taruskin, The New Yorker, 2022'},
+ {s:'“Asma al-Assad is glamorous, young, and very chic<b>—the freshest and most magnetic of first ladies</b>.”', at:'Joan Juliet Buck, “A Rose in the Desert,” Vogue, 2011'}]},
+{name:'Three beats', d:'Three phrases or statements built the same way — a tricolon. Two is a pair; three is a pattern.',
+ ex:[
+ {s:'“The white house seems deserted, too; but occasionally, when the animals become too clamorous, <b>a light will flash on, a window will open, and a Coke bottle will come flying</b> through the darkness and smash against the cans.”', at:'Gay Talese, “The Loser,” Esquire, 1964'},
+ {s:'“<b>Limited by physical temperament, trained in poverty, organically costive,</b> he has become the dietetic survivor of his poor health.”', at:'Janet Flanner, “Führer,” The New Yorker, 1936'},
+ {s:'“<b>The man came to the village on a moped. Youssouf Malé watched him. A man on a moped was unusual.</b>”', at:'Michael Finkel, “Is Youssouf Malé a Slave?,” The New York Times Magazine, 2001'}]},
+{name:'The present tense', d:'Profiles usually run in the past tense. Switching to the present makes the scene happen while you read it.',
+ ex:[
+ {s:'“It <b>is raining</b>, and Mikhail Baryshnikov <b>is standing</b> in a courtyard in Riga, the capital of Latvia, pointing up at two corner windows of an old stucco building that was probably yellow once.”', at:'Joan Acocella, “The Soloist,” The New Yorker, 1998'},
+ {s:'“He <b>saunters</b> out from shadows in the back of the stage, indistinguishable at first from the four other band members.”', at:'Alex Ross, “The Wanderer,” The New Yorker, 1999'},
+ {s:'“Merle <b>stares</b> a lot; onstage, where he almost never talks between songs, he can seem oblivious of the audience.”', at:'Bryan Di Salvatore, “Ornery,” The New Yorker, 1990'}]},
+{name:'The habitual “would” (and “will”)', d:'“Would” — or “will” — for what happens over and over: not one scene but a routine, compressed into a single sentence.',
+ ex:[
+ {s:'“IF COLIN DUFFY AND I WERE TO GET MARRIED, we <b>would have</b> matching superhero notebooks. We <b>would wear</b> shorts, big sneakers, and long, baggy T-shirts depicting famous athletes every single day, even in the winter. We <b>would sleep</b> in our clothes.”', at:'Susan Orlean, “The American Man at Age Ten,” Esquire, 1992'},
+ {s:'“The white house seems deserted, too; but occasionally, when the animals become too clamorous, a light <b>will flash</b> on, a window <b>will open</b>, and a Coke bottle <b>will come</b> flying through the darkness and smash against the cans.”', at:'Gay Talese, “The Loser,” Esquire, 1964'}]},
+{name:'The sentence interrupted', d:'Something wedged between the subject and its verb — commas or dashes on both sides. You wait through the middle to reach what happened.',
+ ex:[
+ {s:'“Frank Sinatra, <b>holding a glass of bourbon in one hand and a cigarette in the other,</b> stood in a dark corner of the bar between two attractive but fading blondes who sat waiting for him to say something.”', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
+ {s:'“Like the credulous widow who wakes up one day to find the charming young man and all her savings gone, so the consenting subject of a piece of nonfiction writing learns<b>—when the article or book appears—</b>his hard lesson.”', at:'Janet Malcolm, The Journalist and the Murderer, 1990'},
+ {s:'“Clooney, <b>who is unusual in being both very famous and, apparently, at ease with the fact—he can sometimes look like a spokesman for celebrity itself—</b>was sitting on a long pale sofa, alongside Sarah Larson, his girlfriend.”', at:'Ian Parker, “Somebody Has to Be in Control,” The New Yorker, 2008'}]},
+{name:'The comparison', d:'The subject explained through something it isn’t — like X, or X without Y. The likeness carries the information.',
+ ex:[
+ {s:'“Sinatra with a cold is <b>Picasso without paint, Ferrari without fuel</b> — only worse.”', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
+ {s:'“<b>Like the credulous widow who wakes up one day to find the charming young man and all her savings gone,</b> so the consenting subject of a piece of nonfiction writing learns—when the article or book appears—his hard lesson.”', at:'Janet Malcolm, The Journalist and the Murderer, 1990'},
+ {s:'“He is <b>like a God who spends four hours on the shading on Eve’s upper lip</b>, forgets to give her a clitoris.”', at:'Patricia Lockwood, “Malfunctioning Sex Robot,” LRB, 2019'}]},
+{name:'One subject, many verbs', d:'One subject runs a chain of verbs, commas between them. Nothing after the commas could stand alone — so it isn’t a splice.',
+ ex:[
+ {s:'“<b>We interpret</b> what we see, <b>select</b> the most workable of the multiple choices.”', at:'Joan Didion, “The White Album,” 1979'},
+ {s:'“<b>He swallows</b> gruel for breakfast, <b>is fond of</b> oatmeal, <b>digests</b> milk and onion soup, <b>declines</b> meat, which even as an undernourished youth he avoided, <b>never touches</b> fish, <b>has given up</b> macaroni as fattening, <b>eats</b> one piece of bread at a meal, <b>favors</b> vegetables, greens, and salads, <b>drinks</b> lemonade, <b>likes</b> tea and cake, and <b>loves</b> a raw apple.”', at:'Janet Flanner, “Führer,” The New Yorker, 1936'},
+ {s:'“<b>He is</b> like a God who <b>spends</b> four hours on the shading on Eve’s upper lip, <b>forgets</b> to give her a clitoris.”', at:'Patricia Lockwood, “Malfunctioning Sex Robot,” LRB, 2019'}]},
+{name:'Where before who', d:'The sentence opens with place — sometimes several places deep — before anyone appears in it.',
+ ex:[
+ {s:'“<b>AT THE FOOT of a mountain in upstate New York, about sixty miles from Manhattan,</b> there is an abandoned country clubhouse with a dusty dance floor, upturned barstools, and an untuned piano; and the only sounds heard around the place at night come from the big white house behind it—the clanging sounds of garbage cans being toppled by raccoons, skunks, and stray cats making their nocturnal raids down from the mountain.”', at:'Gay Talese, “The Loser,” Esquire, 1964'},
+ {s:'“<b>In New York City, especially in Greenwich Village, down among the cranks and the misfits and the one-lungers and the has-beens and the might’ve-beens and the would-bes and the never-wills and the God-knows-whats,</b> I have always felt at home.”', at:'Joe Gould, quoted in Joseph Mitchell, “Professor Sea Gull,” The New Yorker, 1942'}]}
 ];
 const $ = id => document.getElementById(id);
 let misses = {}; try { misses = JSON.parse(localStorage.getItem('splice-misses2') || '{}'); } catch(e){}
@@ -651,7 +699,7 @@ const EX = [
  ['We smile','STATEMENT ONE','Subject + verb: a complete statement.'],
  [' '],
  ['when we see him','TIME CLAUSE','Has its own subject and verb, but “when” pins it to “we smile” — it can’t stand alone.'],
- [',','THE SPLICE','This comma is holding two complete statements together all by itself. That job normally needs “and” or a semicolon — a bare comma there is called a comma splice. Kael does it on purpose: the smile and the laugh fuse into one reflex.'],
+ [',','THE SPLICE','This comma is holding two complete statements together all by itself. That job normally needs “and” or a semicolon — a bare comma there is called a comma splice. (With nothing there at all — not even a comma — it would be a run-on.) Kael does it on purpose: the smile and the laugh fuse into one reflex.'],
  [' '],
  ['we laugh','STATEMENT TWO','Another complete statement — which is what makes the comma before it a splice.'],
  [' '],
@@ -659,6 +707,64 @@ const EX = [
  [';','SEMICOLON','The standard way to join two complete statements without “and.” The comma broke the rule; the semicolon follows it — both in one sentence.'],
  [' '],
  ['it makes us happy just to look at him','STATEMENT THREE','Subject (“it”) + verb (“makes”): the third complete statement, seated by the semicolon.'],
+ ['.”']]},
+{cite:'Joan Didion, “The White Album,” 1979', parts:[
+ ['“'],
+ ['We interpret what we see','STATEMENT','Subject (“we”) + verb (“interpret”): complete.'],
+ [',','THE MISSING “AND”','You’d expect “and select.” Deleting the “and” and letting a comma carry the join is called asyndeton — clipped, quick. (Not a splice: “select” has no subject of its own; it still belongs to “we.”)'],
+ [' '],
+ ['select the most workable of the multiple choices','SECOND VERB','Same subject, second verb — one “we” doing both.'],
+ ['.”']]},
+{cite:'Janet Flanner, “Führer,” The New Yorker, 1936', parts:[
+ ['“'],
+ ['He','SUBJECT','One subject — and it owns every verb that follows.'],
+ [' '],
+ ['swallows','VERB ONE OF ELEVEN','The first of eleven verbs, all belonging to “He.” One subject with a chain of verbs is called a compound predicate.'],
+ [' gruel for breakfast'],
+ [',','LIST COMMA','Separates verbs in a list. It is not joining two statements — what follows has no subject of its own — so it isn’t a splice.'],
+ [' is fond of oatmeal, digests milk and onion soup, declines meat'],
+ [', which even as an undernourished youth he avoided,','ASIDE','Commas on both sides: a liftable aside about the meat. Remove it and the sentence still runs. (Compare a clause with no commas, which narrows instead of commenting.)'],
+ [' never touches fish, has given up macaroni as fattening, eats one piece of bread at a meal, favors vegetables, greens, and salads, drinks lemonade, likes tea and cake, and '],
+ ['loves a raw apple','THE LAST VERB','“And” before the final verb closes the list — eleven things, one subject doing all of them.'],
+ ['.”']]},
+{cite:'Janet Malcolm, The Journalist and the Murderer, 1990', parts:[
+ ['“'],
+ ['Every journalist','SUBJECT','Announced first — then made to wait through the “who” clause.'],
+ [' '],
+ ['who is not too stupid or too full of himself to notice what is going on','RESTRICTIVE CLAUSE','No commas around it — that’s the signal. Without commas, a “who” clause narrows down which ones: not every journalist, only these. With commas it would be a liftable aside instead.'],
+ [' '],
+ ['knows','VERB','The sentence’s verb, held back until the narrowing is done.'],
+ [' that what he does is morally indefensible.”']]},
+{cite:'Terry Castle, “Desperately Seeking Susan,” London Review of Books, 2003', parts:[
+ ['“'],
+ ['God','INTERJECTION','An exclamation parked outside the sentence — it has no grammatical job in the statement that follows.'],
+ [',','COMMA','Sets the interjection off.'],
+ [' '],
+ ['she could be insulting to people','STATEMENT','Subject (“she”) + verb (“could be”): complete on its own.'],
+ ['.”']]},
+{cite:'Bryan Di Salvatore, “Ornery,” The New Yorker, 1990', parts:[
+ ['“'],
+ ['It is more than','OPENER, FIRST TIME','A complete statement begins.'],
+ [' Hank Williams, Sr., Johnny Cash, and Glen Campbell combined. '],
+ ['It is more than','OPENER, AGAIN','The same opening words, sentence after sentence — that repetition is called anaphora.'],
+ [' George Jones, Hank Snow, and Ray Price '],
+ ['combined','THE REPEATED ENDING','Both sentences also end on the same word. Matched endings are the mirror of anaphora: epistrophe.'],
+ ['.”']]},
+{cite:'Gay Talese, “The Loser,” Esquire, 1964', parts:[
+ ['“The white house seems deserted, too; but occasionally, when the animals become too clamorous, '],
+ ['a light will flash on','BEAT ONE','First of three phrases built the same way: subject, “will,” verb. “Will” here means every night, not one night — a routine.'],
+ [', '],
+ ['a window will open','BEAT TWO','Second beat, same shape.'],
+ [', and '],
+ ['a Coke bottle will come flying','BEAT THREE','Third beat. Three matched phrases in a row make a tricolon — two is a pair, three is a pattern.'],
+ [' through the darkness and smash against the cans.”']]},
+{cite:'Janet Malcolm, The Journalist and the Murderer, 1990', parts:[
+ ['“Like the credulous widow who wakes up one day to find the charming young man and all her savings gone, so the '],
+ ['consenting','PARTICIPLE','An -ing verb-form describing the noun right after it. Describing is one of the two jobs an -ing word can do.'],
+ [' subject of a piece of nonfiction '],
+ ['writing','GERUND','The other job: “writing” here isn’t describing anything — it’s a thing, a noun. An -ing word working as a noun is called a gerund.'],
+ [' learns—when the article or book appears—'],
+ ['his hard lesson','THE HELD-BACK ENDING','The sentence’s whole point, kept for the last three words. A sentence that saves its main point for the end is called a periodic sentence — everything stacks up first, then this lands.'],
  ['.”']]}
 ];
 
@@ -667,7 +773,7 @@ const GLOSS = [
 {k:'subject', t:'subject', d:'Who or what the sentence is about — the doer of the verb.', ex:'“Gary Robinson” in “Gary Robinson died.”'},
 {k:'verb', t:'verb', d:'The word that says what happened and when: died, is, stood. Every complete statement needs one.', ex:'“stood” in the Sinatra lede.'},
 {k:'statement', t:'complete statement (clause)', d:'A subject plus a verb that could stand alone as a sentence. Grammars call this a clause.', ex:'“It is raining.”'},
-{k:'fragment', t:'fragment', d:'Less than a complete statement — no verb, or no subject — wearing a period. Sometimes an error, sometimes a chosen verdict.', ex:'“Penis with a thesaurus.” — DFW on Updike, quoted by Lockwood'},
+{k:'fragment', t:'fragment', d:'Less than a complete statement — no verb, or no subject — wearing a period. Sometimes an error, sometimes chosen — the sound of the last word.', ex:'“Penis with a thesaurus.” — DFW on Updike, quoted by Lockwood'},
 {k:'splice', t:'comma splice', d:'Two complete statements held together by only a comma. That job normally needs “and,” a semicolon, or a period. Writers sometimes do it on purpose, for speed.', ex:'“We smile when we see him, we laugh before he does anything…” — Kael'},
 {k:'runon', t:'run-on', d:'Two complete statements with nothing at all between them — not even a comma.', ex:'(constructed) “He talked for an hour he never mentioned the record.”'},
 {k:'semicolon', t:'semicolon', d:'Joins two complete statements without “and.” Second job: separates list items that have commas inside them.', ex:'“Merle stares a lot; onstage… he can seem oblivious of the audience.” — Di Salvatore'},
@@ -761,7 +867,7 @@ function renderMoves(){
   MOVES.forEach((m, i) => {
     const card = document.createElement('div'); card.className = 'card';
     card.innerHTML =
-      '<div class="eyebrow">Same move, different writers &middot; ' + (i+1) + ' of ' + MOVES.length + '</div>' +
+      '<div class="eyebrow">' + (i+1) + ' of ' + MOVES.length + '</div>' +
       '<p class="mv-name">' + m.name + '</p>' +
       '<p class="mv-def">' + m.d + '</p>' +
       m.ex.map(e => '<p class="mvq">' + e.s + '</p><p class="mv-cite">— ' + e.at + '</p>').join('') +
@@ -824,7 +930,7 @@ function renderBasics(){
   const card = document.createElement('div'); card.className = 'card';
   let h = '<div class="eyebrow">Basics</div>' +
     '<p class="why" style="font-size:15px">A sentence tells you that someone or something did something. The someone is the <strong>subject</strong>; the did-something is the <strong>verb</strong> — the word that says what happened and when (died, is, stood). Subject plus verb makes a complete statement. Everything else in a sentence is doing one of three jobs: describing, renaming, or joining.</p>' +
-    '<p class="why" style="margin-top:8px; color:var(--muted)">Nine sentences from the readings. Hover over (or tap) any underlined part to see what it is and what it’s doing.</p>';
+    '<p class="why" style="margin-top:8px; color:var(--muted)">' + EX.length + ' sentences from the readings. Hover over (or tap) any underlined part to see what it is and what it’s doing.</p>';
   for (const ex of EX){
     h += '<div class="ex"><p class="sentence">';
     for (const p of ex.parts){
