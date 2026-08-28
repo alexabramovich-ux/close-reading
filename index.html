@@ -746,7 +746,7 @@ function render(){
     '<div class="opts">' + order.map((oi,p) =>
       '<button class="opt" data-i="' + oi + '"><span class="key">' + (p+1) + '</span><span>' + d.o[oi] + '</span></button>').join('') + '</div>' +
     '<div id="verdict"></div>' +
-    '<div class="actions"><span class="hint">type 1&ndash;' + d.o.length + ' to answer &middot; Enter for the next card</span>' +
+    '<div class="actions"><span></span>' +
     '<button class="next" id="nextbtn" disabled>Next</button></div>';
   stage.innerHTML = ''; stage.appendChild(card);
   card.querySelectorAll('.opt').forEach(b => b.onclick = () => answer(parseInt(b.dataset.i,10)));
