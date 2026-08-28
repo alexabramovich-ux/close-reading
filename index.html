@@ -558,7 +558,7 @@ const LINES = [
  n:'“Equal” is an absolute — grammar has no “more equal.” The sentence runs a comparative that cannot exist, and the impossibility is the political point.',
  at:'George Orwell, Animal Farm, 1945'},
 {s:'“To be, or not to be<b>, that</b> is the question”',
- n:'The subject is a pair of infinitives — verb-forms acting as nouns. And the comma before “that is” is the same bare-comma join the drill flags as a splice; it was standard in 1600.',
+ n:'The subject is a pair of infinitives — verb-forms acting as nouns — and “that” picks the pair up again before the verb: a fronted subject restated by a pronoun, standard in 1600 and still legible now.',
  at:'William Shakespeare, Hamlet, c. 1600'},
 {hd:'The smallest sentences', s:'“<b>Jesus wept.</b>”',
  n:'The shortest verse in the Bible: subject, verb, period. Nothing modifies anything.',
@@ -608,7 +608,7 @@ const LINES = [
 {s:'“The art of losing isn’t hard to master”',
  n:'An ordinary declarative with a negative (“isn’t hard”) — understatement built into the grammar. The poem repeats the line, with small variations, until it cracks.',
  at:'Elizabeth Bishop, “One Art,” 1976'},
-{s:'“<b>Quoth the Raven</b> “Nevermore.””',
+{s:'“<b>Quoth the Raven</b> ‘Nevermore.’”',
  n:'“Quoth the Raven” is inverted order — verb before subject, an old form. And the bird’s entire vocabulary is one adverb.',
  at:'Edgar Allan Poe, “The Raven,” 1845'},
 {hd:'Speeches & broadcast', s:'“…that government <b>of the people, by the people, for the people,</b> shall not perish from the earth.”',
@@ -624,7 +624,7 @@ const LINES = [
  n:'An inverted imperative (“ask not” for “don’t ask”), then a dash, then the same clause with its halves swapped — chiasmus: the words repeat in reverse order.',
  at:'John F. Kennedy, Inaugural Address, 1961'},
 {s:'“<b>I have a dream</b>”',
- n:'Four plain words — subject, verb, object — that opened eight successive sentences of the speech: anaphora carrying the argument. The repetition, not the sentence, is the device.',
+ n:'Four plain words — subject, verb, object — that opened sentence after sentence of the speech: anaphora carrying the argument. The repetition, not the sentence, is the device.',
  at:'Martin Luther King, Jr., March on Washington, August 28, 1963'},
 {s:'“That’s one small step for man, one giant leap for <b>mankind</b>.”',
  n:'Two matched noun phrases with a comma between. Armstrong meant “for a man” — without the article, “man” already means mankind, and the sentence contradicts its own second half. One dropped “a” undid the grammar.',
@@ -977,9 +977,20 @@ const GLOSS = [
 {k:'adverb', t:'adverb', d:'A word that describes a verb, an adjective, or a whole sentence — how, when, how much: “slowly,” “never,” “certainly.” Fronted with a comma (“Certainly, …”), it sets the stance of everything that follows.', ex:'“Certainly, he had a point…” — Ross'},
 {k:'pronoun', t:'pronoun', d:'A word that stands in for a noun — he, she, it, they, who, that. Every pronoun points back at something.', ex:'“We smile when we see him” — Kael: “him” is Cary Grant.'},
 {k:'antecedent', t:'antecedent', d:'The noun a pronoun points back to. From Latin ante + cedere, “going before” — the antecedent usually goes before its pronoun. When it doesn’t, or when two nouns compete for the job, the pronoun wobbles.', ex:'“a God who spends four hours…” — Lockwood: “who” points back to “a God.”'},
+{k:'article', t:'article', d:'The smallest modifiers: a, an, the. “The” points at a known one, “a” at any one. Headlines drop them — and dropping one can change the meaning: Armstrong needed “one small step for A man.”', ex:'“MEN WALK ON MOON” — the Times, articles stripped.'},
+{k:'preposition', t:'preposition', d:'A small word that ties a noun into the sentence by relation — in, on, at, of, with, between, through. It opens a prepositional phrase, which works as a modifier.', ex:'“in a dark corner of the bar between two attractive but fading blondes” — Talese, three deep.'},
+{k:'conjunction', t:'joining word (conjunction)', d:'The seven small words that may hold two complete statements together with a comma: and, but, or, nor, for, so, yet. They also join list items. (“However” and “rather” are not on the list — those are pivot words.)', ex:'“…the most publicly seduced male the world has known, yet he has never become a public joke” — Kael'},
+{k:'infinitive', t:'infinitive', d:'“To” plus a verb: to be, to know. It names the action without saying when, so it can’t make a statement — and it can act as a noun.', ex:'“To be, or not to be” — the subject of Hamlet’s sentence is two infinitives.'},
 {k:'sentence', t:'sentence', d:'Tells you that someone or something did something, and closes with a period. At minimum: a subject and a verb.', ex:'“Gary Robinson died hungry.”'},
 {k:'subject', t:'subject', d:'Who or what the sentence is about — the doer of the verb.', ex:'“Gary Robinson” in “Gary Robinson died.”'},
 {k:'verb', t:'verb', d:'The word that says what happened and when: died, is, stood. Every complete statement needs one.', ex:'“stood” in the Sinatra lede.'},
+{k:'predicate', t:'predicate', d:'The verb plus everything attached to it — the half of the sentence that says what happened. Subject | predicate: “Gary Robinson | died hungry.”', ex:'“stood in a dark corner of the bar…” — the predicate of the Sinatra sentence.'},
+{k:'object', t:'object', d:'The noun on the receiving end of the verb. The subject does; the object is done to.', ex:'“Call me Ishmael.” — “me” is the object of “call.”'},
+{k:'phrase', t:'phrase', d:'A group of words that works as one unit but has no subject-verb pair of its own — that is what separates it from a clause.', ex:'“holding a glass of bourbon in one hand” — Talese'},
+{k:'imperative', t:'imperative', d:'A command. The verb comes first and the subject — you — goes unsaid.', ex:'“Call me Ishmael.” — Melville; “DROP DEAD” — Daily News'},
+{k:'tense', t:'tense', d:'What the verb says about when: past (“stood”), present (“saunters”), future (“will flash”). Profiles default to the past; any switch is a choice.', ex:'“He saunters out from shadows” — Ross, present.'},
+{k:'voice', t:'active & passive voice', d:'Active: the subject does the verb (“Buchanan covered the murder”). Passive: the subject is acted on (“the murder was covered”) — the doer can drop out entirely. Passive isn’t a sin; it decides who stands in the spotlight.', ex:'“garbage cans being toppled by raccoons” — Talese: the cans star; the raccoons trail.'},
+{k:'directaddress', t:'direct address', d:'Naming the person you are speaking to, set off by a comma. The reader can be that person.', ex:'“Reader, I married him.” — Brontë'},
 {k:'statement', t:'complete statement (clause)', d:'A subject plus a verb that could stand alone as a sentence. Grammars call this a clause.', ex:'“It is raining.”'},
 {k:'fragment', t:'fragment', d:'Less than a complete statement — no verb, or no subject — wearing a period. Sometimes an error, sometimes chosen — the sound of the last word.', ex:'“Penis with a thesaurus.” — DFW on Updike, quoted by Lockwood'},
 {k:'splice', t:'comma splice', d:'Two complete statements held together by only a comma. That job normally needs “and,” a semicolon, or a period. Writers sometimes do it on purpose, for speed.', ex:'“We smile when we see him, we laugh before he does anything…” — Kael'},
@@ -987,6 +998,9 @@ const GLOSS = [
 {k:'semicolon', t:'semicolon', d:'Joins two complete statements without “and.” Second job: separates list items that have commas inside them.', ex:'“Merle stares a lot; onstage… he can seem oblivious of the audience.” — Di Salvatore'},
 {k:'colon', t:'colon', d:'Needs a complete statement on its left. Then it delivers — a word, a list, or another statement.', ex:'“She’s a rare combination: a thin, long-limbed beauty…” — Buck'},
 {k:'dash', t:'dash', d:'Joins or interrupts with a jolt; good for the held beat before a payoff, or for fencing off an aside too big for commas.', ex:'“…Picasso without paint, Ferrari without fuel — only worse.” — Talese'},
+{k:'hyphen', t:'hyphen', d:'Glues words into one word. The opposite of the dash’s job: the dash separates; the hyphen fuses.', ex:'“the has-beens and the might’ve-beens and the would-bes” — Joe Gould'},
+{k:'ellipsismark', t:'ellipsis (…)', d:'Three dots: words left out of a quotation, or a voice trailing off. Inside a quote it flags that something is missing — which is why this site quotes whole sentences.', ex:'“. . .” in Jacobson’s Dylan wish — the trail-off is the original’s.'},
+{k:'scarequotes', t:'scare quotes', d:'Quotation marks around a word nobody is actually quoting — the word held with tongs: their term, not mine.', ex:'“it would be ‘interesting’ to know which” — Didion'},
 {k:'appositive', t:'appositive', d:'A phrase set beside a noun to rename it. No verb of its own, so it can never stand alone — and it’s often mistaken for a comma splice. Beside a person’s name it can carry a whole claim about them in one phrase — the profile writer’s appositive. (Latin ad + positus: “placed beside.”)', ex:'A plain rename: “Riga, the capital of Latvia” — Acocella. A role: “Sarah Larson, his girlfriend” — Parker. A whole claim, made before the name even arrives: “Dictator of a nation devoted to splendid sausages, cigars, beer, and babies, Adolf Hitler is a vegetarian…” — Flanner'},
 {k:'modifier', t:'modifier', d:'The umbrella term for describing words and phrases — adjectives, adverbs, participle phrases, prepositional phrases. A modifier adds to a noun or a verb without making a new statement of its own.', ex:'“in a dark corner of the bar” — Talese'},
 {k:'participle', t:'participle', d:'An -ing verb-form doing describing work. In “Sinatra, holding a glass of bourbon, stood,” the verb is “stood” — it says when. “Holding” never says when, so it can’t make a statement of its own; it hangs off “Sinatra” and describes him. (An -ing word used as a noun instead — “a piece of nonfiction writing” — is a gerund.) From Latin particeps, “sharing”: it shares in being a verb and an adjective at once.', ex:'“Sinatra, holding a glass of bourbon…, stood” — Talese'},
@@ -1001,11 +1015,19 @@ const GLOSS = [
 {k:'asyndeton', t:'asyndeton', d:'Leaving out the “and” where you would expect one, letting a comma carry the join. It makes the list quick and clipped. (Greek: “unbound.”)', ex:'“We interpret what we see, select the most workable…” — Didion'},
 {k:'polysyndeton', t:'polysyndeton', d:'Putting “and” between every item in a list, where normal writing would use commas. It slows the sentence down and makes you take the items one at a time. (Greek: “many bindings.”)', ex:'“odd and penniless and unemployable… ducked and dodged and held on” — Mitchell'},
 {k:'tricolon', t:'tricolon', d:'A three-beat pattern — three phrases or statements built the same way. (Greek: “three limbs.”)', ex:'“a light will flash on, a window will open, and a Coke bottle will come flying” — Talese'},
-{k:'periodic', t:'periodic sentence', d:'A sentence that saves its main statement for the very end — everything stacks up first, then the payoff lands. (Greek periodos, “a way around”: the sentence closes its circuit only at the last word.)', ex:'Malcolm’s widow sentence, ending “…his hard lesson.”'}
+{k:'periodic', t:'periodic sentence', d:'A sentence that saves its main statement for the very end — everything stacks up first, then the payoff lands. (Greek periodos, “a way around”: the sentence closes its circuit only at the last word.)', ex:'Malcolm’s widow sentence, ending “…his hard lesson.”'},
+{k:'parallel', t:'parallel structure', d:'Phrases or statements built on the same frame, so the reader feels the pattern. The skeleton under anaphora, tricolons, and chiasmus.', ex:'“a light will flash on, a window will open, and a Coke bottle will come flying” — Talese'},
+{k:'chiasmus', t:'chiasmus', d:'The second half repeats the first half’s words in reverse order — A-B, then B-A. (Greek chi, the letter X: the halves cross.)', ex:'“Ask not what your country can do for you — ask what you can do for your country.” — Kennedy'},
+{k:'simile', t:'simile', d:'A comparison that shows its wiring: “like” or “as.”', ex:'“My soul has grown deep like the rivers.” — Hughes'},
+{k:'metaphor', t:'metaphor', d:'A comparison with the wiring hidden — one thing simply said to be the other.', ex:'“Sinatra with a cold is Picasso without paint” — Talese'},
+{k:'understatement', t:'understatement', d:'Saying less than the situation calls for, and letting the gap do the work.', ex:'“The art of losing isn’t hard to master” — Bishop'},
+{k:'rhetq', t:'rhetorical question', d:'A question not fishing for an answer — it makes its point by asking.', ex:'“Isn’t it pretty to think so?” — Hemingway'},
+{k:'lede', t:'lede', d:'Journalism’s spelling for the opening sentence of a piece — the one that has to do the most work.', ex:'“Gary Robinson died hungry.” — Edna Buchanan’s classic.'},
+{k:'kicker', t:'kicker', d:'Journalism: the closing line — the one the reader leaves with. Often short, often a turn.', ex:'The short sentence and the dash before the last words, in Moves, are kicker machinery.'}
 ];
 const GLOSSMAP = {}; GLOSS.forEach(g => GLOSSMAP[g.k] = g);
 const TERMRE = new RegExp('\\b(' + [
- 'comma splices?','compound predicates?','conjunctive adverbs?','periodic sentences?','pivot words?',
+ 'comma splices?','compound predicates?','conjunctive adverbs?','periodic sentences?','pivot words?','prepositional phrases?','prepositions?','conjunctions?','joining words?','infinitives?','imperatives?','hyphens?','scare quotes','parallel structure','chiasmus','similes?','metaphors?','understatement','rhetorical questions?','ledes?','kickers?','direct address','passive voice','active voice','predicates?',
  'polysyndeton','asyndeton','epistrophe','anaphora','tricolons?','interjections?',
  'semicolons?','appositives?','modifiers?','participles?','gerunds?','pronouns?','antecedents?','fragments?','splices?','run-ons?','restrictive','nonrestrictive','colons?','dash(?:es)?'
 ].join('|') + ')\\b', 'gi');
@@ -1022,6 +1044,23 @@ function termKey(m){
   if (s.startsWith('participle')) return 'participle';
   if (s.startsWith('gerund')) return 'gerund';
   if (s.startsWith('pronoun')) return 'pronoun';
+  if (s.startsWith('prepositional') || s.startsWith('preposition')) return 'preposition';
+  if (s.startsWith('conjunction') || s.startsWith('joining word')) return 'conjunction';
+  if (s.startsWith('infinitive')) return 'infinitive';
+  if (s.startsWith('imperative')) return 'imperative';
+  if (s.startsWith('hyphen')) return 'hyphen';
+  if (s.startsWith('scare quote')) return 'scarequotes';
+  if (s.startsWith('parallel')) return 'parallel';
+  if (s.startsWith('chiasmus')) return 'chiasmus';
+  if (s.startsWith('simile')) return 'simile';
+  if (s.startsWith('metaphor')) return 'metaphor';
+  if (s.startsWith('understatement')) return 'understatement';
+  if (s.startsWith('rhetorical')) return 'rhetq';
+  if (s.startsWith('lede')) return 'lede';
+  if (s.startsWith('kicker')) return 'kicker';
+  if (s.startsWith('direct address')) return 'directaddress';
+  if (s.startsWith('passive') || s.startsWith('active')) return 'voice';
+  if (s.startsWith('predicate')) return 'predicate';
   if (s.startsWith('antecedent')) return 'antecedent';
   if (s.startsWith('fragment')) return 'fragment';
   if (s.startsWith('restrictive') || s.startsWith('nonrestrictive')) return 'restrictive';
@@ -1104,10 +1143,11 @@ function renderLines(){
   });
 }
 const GLOSS_GROUPS = [
- ['Words', ['noun','verb','adjective','adverb','pronoun','antecedent','modifier','participle','gerund','interjection','pivotword']],
- ['Sentences', ['subject','sentence','statement','compoundpred','fragment','runon','splice','pinned','restrictive','appositive','periodic']],
- ['Punctuation', ['semicolon','colon','dash']],
- ['Patterns', ['anaphora','epistrophe','asyndeton','polysyndeton','tricolon']]
+ ['Words', ['noun','verb','adjective','adverb','pronoun','antecedent','article','preposition','conjunction','infinitive','modifier','participle','gerund','interjection','pivotword']],
+ ['Sentences', ['subject','predicate','object','sentence','statement','phrase','compoundpred','fragment','runon','splice','pinned','restrictive','appositive','imperative','tense','voice','directaddress','periodic']],
+ ['Punctuation', ['semicolon','colon','dash','hyphen','ellipsismark','scarequotes']],
+ ['Patterns', ['parallel','anaphora','epistrophe','asyndeton','polysyndeton','tricolon','chiasmus','simile','metaphor','understatement','rhetq']],
+ ['The trade', ['lede','kicker']]
 ];
 function renderGloss(){
   const stage = $('stage');
@@ -1163,16 +1203,15 @@ function renderBasics(){
   const stage = $('stage');
   const card = document.createElement('div'); card.className = 'card';
   let h = '<div class="eyebrow">Basics</div>' +
-    '<p class="why" style="font-size:15px">A sentence tells you that someone or something did something. The someone is the <strong>subject</strong>; the did-something is the <strong>verb</strong> — the word that says what happened and when (died, is, stood). Subject plus verb makes a <strong>complete statement</strong> (grammars call this a clause), and a sentence can hold one statement or several.</p>' +
-    '<p class="why" style="font-size:15px; margin-top:8px">Everything else in a sentence is doing one of three jobs. <strong>Modifying</strong> (describing): adding to a noun or a verb without making a new statement — grammars call these modifiers — &ldquo;holding a glass of bourbon,&rdquo; &ldquo;in a dark corner.&rdquo; <strong>Renaming</strong>: setting a second name beside a noun — &ldquo;Riga, the capital of Latvia.&rdquo; <strong>Joining</strong>: holding statements together — with &ldquo;and,&rdquo; a semicolon, a colon, a dash, or (against the usual rule) a bare comma. To read a sentence closely: find the verb, find its subject, then ask what job every remaining piece is doing. The full set of terms is below, each with an example — then sixteen sentences from the readings you can hover through, part by part.</p>' +
-    '<p class="why" style="margin-top:8px; color:var(--muted)">' + EX.length + ' sentences from the readings. Hover over (or tap) any underlined part to see what it is and what it’s doing.</p>';
+    '<p class="why" style="font-size:15px">A sentence has two parts: a <strong>subject</strong> — who or what it&rsquo;s about — and a <strong>predicate</strong>: the verb, the word that says what happened and when, plus everything attached to it. &ldquo;Gary Robinson died hungry&rdquo;: subject &ldquo;Gary Robinson,&rdquo; predicate &ldquo;died hungry.&rdquo; Subject plus verb makes a <strong>clause</strong> — a complete statement — and a sentence holds one clause or several.</p>' +
+    '<p class="why" style="font-size:15px; margin-top:8px">Every word belongs to a part of speech — noun, verb, adjective, adverb, pronoun, preposition, conjunction, article, interjection — and words build into <strong>phrases</strong> (no subject-verb pair of their own) and clauses (with one). Whatever isn&rsquo;t the subject or the verb is doing one of three jobs: <strong>modifying</strong> a noun or a verb, <strong>renaming</strong> one (&ldquo;Riga, the capital of Latvia&rdquo;), or <strong>joining</strong> clauses.</p>';
   h += GLOSS_GROUPS.map(grp =>
     '<div class="eyebrow" style="margin:26px 0 4px">' + grp[0] + '</div>' +
     grp[1].map(k => GLOSSMAP[k]).filter(Boolean).map(g =>
       '<div class="g-row"><p class="g-term">' + g.t + '</p><p class="g-def">' + g.d + '</p>' +
       (g.ex ? '<p class="g-ex">' + g.ex + '</p>' : '') + '</div>').join('')
   ).join('');
-  h += '<div class="eyebrow" style="margin:30px 0 10px">The sentences, annotated</div>';
+  h += '<div class="eyebrow" style="margin:30px 0 10px">From the readings &middot; hover the underlined parts</div>';
   for (const ex of EX){
     h += '<div class="ex"><p class="sentence">';
     for (const p of ex.parts){
