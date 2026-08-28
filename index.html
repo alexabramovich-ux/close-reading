@@ -11,24 +11,30 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   :root{
-    --paper:#FAFAF8; --card:#FFFFFF; --ink:#1D1C1A; --muted:#6F6B63; --faint:#A39E94;
+    --paper:#57068C; --card:#FFFFFF; --ink:#1D1C1A; --muted:#6F6B63; --faint:#A39E94;
+    --onground:#FFFFFF; --onground-muted:#DCC6EF; --chip-on-bg:#FFFFFF; --chip-on-ink:#57068C;
+    --tip-bg:#1D1C1A; --tip-ink:#FAFAF8;
     --line:#E5E2DA; --line-strong:#CFCBC1;
     --accent:#57068C; --accent-ink:#FFFFFF; --accent-soft:#F4ECFA;
     --good:#2F7D46; --good-soft:#EDF6EF; --bad:#B3352E; --bad-soft:#FAF0EF;
-    --shadow:0 1px 2px rgba(29,28,26,.05), 0 8px 24px -12px rgba(29,28,26,.12);
+    --shadow:0 1px 2px rgba(29,28,26,.05), 0 10px 30px -12px rgba(20,0,40,.45);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --paper:#161920; --card:#1E222B; --ink:#E9E7E1; --muted:#9CA0AB; --faint:#6B707D;
-      --line:#2C313C; --line-strong:#3A4050;
+      --paper:#1C0630; --card:#2A1440; --ink:#EDE7F3; --muted:#B4A3C8; --faint:#8A7699;
+      --line:#3C2756; --line-strong:#4E3568;
+      --onground:#F3EAFB; --onground-muted:#BFA3DC; --chip-on-bg:#EDE0F8; --chip-on-ink:#3A1160;
+      --tip-bg:#120321; --tip-ink:#EDE7F3;
       --accent:#C08FE8; --accent-ink:#1B0C28; --accent-soft:#2E2139;
       --good:#6FBE87; --good-soft:#1F2E24; --bad:#E2756D; --bad-soft:#332222;
       --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
     }
   }
   :root[data-theme="dark"]{
-    --paper:#161920; --card:#1E222B; --ink:#E9E7E1; --muted:#9CA0AB; --faint:#6B707D;
-    --line:#2C313C; --line-strong:#3A4050;
+    --paper:#1C0630; --card:#2A1440; --ink:#EDE7F3; --muted:#B4A3C8; --faint:#8A7699;
+    --line:#3C2756; --line-strong:#4E3568;
+    --onground:#F3EAFB; --onground-muted:#BFA3DC; --chip-on-bg:#EDE0F8; --chip-on-ink:#3A1160;
+    --tip-bg:#120321; --tip-ink:#EDE7F3;
     --accent:#C08FE8; --accent-ink:#1B0C28; --accent-soft:#2E2139;
     --good:#6FBE87; --good-soft:#1F2E24; --bad:#E2756D; --bad-soft:#332222;
     --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
@@ -38,16 +44,16 @@
     font-family:'Archivo', system-ui, sans-serif; -webkit-font-smoothing:antialiased; line-height:1.5}
   .wrap{max-width:700px; margin:0 auto; padding:40px 20px 90px}
   .masthead{display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px}
-  h1{font-family:'Newsreader', Georgia, serif; font-weight:600; font-size:clamp(28px,5vw,36px); margin:0; letter-spacing:-.01em}
+  h1{font-family:'Newsreader', Georgia, serif; font-weight:600; font-size:clamp(28px,5vw,36px); margin:0; letter-spacing:-.01em; color:var(--onground)}
   h1 .comma{color:var(--accent)}
-  .stats{font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:13px; color:var(--muted);
+  .stats{font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:13px; color:var(--onground-muted);
     display:flex; gap:16px; font-variant-numeric:tabular-nums}
-  .stats b{color:var(--ink); font-weight:500}
+  .stats b{color:var(--onground); font-weight:500}
   .modes{display:flex; gap:8px; margin:14px 0 0; flex-wrap:wrap}
   .chip{font:500 13px 'Archivo',sans-serif; padding:6px 13px; border-radius:999px;
-    border:1px solid var(--line-strong); background:var(--card); color:var(--muted); cursor:pointer}
-  .chip:hover{border-color:var(--accent); color:var(--ink)}
-  .chip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+    border:1px solid var(--onground-muted); background:transparent; color:var(--onground-muted); cursor:pointer}
+  .chip:hover{border-color:var(--onground); color:var(--onground)}
+  .chip[aria-pressed="true"]{background:var(--chip-on-bg); border-color:var(--chip-on-bg); color:var(--chip-on-ink)}
   .chip:disabled{opacity:.4; cursor:default}
   .card{background:var(--card); border:1px solid var(--line); border-radius:14px;
     box-shadow:var(--shadow); padding:28px 30px 24px; margin-top:20px}
@@ -101,7 +107,7 @@
   .ex .sentence{font-size:20px; line-height:1.6}
   .hov{border-bottom:1.5px dotted var(--accent); cursor:help; border-radius:2px; padding:0 1px}
   .hov:hover,.hov.on{background:var(--accent-soft)}
-  #tip{position:fixed; z-index:50; max-width:330px; background:var(--ink); color:var(--paper);
+  #tip{position:fixed; z-index:50; max-width:330px; background:var(--tip-bg); color:var(--tip-ink);
     padding:10px 13px; border-radius:8px; font:400 13.5px/1.5 'Archivo',sans-serif; display:none;
     box-shadow:0 6px 24px -8px rgba(0,0,0,.35)}
   #tip b{display:block; font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:500;
@@ -138,227 +144,227 @@
 const DATA = [
 {id:'bd1', s:'&ldquo;But he said nothing; he had been silent during much of the evening&hellip;&rdquo;',
  q:'What is the semicolon doing?', o:['Joining two complete statements','Introducing a list','Standing in for a comma','Marking a pause before “he”'], a:0,
- w:'Both halves could stand as sentences; the semicolon joins them without a period’s full stop, so the silence carries through the whole evening in one sentence. The sentence-opening “But” is standard.',
+ w:'Both halves could stand alone as sentences. The semicolon is a mark that can hold two sentences together as one — so his silence stretches across the whole evening without a full stop. (Starting a sentence with “But” is fine; professionals do it constantly.)',
  at:'Gay Talese, &ldquo;Frank Sinatra Has a Cold,&rdquo; Esquire, 1966'},
 {id:'bd2', s:'&ldquo;Gary Robinson died hungry.&rdquo;',
  q:'Complete sentence or fragment?', o:['Complete: subject, verb, final state','Fragment: too short','Fragment: no object','Neither — a headline'], a:0,
- w:'Subject, verb, and “hungry” riding the verb. Everything else — the chicken, the shooting — is left for the reader to supply; that’s why four words carry the story.',
+ w:'It has a subject (Gary Robinson) and a verb (died), so it’s a complete sentence — length doesn’t matter. Everything else, the chicken and the shooting, is left for you to fill in. That’s why four words hit so hard.',
  at:'Edna Buchanan&rsquo;s lede, in Calvin Trillin, &ldquo;Covering the Cops,&rdquo; The New Yorker, 1986'},
 {id:'bd3', s:'&ldquo;It is raining, and Mikhail Baryshnikov is standing in a courtyard in Riga, the capital of Latvia, pointing up at two corner windows of an old stucco building that was probably yellow once.&rdquo;',
  q:'What keeps this one sentence instead of three?', o:['Comma + “and” joins the two statements; the rest is description, not new sentences','Two splices','A hidden semicolon','Nothing — it’s a run-on'], a:0,
- w:'Comma + “and” is the standard way to couple two complete statements. “The capital of Latvia” renames Riga — an appositive, a phrase set beside a noun to rename it and “pointing up…” describes him — descriptions, not sentences. One continuous establishing shot.',
+ w:'Two statements — “It is raining” and “Baryshnikov is standing…” — and comma + “and” is the normal, correct way to hold two statements in one sentence. The rest is description: “the capital of Latvia” renames Riga (an appositive), “pointing up…” shows what he’s doing. No new statements start, so it stays one long camera move.',
  at:'Joan Acocella, &ldquo;The Soloist,&rdquo; The New Yorker, 1998'},
 {id:'bd4', s:'&ldquo;He swallows gruel for breakfast, is fond of oatmeal, digests milk and onion soup, declines meat&hellip; never touches fish, has given up macaroni as fattening&hellip; and loves a raw apple.&rdquo;',
  q:'A dozen commas. Why is this not a splice chain?', o:['One subject, many verbs — a list of actions, not a chain of sentences','It is a splice chain','Each verb starts a new sentence','The final “and” makes it all right'], a:0,
- w:'Every verb hangs off the single “He”; none brings its own subject, so no new sentence ever starts. (Grammars call one subject with a chain of verbs a compound predicate.) The commas separate list items — the diet as inventory.',
+ w:'Every verb — swallows, digests, declines, loves — belongs to the one “He” at the start. No verb gets its own new subject, so no new sentence ever starts. The commas just separate items in a list of things he does. It reads like an inventory of his diet, which is the point.',
  at:'Janet Flanner, &ldquo;F&uuml;hrer,&rdquo; The New Yorker, 1936'},
 {id:'bd5', s:'&ldquo;It&rsquo;s late already, five or five-thirty.&rdquo;',
  q:'What is “five or five-thirty”?', o:['A second name for “late,” set beside it','A spliced second sentence','A fragment','A description aimed at the wrong word'], a:0,
- w:'No verb, no subject — it renames “late” and sharpens it — an appositive, a phrase set beside a word to rename it. The “or” carries the tone: approximate, unbothered.',
+ w:'“Five or five-thirty” has no verb, so it can’t be a sentence on its own. It just sits next to “late” to say it more exactly (an appositive). The “or” gives you the mood: he isn’t sure, and doesn’t much care.',
  at:'Larissa MacFarquhar, &ldquo;Present Waking Life,&rdquo; The New Yorker, 2005'},
 {id:'bd6', s:'&ldquo;Penis with a thesaurus.&rdquo;',
  q:'Classify it.', o:['A fragment — no verb','A complete sentence','A run-on','Two statements fused'], a:0,
- w:'No verb, so a fragment; the period makes it a verdict. Nothing to argue with — the reason it stuck.',
+ w:'No verb — nothing happens — so it’s a fragment: a piece of a sentence wearing a period. Here that’s on purpose. A verdict with no verb leaves nothing to argue with.',
  at:'David Foster Wallace, quoted in Patricia Lockwood, &ldquo;Malfunctioning Sex Robot,&rdquo; LRB, 2019'},
 {id:'bd7', s:'&ldquo;He is a kind of confidence man, preying on people&rsquo;s vanity, ignorance, or loneliness, gaining their trust and betraying them without remorse.&rdquo;',
  q:'Do “preying” and “gaining” start new sentences?', o:['No — -ing phrases trailing off the main statement','Yes — splices','Only because of the final “and”','Yes — three sentences'], a:0,
- w:'-ing forms with no subject or tense of their own can’t start sentences (participles — verb forms doing description work). The sentence proper ends at “confidence man”; the -ing phrases keep adding charges after it.',
+ w:'No. “Preying” and “gaining” are -ing words with no subject of their own — they don’t start new sentences, they keep describing the confidence man. One sentence, with the charges piling up after the main point is made.',
  at:'Janet Malcolm, The Journalist and the Murderer, 1990'},
 {id:'bd8', s:'&ldquo;Willing but not forward, Cary Grant must be the most publicly seduced male the world has known, yet he has never become a public joke&hellip;&rdquo;',
  q:'What joins the two statements?', o:['Comma + “yet”','The comma alone — splice','The fronted adjectives','An implied semicolon'], a:0,
- w:'“Yet” is one of the seven joining words (and, but, or, nor, for, so, yet), so comma-plus-yet is the standard couple. “Willing but not forward” is a pair of adjectives moved ahead of the name — judgment first.',
+ w:'The comma plus “yet.” “Yet” is one of the seven small joining words (and, but, or, nor, for, so, yet) allowed to hold two statements together with a comma. And notice “Willing but not forward” comes before Grant’s name — you get the judgment before you get the man.',
  at:'Pauline Kael, &ldquo;The Man from Dream City,&rdquo; The New Yorker, 1975'},
 {id:'bd9', s:'&ldquo;Merle stares a lot; onstage, where he almost never talks between songs, he can seem oblivious of the audience.&rdquo;',
  q:'What do the paired commas fence off?', o:['An aside you could lift out whole','A splice','A second name for Merle','A fragment'], a:0,
- w:'“Where he almost never talks between songs” lifts out whole — an aside — what grammars call a nonrestrictive clause: one the sentence doesn’t need in order to know its noun — closed by commas at both ends. The semicolon does the main joining.',
+ w:'The part between the commas — “where he almost never talks between songs” — is an aside. You could lift it out and the sentence would still work; that’s why it gets a comma on each side, like brackets. The semicolon joins the two main statements.',
  at:'Bryan Di Salvatore, &ldquo;Ornery,&rdquo; The New Yorker, 1990'},
 {id:'bd10', s:'&ldquo;The man came to the village on a moped. Youssouf Mal&eacute; watched him. A man on a moped was unusual.&rdquo;',
  q:'Fragments?', o:['No — three complete sentences','The third is a fragment','All three are','The first two should be joined'], a:0,
- w:'Each has a subject and a verb. The smallness is the register: information arriving one fact at a time.',
+ w:'No — each one has a subject and a verb, so each is a complete sentence. The smallness is a choice: information arrives one plain fact at a time, the way news travels in a small village.',
  at:'Michael Finkel, &ldquo;Is Youssouf Mal&eacute; a Slave?,&rdquo; The New York Times Magazine, 2001'},
 {id:'mv1', s:'&ldquo;Dictator of a nation devoted to splendid sausages, cigars, beer, and babies, Adolf Hitler is a vegetarian, teetotaller, nonsmoker, and celibate.&rdquo;',
  q:'What is “Dictator of a nation…babies”?', o:['A description of Hitler, moved ahead of his name','A separate sentence, spliced on','A description attached to the wrong person','A clause that could stand alone'], a:0,
- w:'A long noun phrase renaming Hitler, placed first — an appositive: a phrase set beside a noun to rename it — so the nation’s appetites are on the table before the man arrives to refuse them, item for item.',
+ w:'The whole opening phrase is a description of Hitler, placed before his name. You hear about a nation that loves sausages, cigars, beer, and babies — and then meet the man who refuses all four. The order of the sentence is what makes the joke land.',
  at:'Janet Flanner, &ldquo;F&uuml;hrer,&rdquo; The New Yorker, 1936'},
 {id:'mv2', s:'&ldquo;Persuaded to wait his turn, he reached the counter again five or ten minutes later, only to be told that Church&rsquo;s had run out of fried chicken.&rdquo;',
  q:'What is “Persuaded to wait his turn”?', o:['A description of “he,” correctly attached','A description attached to the wrong person (a dangler)','A phrase with no owner at all','A fragment'], a:0,
- w:'The opening phrase describes “he” — he was the one persuaded — so it’s attached correctly. Its politeness, applied to a drunk ex-con, sets the deadpan; “only to be told” delivers the bad news as procedure.',
+ w:'It describes “he” — he’s the one who was persuaded — so it’s attached to the right person. The polite wording, applied to a drunk man in a fried-chicken line, is what makes it funny; the grammar keeps a straight face.',
  at:'Calvin Trillin, &ldquo;Covering the Cops,&rdquo; The New Yorker, 1986'},
 {id:'mv3', s:'&ldquo;We interpret what we see, select the most workable of the multiple choices.&rdquo;',
  q:'What happened between “interpret” and “select”?', o:['The “and” was cut','A splice','One verb was demoted under the other','Nothing — commas do this normally'], a:0,
- w:'Two verbs share “we,” and the “and” that would couple them is deleted — asyndeton, the deleted conjunction. The sentence sorts without ceremony — the way it says we do.',
+ w:'It should be “interpret what we see AND select…” — the “and” was deleted (asyndeton). Cutting it makes the sorting feel quick and cold, no ceremony. Which is what the sentence says we do.',
  at:'Joan Didion, &ldquo;The White Album,&rdquo; 1979'},
 {id:'mv4', s:'&ldquo;Joe Gould was an odd and penniless and unemployable little man who came to the city in 1916 and ducked and dodged and held on as hard as he could for over thirty-five years.&rdquo;',
  q:'What are the repeated “ands” doing?', o:['Stretching the sentence to the length of the years','Loose editing','Marking a list','Satisfying a rule'], a:0,
- w:'“Odd and penniless and unemployable”; “ducked and dodged and held on.” The surplus “ands” — polysyndeton, conjunctions piled past need — slow the sentence to a trudge — thirty-five years, felt in the joins.',
+ w:'Normally you’d write “odd, penniless, and unemployable.” Mitchell writes “odd AND penniless AND unemployable” — extra “ands” everywhere (polysyndeton). They slow the sentence to a trudge, so you feel the thirty-five years of hanging on.',
  at:'Joseph Mitchell, &ldquo;Professor Sea Gull,&rdquo; The New Yorker, 1942'},
 {id:'mv5', s:'&ldquo;It is more than Hank Williams, Sr., Johnny Cash, and Glen Campbell combined. It is more than George Jones, Hank Snow, and Ray Price combined.&rdquo;',
  q:'Name the device.', o:['Repetition: same opening, same final word, both sentences','Comma splices','Too many “ands”','A list error'], a:0,
- w:'Each sentence reopens with “It is more than” and lands on “combined” — repetition at both ends — anaphora is the repeated opening, epistrophe the repeated close. It turns the statistic into rhythm.',
+ w:'Both sentences open with the same words (“It is more than”) and end on the same word (“combined”). Repeating the frame turns a statistic into a drumbeat — each sentence hits the same spot harder.',
  at:'Bryan Di Salvatore, &ldquo;Ornery,&rdquo; The New Yorker, 1990'},
 {id:'mv6', s:'&ldquo;He had some coffee. He read the newspaper. He dipped into a couple of books&hellip;&rdquo;',
  q:'What is the “He… He… He…” doing?', o:['Repetition — logging identical small evasions','Fragmenting','Padding','Building suspense'], a:0,
- w:'Three flat sentences, each reopening on “He,” each recording one more dodge of the typewriter — anaphora, the repeated opening. The meter is the procrastination.',
+ w:'Three flat little sentences, each starting with “He.” The repetition ticks off one small dodge after another, like a clock. That’s what procrastination feels like.',
  at:'Larissa MacFarquhar, &ldquo;Present Waking Life,&rdquo; The New Yorker, 2005'},
 {id:'mv7', s:'&ldquo;&hellip;a light will flash on, a window will open, and a Coke bottle will come flying through the darkness and smash against the cans.&rdquo;',
  q:'What is the structure of the three clauses?', o:['Three matching statements, joined the ordinary list way: comma, comma, and','Comma splices','Three names for one event','Too many “ands”'], a:0,
- w:'Three statements built to the same pattern — a will-verb apiece — a tricolon, a three-part matched pattern. The list shape with the final “and” is standard grammar; the matching is what turns the moment into beats.',
+ w:'Three mini-statements built exactly the same way: a light will, a window will, a bottle will. Because they match, you read them as beats — one, two, three — like frames of film. The final “and” makes it all standard grammar.',
  at:'Gay Talese, &ldquo;The Loser,&rdquo; Esquire, 1964'},
 {id:'mv8', s:'&ldquo;IF COLIN DUFFY AND I WERE TO GET MARRIED, we would have matching superhero notebooks. We would wear shorts, big sneakers, and long, baggy T-shirts&hellip; We would sleep in our clothes.&rdquo;',
  q:'Which “would” is this?', o:['The hypothetical — one “if” sustains it for paragraphs','The habitual (what he regularly did)','Politeness','Future-in-past'], a:0,
- w:'Nothing here happened; the opening IF keeps a pretend world open across sentences. The other “would,” the habitual, narrates what someone typically did — a different tool.',
+ w:'This “would” means “in the made-up world where we got married.” The one “if” at the top keeps that pretend world open for sentence after sentence. (There’s another “would” — “he would slouch,” meaning he always did — a different tool.)',
  at:'Susan Orlean, &ldquo;The American Man at Age Ten,&rdquo; Esquire, 1992'},
 {id:'mv9', s:'&ldquo;A big, burly guy, he had a macho strain in him&mdash;a pugilistic vision of intellectual life.&rdquo;',
  q:'What are “A big, burly guy” and “a pugilistic vision of intellectual life”?', o:['Two renamings — one before the clause, one after the dash','Two splices','Two separate sentences','Two descriptions aimed at the wrong nouns'], a:0,
- w:'Both phrases are appositives — a phrase set beside a noun to rename it, asserting nothing: one sizes him up before the statement, one diagnoses him after the dash. Characterization at both ends of one sentence.',
+ w:'Both phrases are second names pinned onto him (appositives): “a big, burly guy” before the sentence starts its work, “a pugilistic vision of intellectual life” after the dash. Sized up on the way in, summed up on the way out.',
  at:'Alex Ross, on Richard Taruskin, The New Yorker, 2022'},
 {id:'mv10', s:'&ldquo;Rather, it was a supremely cool crush &mdash; she walked through the world with the confidence of a woman who was not aspiring to have a man&hellip;&rdquo;',
  q:'What is “Rather” doing?', o:['Pivoting off the previous sentence — a turn-word up front','Joining two statements','Renaming the crush','Nothing'], a:0,
- w:'“Rather” is a pivot word — a conjunctive adverb, a connector that comments but can’t join — and opening a fresh sentence, it needs no glue. The whole sentence becomes a correction of the last one; the dash then couples two full statements.',
+ w:'“Rather” is a turn-word — it can’t glue two statements together, but at the start of a fresh sentence it doesn’t need to. It makes this whole sentence a correction of the one before it: not that kind of crush, this kind.',
  at:'Taffy Brodesser-Akner, on Margot Kidder, The New York Times, 2018'},
 {id:'mv11', s:'&ldquo;Certainly, he had a point about Strauss&rsquo;s remorseless performance of &lsquo;Death and Transfiguration.&rsquo;&rdquo;',
  q:'Name the move.', o:['Fronted adverb + comma, then the judgment','A splice','A stray description','A modifier aimed at the wrong noun'], a:0,
- w:'One adverb pulled forward, a beat of comma, then the point — the rhythm Cohn used (“Always, he came back to sex.”). The pause makes the concession feel weighed.',
+ w:'One word out front, then a comma, then the point. The comma forces a tiny pause, so the judgment lands harder. Nik Cohn built a style on this: “Always, he came back to sex.”',
  at:'Alex Ross, on Richard Taruskin, The New Yorker, 2022'},
 {id:'mv12', s:'&ldquo;He saunters out from shadows in the back of the stage, indistinguishable at first from the four other band members.&rdquo;',
  q:'What is “indistinguishable at first…”?', o:['A trailing description — the sentence is already complete','A spliced second sentence','A phrase with no owner','The start of a new sentence'], a:0,
- w:'The sentence proper ends at “stage”; the adjective phrase hangs on after it, holding the shot one beat longer — long enough to see Dylan lost in his own band.',
+ w:'The sentence is complete at “stage.” Then one more description hangs on after the comma — and in that extra beat you watch the most famous man in music fail to stand out from his own band. The tail of the sentence is where the joke happens.',
  at:'Alex Ross, &ldquo;The Wanderer,&rdquo; The New Yorker, 1999'},
 {id:'mv13', s:'&ldquo;Like the credulous widow who wakes up one day to find the charming young man and all her savings gone, so the consenting subject of a piece of nonfiction writing learns&mdash;when the article or book appears&mdash;his hard lesson.&rdquo;',
  q:'Why does “his hard lesson” come last?', o:['The payoff is deliberately withheld to the end','The sentence just ran long','Poor planning','The dashes require it'], a:0,
- w:'The simile stacks first, the dashes delay once more, and the main statement lands in the final words — a periodic sentence, one that saves its main statement for the end. The reader walks the widow’s path before being told what it was.',
+ w:'Everything piles up first — the widow, the charming young man, the vanished savings — and the main point is held back to the last three words. You walk the whole path before being told where it leads. The delay is the trap, and the trap is Malcolm’s argument.',
  at:'Janet Malcolm, The Journalist and the Murderer, 1990'},
 {id:'mv14', s:'&ldquo;Frank Sinatra, holding a glass of bourbon in one hand and a cigarette in the other, stood in a dark corner of the bar&hellip;&rdquo;',
  q:'What sits between “Sinatra” and “stood”?', o:['A description of Sinatra, wedged mid-sentence','A second name for Sinatra','A separate statement','A clause with its own verb'], a:0,
- w:'“Holding a glass of bourbon…” — a participial phrase, a description built on an -ing verb — suspends the subject from its verb; the sentence waits with the room. A rename would give him another name — this narrates him.',
+ w:'“Holding a glass of bourbon…” is a description built on an -ing verb (a participial phrase). It’s wedged between “Frank Sinatra” and “stood,” so you wait through the description to find out what he’s doing — the same way the room waits for him.',
  at:'Gay Talese, &ldquo;Frank Sinatra Has a Cold,&rdquo; Esquire, 1966'},
 {id:'mv15', s:'&ldquo;Limited by physical temperament, trained in poverty, organically costive, he has become the dietetic survivor of his poor health.&rdquo;',
  q:'What are the three phrases before “he”?', o:['Three descriptions stacked before the subject','Three splices','Three separate sentences','Three subordinate clauses'], a:0,
- w:'Stacked pre-modification: two verb-based phrases and an adjective phrase, all pointing at “he.” The diagnosis is complete before the subject appears; no main verb until “has become.”',
+ w:'Three descriptions stack up before “he” even arrives: limited by this, trained in that. By the time the man shows up, he’s already been diagnosed. Stacking descriptions in front builds pressure like a drumroll.',
  at:'Janet Flanner, &ldquo;F&uuml;hrer,&rdquo; The New Yorker, 1936'},
 {id:'mv16', s:'&ldquo;I was hired as an assassin. You don&rsquo;t bring in a 37-year-old woman to review John Updike in the year of our Lord 2019 unless you&rsquo;re hoping to see blood on the ceiling.&rdquo;',
  q:'What is the device?', o:['Length contrast — a six-word claim, then its long warrant','Repetition','A splice','A withheld payoff'], a:0,
- w:'The short sentence states the job; the long one justifies it. The proportion does the persuading.',
+ w:'The first sentence is six words. The second is thirty. The short one makes the claim; the long one backs it up. Sentence size is a tool like any other.',
  at:'Patricia Lockwood, &ldquo;Malfunctioning Sex Robot,&rdquo; LRB, 2019'},
-{id:'pc1', s:'&ldquo;&hellip;a dusty dance floor, upturned barstools, and an untuned piano; and the only sounds heard around the place at night come from the big white house behind it&hellip;&rdquo;',
- q:'Why a semicolon before “and”?', o:['Both statements carry commas; the main seam gets a stronger mark','Redundancy','An error','House style, nothing more'], a:0,
- w:'The heavy join: when both statements have commas inside them, the boundary between them is promoted to a semicolon — even with the “and” present.',
+{id:'pc1', s:'&ldquo;&hellip;an abandoned country clubhouse with a dusty dance floor, upturned barstools, and an untuned piano; and the only sounds heard around the place at night come from the big white house behind it&mdash;the clanging sounds of garbage cans being toppled by raccoons, skunks, and stray cats making their nocturnal raids down from the mountain.&rdquo;',
+ q:'Why a semicolon before &ldquo;and&rdquo;?', o:['Both statements carry commas of their own; the main seam gets a stronger mark','Redundancy','An error','House style, nothing more'], a:0,
+ w:'Each half has its own little commas &mdash; &ldquo;dance floor, upturned barstools&rdquo; in the first, &ldquo;raccoons, skunks, and stray cats&rdquo; in the second. With that many small commas around, the main joint between the two statements gets a stronger mark, the semicolon &mdash; even though &ldquo;and&rdquo; is right there too.',
  at:'Gay Talese, &ldquo;The Loser,&rdquo; Esquire, 1964'},
 {id:'pc2', s:'&ldquo;He dipped into a couple of books: a Proust biography&hellip;, a novel by Jean Rhys&hellip;&mdash;he&rsquo;s not a systematic reader.&rdquo;',
  q:'What are the colon and the dash each doing?', o:['Colon delivers the list; dash breaks off for the point','Both are errors','Both introduce lists','The dash corrects the colon'], a:0,
- w:'A complete statement precedes the colon, so it can hand over the two books; the dash then abandons the inventory for the conclusion — “he’s not a systematic reader.”',
+ w:'“He dipped into a couple of books” could end with a period, so it’s allowed to take a colon and hand over the list. Then the dash breaks off the list for the real point: he’s not a systematic reader. Colon = delivery; dash = change of direction.',
  at:'Larissa MacFarquhar, &ldquo;Present Waking Life,&rdquo; The New Yorker, 2005'},
 {id:'pc3', s:'&ldquo;Martha Nussbaum was preparing to give a lecture at Trinity College, Dublin, in April, 1992, when she learned that her mother was dying in a hospital in Philadelphia.&rdquo;',
  q:'Why commas after “Dublin” and “1992”?', o:['Place and date pairs close with a second comma','Splices','Optional pauses','A list'], a:0,
- w:'Two-part names take a closing comma, like a bracket. Without it, place welds to time and the sentence misreads.',
+ w:'“Trinity College, Dublin” and “April, 1992” are two-part names, and each needs a closing comma, like a closed bracket. Tidy bookkeeping — right before the sentence delivers the news about her mother. The neatness makes the news land harder.',
  at:'Rachel Aviv, &ldquo;The Philosopher of Feelings,&rdquo; The New Yorker, 2016'},
 {id:'pc4', s:'&ldquo;Clooney, who is unusual in being both very famous and, apparently, at ease with the fact&mdash;he can sometimes look like a spokesman for celebrity itself&mdash;was sitting on a long pale sofa, alongside Sarah Larson, his girlfriend.&rdquo;',
  q:'Why dashes instead of commas for the aside?', o:['The aside is a whole sentence, inside a sentence already full of commas','Dashes are more elegant','Commas would splice','No reason'], a:0,
- w:'“He can sometimes look like a spokesman for celebrity itself” has its own subject and verb; an insertion that size needs dash-strength walls to stay visible.',
+ w:'The words between the dashes are a whole sentence of their own. A full sentence dropped inside another one needs dashes to keep its walls visible — commas would let it dissolve into the crowd. And that aside is the profile’s whole idea, planted in line one.',
  at:'Ian Parker, &ldquo;Somebody Has to Be in Control,&rdquo; The New Yorker, 2008'},
 {id:'pc5', s:'&ldquo;She&rsquo;s a rare combination: a thin, long-limbed beauty with a trained analytic mind who dresses with cunning understatement.&rdquo;',
  q:'What allows the colon?', o:['The complete statement on its left','A list on its right','The capital letter','The “who” clause'], a:0,
- w:'“She’s a rare combination” could stand alone, so the colon may deliver — anything: a statement, a list, one noun phrase. That is the colon’s one rule.',
+ w:'The rule: whatever sits to the left of a colon must work as a full sentence. “She’s a rare combination” does. So the colon may deliver what she’s a combination OF — and that delivery is the whole sales pitch of the piece.',
  at:'Joan Juliet Buck, &ldquo;A Rose in the Desert,&rdquo; Vogue, 2011'},
 {id:'pc6', s:'&ldquo;&hellip;down among the cranks and the misfits and the one-lungers and the has-beens and the might&rsquo;ve-beens and the would-bes and the never-wills and the God-knows-whats, I have always felt at home.&rdquo;',
  q:'What are the hyphens doing?', o:['Coining nouns — a has-been, a never-will','Marking pauses','Joining sentences','Optional decoration'], a:0,
- w:'Each hyphen binds a phrase into a countable noun, so the population can be inventoried. The repeated “ands” pile on top.',
+ w:'Each hyphen glues words into a single new noun: a has-been, a never-will, a God-knows-what. Without the hyphens the phrases fall apart. Gould is inventing nouns for people nobody bothered to name.',
  at:'Joe Gould, quoted in Joseph Mitchell, &ldquo;Professor Sea Gull,&rdquo; The New Yorker, 1942'},
 {id:'pc7', s:'&ldquo;Sinatra with a cold is Picasso without paint, Ferrari without fuel &mdash; only worse.&rdquo;',
  q:'What is the dash doing?', o:['Cutting off the parallel list to land “only worse”','Joining two statements','Setting off an aside','Repairing the comma'], a:0,
- w:'Two analogies run comma to comma; the dash breaks the pattern and holds a beat before the kicker. “Ferrari without fuel” is a list item, not a statement — no splice.',
+ w:'“Picasso without paint, Ferrari without fuel” is a two-item list. The dash stops the list and holds a beat of silence before the last word drops. The pause before a punchline. (The comma before “Ferrari” separates list items — it isn’t joining sentences.)',
  at:'Gay Talese, &ldquo;Frank Sinatra Has a Cold,&rdquo; Esquire, 1966'},
 {id:'pc8', s:'&ldquo;He plays five numbers from his most recent album, &lsquo;Time Out of Mind&rsquo;; several hits&hellip;; and something more unexpected from his five-hundred-song back catalogue&hellip;&rdquo;',
  q:'Why semicolons in this list?', o:['The items contain commas — the separators step up a rank','Each item is a sentence','Affectation','Error'], a:0,
- w:'Song titles with internal commas would dissolve a comma-separated list. Promoting the separators to semicolons keeps it readable.',
+ w:'The song titles have commas INSIDE them (“Don’t Think Twice, It’s All Right”), so commas between the items would turn the list to soup. Semicolons act as bigger commas and keep it readable.',
  at:'Alex Ross, &ldquo;The Wanderer,&rdquo; The New Yorker, 1999'},
 {id:'pc9', s:'&ldquo;Edna Buchanan covered the murder for the Herald&mdash;there are policemen in Miami who say that it wouldn&rsquo;t be a murder without her&mdash;and her story began&hellip;&rdquo;',
  q:'Why is the aside in dashes?', o:['It’s a complete sentence inside another one','Commas would splice','Emphasis only','It’s optional trivia'], a:0,
- w:'“There are policemen in Miami who say…” has its own subject and verb. Sentence-sized insertions need dashes or parentheses; commas would lose the walls.',
+ w:'The bit between the dashes — “there are policemen in Miami who say…” — is a full sentence inside another sentence. Only dashes (or parentheses) are strong enough to hold that. And what they hold is her legend, vouched for by cops, mid-sentence.',
  at:'Calvin Trillin, &ldquo;Covering the Cops,&rdquo; The New Yorker, 1986'},
 {id:'pc10', s:'&ldquo;In the dim kitchen, his face hung limp and pale; his eyes were dull and heavily lidded&hellip;&rdquo;',
  q:'What does the semicolon do that a period wouldn’t?', o:['Keeps both observations in one look','Pauses longer','Adds formality','Nothing'], a:0,
- w:'A period cuts the gaze in two; a comma would splice. The semicolon holds face and eyes in a single sustained observation.',
+ w:'A period would chop the look into two separate glances. A comma alone isn’t allowed between two full statements. The semicolon keeps face and eyes inside one steady stare — connected, but under control.',
  at:'Bryan Di Salvatore, &ldquo;Ornery,&rdquo; The New Yorker, 1990'},
 {id:'jd1', s:'&ldquo;We smile when we see him, we laugh before he does anything; it makes us happy just to look at him.&rdquo;',
  q:'The first comma joins two full statements. Why does it hold up?', o:['The matching “we” clauses make the splice read as one reflex','It doesn’t','Matching shapes make it grammatical','The semicolon fixes it retroactively'], a:0,
- w:'A true splice, carried by the matched clauses: smiling and laughing fuse into one motion. The semicolon then joins the third statement in the standard way. Matching shapes can make a splice work — they don’t make it grammatical.',
+ w:'“We smile…” and “we laugh…” are both complete statements, so that comma is breaking the rule — a comma splice. It works because the two match so closely they read as one reflex: you don’t smile and then laugh, it’s one motion. The semicolon then joins the last part the standard way. One rule broken, one followed, both on purpose.',
  at:'Pauline Kael, &ldquo;The Man from Dream City,&rdquo; The New Yorker, 1975'},
 {id:'jd2', s:'&ldquo;The naked woman on the ledge&hellip; is a victim of accidie, or the naked woman is an exhibitionist, and it would be &lsquo;interesting&rsquo; to know which.&rdquo;',
  q:'Anything ungrammatical here?', o:['No — the unease is tonal, not grammatical','Yes: two splices','Yes: a fragment','Yes: the scare quotes'], a:0,
- w:'Comma + “or,” comma + “and” — standard joins throughout. What unsettles is a possible suicide laid out in the syntax of a multiple-choice question.',
+ w:'Nothing. Every join uses “or” or “and” the standard way. What unsettles is the tone: a possible suicide laid out like a quiz question, with “interesting” in quotes because Didion refuses to actually feel it.',
  at:'Joan Didion, &ldquo;The White Album,&rdquo; 1979'},
 {id:'jd3', s:'&ldquo;I wish Bob Dylan died. Then Channel 5 would piece together an instant documentary&hellip; Just the immutable facts.&rdquo;',
  q:'“Just the immutable facts.” Error or choice?', o:['Choice: a verbless fragment as dismissal','Error: attach it','Error: add a verb','A transcription mistake'], a:0,
- w:'A fragment with no verb to argue with. Ross quotes it for exactly that quality — the wish filed telegraphically.',
+ w:'A choice. It has no verb — a fragment — and that’s the effect: a shrug, case closed. Give it a verb (“I just want the facts”) and it turns earnest, which is exactly what the writer didn’t want.',
  at:'Mark Jacobson, Village Voice, quoted in Alex Ross, &ldquo;The Wanderer,&rdquo; The New Yorker, 1999'},
 {id:'jd4', s:'&ldquo;He is like a God who spends four hours on the shading on Eve&rsquo;s upper lip, forgets to give her a clitoris.&rdquo;',
  q:'Is the comma before “forgets” a splice?', o:['No — the same subject does both verbs; the “and” was cut','Yes','A typo','A comma setting off an aside'], a:0,
- w:'“Forgets” shares the “who”; the “and” between the verbs is deleted. The omission lands where the forgetting does.',
+ w:'No. “Spends” and “forgets” belong to the same “who” — one doer, two verbs — so no new sentence starts at the comma. The “and” that should sit between the verbs was cut. The sentence forgets its “and” right where God forgets the important part.',
  at:'Patricia Lockwood, &ldquo;Malfunctioning Sex Robot,&rdquo; LRB, 2019'},
 {id:'jd5', s:'&ldquo;Maybe, but he also plays more than a hundred shows a year&hellip;&rdquo;',
  q:'“Maybe” has no verb. Error or choice?', o:['Choice: a spoken shrug carried onto the page','Error: fragment','Error: splice','A description with no owner'], a:0,
- w:'“Maybe” stands in for a whole granted sentence; “but” pivots. It reads because we say it aloud — concede, then correct.',
+ w:'A choice. “Maybe” stands in for a whole sentence (“maybe that’s true”), and “but” turns the corner. We talk like this all the time; on the page it reads as: fine, granted — now here’s my point.',
  at:'Alex Ross, &ldquo;The Wanderer,&rdquo; The New Yorker, 1999'},
 {id:'jd6', s:'&ldquo;Every journalist who is not too stupid or too full of himself to notice what is going on knows that what he does is morally indefensible.&rdquo;',
  q:'Why no commas around the “who” clause?', o:['Without commas, the clause narrows WHICH journalists','Oversight','Commas are optional here','Too long for commas'], a:0,
- w:'Bare, the clause narrows the set: only journalists sharp enough to notice know this — implying a class who don’t. Commas would turn it into an aside about all journalists and remove the sting. (The comma-less kind is called restrictive: it restricts which.)',
+ w:'Without commas, the clause pins down WHICH journalists: only the ones smart enough to notice. That quietly implies there are journalists too dumb or too vain to notice. Add commas and it becomes a bland statement about all journalists — the insult disappears.',
  at:'Janet Malcolm, The Journalist and the Murderer, 1990'},
 {id:'jd7', s:'&ldquo;It&rsquo;s pure Tucker Carlson, a move I&rsquo;ve seen hundreds of times&hellip;&rdquo;',
  q:'Splice?', o:['No — a label for what he just did, not a new statement','Yes','A fragment','A run-on'], a:0,
- w:'“A move I’ve seen hundreds of times” has no verb of its own at the top — it renames the behavior — an appositive, a renaming phrase rather than a new statement. The commonest splice lookalike.',
+ w:'No. “A move I’ve seen hundreds of times” isn’t a new statement — it’s a label stuck onto what he just did (an appositive). The test: could the part after the comma stand alone as a sentence? Here it can’t, so no splice.',
  at:'Lyz Lenz, &ldquo;The Mystery of Tucker Carlson,&rdquo; Columbia Journalism Review, 2018'},
 {id:'jd8', s:'&ldquo;God, she could be insulting to people.&rdquo;',
  q:'What is “God” doing?', o:['An exclamation parked before the sentence','Acting as the subject','Splicing','Nothing grammatical'], a:0,
- w:'Set off by the comma — an interjection, an exclamation word standing outside the sentence — it imports speech’s exasperation — the register of a friend rather than a critic, which is the essay’s note throughout.',
+ w:'“God” is an exclamation parked out front, set off by a comma — always allowed. What matters is the sound: for one word, the critic stops sounding like a critic and sounds like an exasperated friend. That’s the whole essay’s relationship to Sontag, in one word.',
  at:'Terry Castle, &ldquo;Desperately Seeking Susan,&rdquo; London Review of Books, 2003'},
 {id:'jd9', s:'&ldquo;Asma al-Assad is glamorous, young, and very chic&mdash;the freshest and most magnetic of first ladies.&rdquo;',
  q:'The grammar is clean. What failed?', o:['The frame — access set the terms','The dash','The comma before “and”','“Very chic”'], a:0,
- w:'Serial adjectives, a correct dash-rename, a superlative — flawless mechanics serving a dictator’s wife on the eve of a massacre. A sentence can be perfectly built and still be the failure.',
+ w:'The frame. The grammar is flawless — clean list, correct dash, big superlative. All of it in service of a dictator’s wife, on terms her people set. The Misfires lesson: a sentence can be perfectly built and still be the thing that went wrong.',
  at:'Joan Juliet Buck, &ldquo;A Rose in the Desert,&rdquo; Vogue, 2011'},
 {id:'jd10', s:'&ldquo;Later, she amended this to say that Maggie was to take her dead body to the mountains so that she could become food for bears.&rdquo;',
  q:'Where does the deadpan come from?', o:['The stacking of clauses — horror filed like paperwork','The word “bears”','A splice','A fragment'], a:0,
- w:'“To say that… was to… so that… could become”: clause folded inside clause, an administrative chain. The flat syntax carries the body to the bears without raising its voice.',
+ w:'From the stacking: “to say that… was to… so that… could become.” The horror is folded into calm, clause-within-clause paperwork, like instructions on a form. The flatter the sentence stays, the louder it gets.',
  at:'Taffy Brodesser-Akner, on Margot Kidder, The New York Times, 2018'},
 {id:'fx1', s:'&ldquo;We smile when we see him, we laugh before he does anything; it makes us happy just to look at him.&rdquo;',
  rw:'We smile when we see him; we laugh before he does anything; it makes us happy just to look at him.',
  q:'The first comma becomes a semicolon. What changed?', o:['Two composed observations instead of one reflex','Nothing','It became incorrect','The matching shapes broke'], a:0,
- w:'The comma fused smiling into laughing — one involuntary motion. The semicolon files them as two separate, orderly observations. Correct, and slower.',
+ w:'With the comma, the smiling and the laughing happen as one reflex. With the semicolon they become two tidy, separate observations. The fix is grammatically correct — and slower, which kills what the sentence was doing.',
  at:'Pauline Kael, &ldquo;The Man from Dream City,&rdquo; The New Yorker, 1975'},
 {id:'fx2', s:'&ldquo;Joe Gould was an odd and penniless and unemployable little man who came to the city in 1916 and ducked and dodged and held on as hard as he could for over thirty-five years.&rdquo;',
  rw:'Joe Gould was an odd, penniless, and unemployable little man who came to the city in 1916 and ducked, dodged, and held on as hard as he could for over thirty-five years.',
  q:'The extra &ldquo;ands&rdquo; become commas. What changed?', o:['The duration went out of it','Nothing — cleaner','A splice appeared','The verbs stopped matching'], a:0,
- w:'Commas make it a brisk montage; the repeated &ldquo;ands&rdquo; made you trudge through it year by year. The edit shortened the very thing the sentence was measuring.',
+ w:'“Ducked, dodged, and held on” is quick — a highlight reel. The “and… and” version made you slog through it, which is what thirty-five years of hanging on felt like. The edit tightened away the point.',
  at:'Joseph Mitchell, &ldquo;Professor Sea Gull,&rdquo; The New Yorker, 1942'},
 {id:'fx3', s:'&ldquo;Dictator of a nation devoted to splendid sausages, cigars, beer, and babies, Adolf Hitler is a vegetarian, teetotaller, nonsmoker, and celibate.&rdquo;',
  rw:'Adolf Hitler, dictator of a nation devoted to splendid sausages, cigars, beer, and babies, is a vegetarian, teetotaller, nonsmoker, and celibate.',
  q:'The description moves behind the name. What changed?', o:['The contrast stops detonating — setup no longer comes before the name','Nothing; the phrase can go anywhere','An error was fixed','The commas broke'], a:0,
- w:'Flanner loads the nation&rsquo;s appetites first, so the name arrives already contradicted. Behind the name, the same words read as a biographical note. The order was the joke.',
+ w:'In the original you hear all the nation’s appetites BEFORE the name, so Hitler arrives already contradicted. With his name first, the same words are just a biographical note. The order was the punchline.',
  at:'Janet Flanner, &ldquo;F&uuml;hrer,&rdquo; The New Yorker, 1936'},
 {id:'fx4', s:'&ldquo;Gary Robinson died hungry.&rdquo;',
  rw:'Gary Robinson died hungry that night, shot by a security guard after a dispute over fried chicken.',
  q:'The rewrite spells out the story. What changed?', o:['The jolt is gone — the reader no longer assembles it themselves','It became more accurate','Nothing; fuller is better','The verb weakened'], a:0,
- w:'The four-word version works because the reader supplies the absurd story in the gap. Spelled out, the lede informs instead of detonating. Some sentences are short the way a fuse is short.',
+ w:'The four-word version works because YOU assemble the story in the gap — that’s the jolt. Spelled out, it just informs. Some sentences are short the way a fuse is short.',
  at:'Edna Buchanan&rsquo;s lede, in Calvin Trillin, &ldquo;Covering the Cops,&rdquo; The New Yorker, 1986'},
 {id:'fx5', s:'&ldquo;Frank Sinatra, holding a glass of bourbon in one hand and a cigarette in the other, stood in a dark corner of the bar between two attractive but fading blondes who sat waiting for him to say something.&rdquo;',
  rw:'Frank Sinatra held a glass of bourbon in one hand and a cigarette in the other. He stood in a dark corner of the bar between two attractive but fading blondes. They sat waiting for him to say something.',
  q:'One sentence becomes three. What changed?', o:['One held take of the room became three cuts','It got clearer','Nothing','Details got lost'], a:0,
- w:'The single sentence holds Sinatra, the bourbon, the blondes, and the waiting in one frame — the length is the mood. Three sentences keep every fact and lose the suspension.',
+ w:'The one long sentence holds everything — Sinatra, bourbon, blondes, the waiting — in a single unbroken shot. Three sentences keep all the facts and lose the held breath.',
  at:'Gay Talese, &ldquo;Frank Sinatra Has a Cold,&rdquo; Esquire, 1966'},
 {id:'fx6', s:'&ldquo;IF COLIN DUFFY AND I WERE TO GET MARRIED, we would have matching superhero notebooks. We would wear shorts, big sneakers, and long, baggy T-shirts&hellip; We would sleep in our clothes.&rdquo;',
  rw:'We would have worn shorts, big sneakers, and long, baggy T-shirts every single day, even in the winter.',
  q:'&ldquo;Would wear&rdquo; becomes &ldquo;would have worn.&rdquo; What changed?', o:['The fantasy closed — it&rsquo;s regret now','Nothing; both are conditional','A tense error was fixed','The list broke'], a:0,
- w:'&ldquo;Would wear&rdquo; keeps the pretend marriage open and present — a standing daydream the whole profile lives inside. &ldquo;Would have worn&rdquo; seals it in the past. One small verb changes the piece&rsquo;s temperature.',
+ w:'“Would wear” keeps the pretend marriage open, happening now. “Would have worn” closes it: over, never happened. One small verb changes the temperature of the whole piece.',
  at:'Susan Orlean, &ldquo;The American Man at Age Ten,&rdquo; Esquire, 1992'},
 {id:'fx7', s:'&ldquo;Like the credulous widow who wakes up one day to find the charming young man and all her savings gone, so the consenting subject of a piece of nonfiction writing learns&mdash;when the article or book appears&mdash;his hard lesson.&rdquo;',
  rw:'The consenting subject of a piece of nonfiction writing learns his hard lesson when the article or book appears, like the credulous widow who wakes up one day to find the charming young man and all her savings gone.',
  q:'The lesson moves to the front. What changed?', o:['The sentence stopped trapping the reader — the delay was the argument','Nothing','An error was fixed','The comparison got stronger up front'], a:0,
- w:'In the original you experience the con — the widow, the vanished savings — before you&rsquo;re told the lesson. Reordered, the sentence merely states it. The delay was doing the arguing.',
+ w:'In the original you experience the con — widow, charming young man, savings gone — before you’re told the lesson. Reordered, the sentence just states the lesson. The waiting was the argument.',
  at:'Janet Malcolm, The Journalist and the Murderer, 1990'},
 {id:'fx8', s:'&ldquo;Clooney, who is unusual in being both very famous and, apparently, at ease with the fact&mdash;he can sometimes look like a spokesman for celebrity itself&mdash;was sitting on a long pale sofa, alongside Sarah Larson, his girlfriend.&rdquo;',
  rw:'Clooney, who is unusual in being both very famous and, apparently, at ease with the fact, was sitting on a long pale sofa, alongside Sarah Larson, his girlfriend.',
  q:'The part between the dashes is cut. What changed?', o:['The idea of the whole profile went with it','Nothing; it was decoration','A splice was fixed','&ldquo;His girlfriend&rdquo; lost its comma'], a:0,
- w:'&ldquo;A spokesman for celebrity itself&rdquo; is the profile&rsquo;s whole argument — fame as a job Clooney performs — planted in the sentence that introduces him. Without it: a man on a sofa.',
+ w:'The part between the dashes — Clooney as “a spokesman for celebrity itself” — is the profile’s whole idea, planted in the first sentence. Cut it and all you have is a man on a sofa.',
  at:'Ian Parker, &ldquo;Somebody Has to Be in Control,&rdquo; The New Yorker, 2008'}
 ];
 
@@ -412,7 +418,6 @@ function missTotal(){ return ALL().filter(d => (misses[d.id]||0) > 0).length; }
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 function newDeck(){
   if (mode === 'saved'){ paint(); renderSaved(); return; }
-  if (mode === 'gloss'){ paint(); renderGloss(); return; }
   if (mode === 'basics' && !basicsStarted){ paint(); renderBasics(); return; }
   const pool = mode === 'miss' ? ALL().filter(d => (misses[d.id]||0) > 0)
     : mode === 'basics' ? BASICS.slice() : DATA.slice();
@@ -428,11 +433,10 @@ function paint(){
     b.className = 'chip'; b.textContent = label;
     b.setAttribute('aria-pressed', String(mode === key));
     b.disabled = !!disabled;
-    b.onclick = () => { mode = (mode === key && key !== 'all') ? 'all' : key; basicsStarted = false; newDeck(); };
+    b.onclick = () => { mode = (mode === key && key !== 'all') ? 'all' : key; basicsStarted = false; flashActive = false; newDeck(); };
     box.appendChild(b);
   };
   mk('Basics', 'basics');
-  mk('Glossary', 'gloss');
   mk('Drill', 'all');
   mk('My misses (' + missTotal() + ')', 'miss', missTotal() === 0 && mode !== 'miss');
   mk('Saved (' + saved.length + ')', 'saved', saved.length === 0 && mode !== 'saved');
@@ -673,6 +677,45 @@ function renderGloss(){
       (g.ex ? '<p class="g-ex">' + g.ex + '</p>' : '') + '</div>').join('');
   stage.innerHTML = ''; stage.appendChild(card);
 }
+let flashQueue = [], flashFlipped = false, flashTotal = 0, flashActive = false;
+function startFlash(){
+  flashQueue = shuffle(GLOSS.slice()); flashTotal = flashQueue.length;
+  flashActive = true; flashFlipped = false; renderFlash();
+}
+function renderFlash(){
+  const stage = $('stage');
+  if (!flashQueue.length){
+    flashActive = false;
+    stage.innerHTML = '<div class="card done"><h2>All ' + flashTotal + ' terms,</h2><p>Run them again, or practice the scan.</p>' +
+      '<button class="next" id="againbtn">Back to Basics</button></div>';
+    $('againbtn').onclick = () => { renderBasics(); };
+    $('againbtn').focus({preventScroll:true});
+    return;
+  }
+  const g = flashQueue[0];
+  const card = document.createElement('div'); card.className = 'card'; card.id = 'flipcard';
+  if (!flashFlipped){
+    card.style.cursor = 'pointer';
+    card.innerHTML = '<div class="eyebrow">Flashcards &middot; ' + flashQueue.length + ' left</div>' +
+      '<p class="sentence" style="font-size:clamp(24px,4vw,30px)">' + g.t + '</p>' +
+      '<div class="actions"><span class="hint">click or space to flip</span></div>';
+    card.onclick = flipFlash;
+  } else {
+    card.innerHTML = '<div class="eyebrow">Flashcards &middot; ' + flashQueue.length + ' left</div>' +
+      '<p class="sentence" style="font-size:22px">' + g.t + '</p>' +
+      '<p class="g-def" style="font-size:15px; margin-top:8px">' + g.d + '</p>' +
+      (g.ex ? '<p class="g-ex">' + g.ex + '</p>' : '') +
+      '<div class="opts" style="margin-top:18px">' +
+      '<button class="opt" id="flagain"><span class="key">1</span><span>Again &mdash; show it to me later</span></button>' +
+      '<button class="opt" id="flgot"><span class="key">2</span><span>Got it</span></button></div>';
+  }
+  stage.innerHTML = ''; stage.appendChild(card);
+  if (flashFlipped){
+    $('flagain').onclick = () => { const g2 = flashQueue.shift(); flashQueue.splice(Math.min(3, flashQueue.length), 0, g2); flashFlipped = false; renderFlash(); };
+    $('flgot').onclick = () => { flashQueue.shift(); flashFlipped = false; renderFlash(); };
+  }
+}
+function flipFlash(){ flashFlipped = true; renderFlash(); }
 function renderBasics(){
   const stage = $('stage');
   const card = document.createElement('div'); card.className = 'card';
@@ -687,12 +730,20 @@ function renderBasics(){
     }
     h += '</p><p class="ex-cite">— ' + ex.cite + '</p></div>';
   }
-  h += '<div class="actions"><span class="hint">8 practice sentences</span><button class="next" id="basicsgo">Practice</button></div>';
+  h += '<div class="actions"><span class="hint">Learn the terms, then drill them</span>' +
+    '<span style="display:flex; gap:10px"><button class="next" id="basicsflash">Flashcards</button>' +
+    '<button class="next" id="basicsgo">Practice</button></span></div>';
+  h += '<p class="fixlabel" style="margin-top:26px">The terms</p>';
+  for (const g of GLOSS){
+    h += '<div class="g-row"><p class="g-term">' + g.t + '</p><p class="g-def">' + g.d + '</p>' +
+      (g.ex ? '<p class="g-ex">' + g.ex + '</p>' : '') + '</div>';
+  }
   card.innerHTML = h;
   stage.innerHTML = ''; stage.appendChild(card);
   hookTips(card);
   document.addEventListener('click', hideTip);
   $('basicsgo').onclick = () => { basicsStarted = true; hideTip(); newDeck(); };
+  $('basicsflash').onclick = () => { hideTip(); startFlash(); };
 }
 function renderSaved(){
   const stage = $('stage');
@@ -716,6 +767,9 @@ function renderSaved(){
   });
 }
 document.addEventListener('keydown', e => {
+  if (flashActive && !flashFlipped && (e.key === ' ' || e.key === 'Enter')){
+    if ($('flipcard')){ e.preventDefault(); flipFlash(); return; }
+  }
   if (e.key === 'Enter'){
     const n = $('nextbtn'), a = $('againbtn');
     if (n && !n.disabled){ e.preventDefault(); advance(); }
