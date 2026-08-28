@@ -108,11 +108,12 @@
   .ex .sentence{font-size:20px; line-height:1.6}
   .hov{border-bottom:1.5px dotted var(--accent); cursor:help; border-radius:2px}
   .hov:hover,.hov.on{background:var(--accent-soft)}
-  #tip{position:fixed; z-index:50; max-width:330px; background:var(--tip-bg); color:var(--tip-ink);
-    padding:10px 13px; border-radius:8px; font:400 13.5px/1.5 'Archivo',sans-serif; display:none;
+  #tip{position:fixed; z-index:50; max-width:360px; background:var(--tip-bg); color:var(--tip-ink);
+    padding:12px 15px 13px; border-radius:8px; font:400 13.5px/1.55 'Archivo',sans-serif; display:none;
     box-shadow:0 6px 24px -8px rgba(0,0,0,.35)}
-  #tip b{display:block; font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:500;
-    text-transform:uppercase; letter-spacing:.09em; margin-bottom:4px; opacity:.7}
+  #tip .tip-label{display:block; font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:500;
+    text-transform:uppercase; letter-spacing:.09em; margin-bottom:7px; opacity:.7}
+  #tip i.tip-ex{display:block; margin-top:8px; font-family:'Newsreader',Georgia,serif; font-size:14px; opacity:.85}
   .ex-cite{font-size:12.5px; color:var(--faint); font-style:italic; margin:4px 0 0}
   .fixlabel{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.09em;
     text-transform:uppercase; color:var(--faint); margin:14px 0 4px}
@@ -228,7 +229,7 @@ const DATA = [
  w:'“Rather” is a turn-word — it can’t glue two statements together, but at the start of a fresh sentence it doesn’t need to. It makes this whole sentence a correction of the one before it: not that kind of crush, this kind.',
  at:'Taffy Brodesser-Akner, on Margot Kidder, The New York Times, 2018'},
 {id:'mv11', cat:'pivot words', s:'“Certainly, he had a point about Strauss’s remorseless performance of ‘Death and Transfiguration.’”',
- q:'Name the move.', o:['Fronted adverb + comma, then the judgment','A splice','A stray description','A modifier aimed at the wrong noun'], a:0,
+ q:'Name the move.', o:['Fronted adverb + comma, then the judgment','A splice','A stray description','An adverb aimed at the wrong verb'], a:0,
  w:'One word out front, then a comma, then the point. The comma forces a tiny pause, so the judgment lands harder. Nik Cohn built a style on this: “Always, he came back to sex.”',
  at:'Alex Ross, on Richard Taruskin, The New Yorker, 2022'},
 {id:'mv12', cat:'trailing description', s:'“He saunters out from shadows in the back of the stage, indistinguishable at first from the four other band members.”',
@@ -511,13 +512,13 @@ const LINES = [
  n:'An ordinary compound sentence — statement, comma-and, statement — running normally until its last word. The grammar stays calm so the last word can go off.',
  at:'George Orwell, 1984, 1949'},
 {s:'“Mother died today.”',
- n:'Subject, verb, time modifier. The flatness is the shock: the most consequential fact arrives in the plainest sentence shape there is.',
+ n:'Subject, verb, and one adverb (“today”). The flatness is the shock: the most consequential fact arrives in the plainest sentence shape there is.',
  at:'Albert Camus, The Stranger, 1942 (tr. Stuart Gilbert)'},
 {s:'“Mrs. Dalloway said she would buy the flowers herself.”',
  n:'A plain report of speech — subject, verb, object — with the novel’s whole charge in the last word. Move “herself” anywhere else and the sentence loses its point.',
  at:'Virginia Woolf, Mrs. Dalloway, 1925'},
 {s:'“Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed.”',
- n:'Two modifiers march in front of the name, and a participle phrase (“bearing…”) trails after the verb. One statement — “Buck Mulligan came” — decorated at both ends.',
+ n:'Two adjectives march in front of the name, and a participle phrase (“bearing…”) trails after the verb. One statement — “Buck Mulligan came” — decorated at both ends.',
  at:'James Joyce, Ulysses, 1922'},
 {s:'“You don’t know about me without you have read a book by the name of The Adventures of Tom Sawyer; but that ain’t no matter.”',
  n:'“Without” where the grammar books want “unless,” a double negative, and a semicolon before “but.” The sentence breaks school rules in Huck’s own voice, on purpose — and is perfectly clear.',
@@ -529,13 +530,13 @@ const LINES = [
  n:'Subject, verb, description — the plainest sentence shape there is, with a house number as the subject. The shape is ordinary; the subject is not.',
  at:'Toni Morrison, Beloved, 1987'},
 {s:'“In the beginning God created the heaven and the earth.”',
- n:'A fronted time phrase, then the plainest possible statement: subject, verb, objects. The modifier comes first; the sentence proper is five words.',
+ n:'A fronted time phrase, then the plainest possible statement: subject, verb, objects. The time phrase comes first; the sentence proper is five words.',
  at:'Genesis 1:1, King James Version, 1611'},
 {s:'“I can’t go on, I’ll go on.”',
  n:'Two complete statements, opposite in meaning, held by a bare comma — a splice. A period would make the reversal a second thought; the comma makes it instantaneous.',
  at:'Samuel Beckett, The Unnamable, 1953'},
 {s:'“So we beat on, boats against the current, borne back ceaselessly into the past.”',
- n:'“Boats against the current” is an appositive renaming “we”; “borne back” is a participle describing us. The statement itself is three words — “we beat on” — and everything after the first comma is modifier.',
+ n:'“Boats against the current” is an appositive renaming “we”; “borne back” is a participle describing us. The statement itself is three words — “we beat on” — and everything after the first comma is the appositive and the participle.',
  at:'F. Scott Fitzgerald, The Great Gatsby, 1925'},
 {s:'“Isn’t it pretty to think so?”',
  n:'A question as the last line. “So” points back at everything the sentence before it imagined; the book closes by doubting itself.',
@@ -547,7 +548,7 @@ const LINES = [
  n:'The comma sets off a direct address — the reader is named — and then a plain subject-verb-object statement delivers the novel’s ending in three words.',
  at:'Charlotte Brontë, Jane Eyre, 1847'},
 {s:'“We tell ourselves stories in order to live.”',
- n:'A plain declarative with a purpose modifier: “in order to live” attaches the stakes directly to the verb “tell.”',
+ n:'A plain declarative with a purpose phrase: “in order to live” attaches the stakes directly to the verb “tell.”',
  at:'Joan Didion, The White Album, 1979'},
 {s:'“People are trapped in history and history is trapped in them.”',
  n:'Two complete statements joined by “and,” the second reversing the first’s subject and object — a chiasmus made of one verb used twice.',
@@ -595,13 +596,13 @@ const LINES = [
  n:'Two complete statements joined by a semicolon. Both are plain subject-verb; the line’s force is entirely in the pairing.',
  at:'W. B. Yeats, “The Second Coming,” 1920'},
 {s:'“My soul has grown deep like the rivers.”',
- n:'A plain statement finished by a simile — “like” attaches the comparison directly to the verb. Eight words, one modifier doing all the imagery.',
+ n:'A plain statement finished by a simile — “like” attaches the comparison directly to the verb. Eight words, one simile doing all the imagery.',
  at:'Langston Hughes, “The Negro Speaks of Rivers,” 1921'},
 {s:'“And miles to go before I sleep,<br>And miles to go before I sleep.”',
  n:'The entire line repeats, unchanged — repetition at the scale of a whole line. Both lines start with “And,” continuing a sentence the poem never quite closes.',
  at:'Robert Frost, “Stopping by Woods on a Snowy Evening,” 1923'},
 {s:'“This is the way the world ends<br>Not with a bang but a whimper.”',
- n:'The second line is not a sentence — no subject, no verb — just a pair of modifiers turned against each other by “but.”',
+ n:'The second line is not a sentence — no subject, no verb — just “with a bang” and “a whimper,” turned against each other by “but.”',
  at:'T. S. Eliot, “The Hollow Men,” 1925'},
 {s:'“The art of losing isn’t hard to master”',
  n:'An ordinary declarative with a negative (“isn’t hard”) — understatement built into the grammar. The poem repeats the line, with small variations, until it cracks.',
@@ -643,7 +644,7 @@ const LINES = [
  n:'No verb before the colon — “Ford to City” is headline shorthand for “Ford says to the city.” The colon hands over the message itself: a two-word imperative.',
  at:'Daily News front page, October 30, 1975'},
 {s:'“HEADLESS BODY IN TOPLESS BAR”',
- n:'A fragment — no verb, so nothing happens grammatically; a noun phrase presents the scene. Five words, two rhyming modifiers doing all the work.',
+ n:'A fragment — no verb, so nothing happens grammatically; a noun phrase presents the scene. Five words, two rhyming adjectives doing all the work.',
  at:'New York Post front page, April 15, 1983'},
 {s:'“WALL ST. LAYS AN EGG”',
  n:'A complete sentence in slang — subject, verb, object — reporting the Crash as a show-business flop. Variety wrote the headline in its own dialect.',
@@ -652,7 +653,7 @@ const LINES = [
  n:'Subject, verb, object, all in trade slang, all one syllable: rural audiences reject rural films. The grammar is intact; the vocabulary is a private language.',
  at:'Variety front page, July 17, 1935'},
 {s:'“For sale: baby shoes, never worn.”',
- n:'A colon delivering, then a comma attaching a participle phrase (“never worn”) — and no statement anywhere: no subject-verb at all. The story happens in the modifiers. (Often attributed to Hemingway; the attribution is almost certainly false.)',
+ n:'A colon delivering, then a comma attaching a participle phrase (“never worn”) — and no statement anywhere: no subject-verb at all. The story happens in “never worn.” (Often attributed to Hemingway; the attribution is almost certainly false.)',
  at:'Author unknown'}
 ];
 const $ = id => document.getElementById(id);
@@ -797,7 +798,7 @@ const EX = [
  [' '],
  ['died','VERB','The word that says what happened, and when — here, in the past. Every sentence needs one.'],
  [' '],
- ['hungry','MODIFIER','A describing word — a modifier. The state he was in when it happened. It rides along after the verb; the sentence would still be complete without it.'],
+ ['hungry','ADJECTIVE','An adjective — it describes the state he was in when it happened. It rides along after the verb; the sentence would still be complete without it.'],
  ['.','PERIOD','Closes the statement. Four words, nothing missing: a subject and a verb make a complete sentence, at any length.'],
  ['”']]},
 {cite:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005', parts:[
@@ -805,7 +806,7 @@ const EX = [
  ['It','SUBJECT','What the sentence is about — here just the situation: “it,” as in “it’s raining.”'],
  ['’s','VERB','“Is,” tucked in behind “it.” Small, but it’s the word that makes this a sentence.'],
  [' '],
- ['late already','MODIFIER','What “it” is — describing words (modifiers) after the verb.'],
+ ['late already','ADJECTIVE + ADVERB','What “it” is: an adjective (“late”) sharpened by an adverb (“already”).'],
  [',','COMMA','This comma attaches a rename — it is not joining a second statement.'],
  [' '],
  ['five or five-thirty','APPOSITIVE','A phrase set beside “late” to rename it more exactly. No verb in it, so it could never stand alone — it leans on the sentence. (This is called an appositive.)'],
@@ -822,7 +823,7 @@ const EX = [
  [' '],
  ['the capital of Latvia','APPOSITIVE','Renames Riga. No verb — not a new statement, just a label placed beside the name.'],
  [', '],
- ['pointing up at two corner windows of an old stucco building','MODIFIER (PARTICIPLE)','“Pointing” looks like a verb but never says when — it can’t make a statement by itself. It borrows Baryshnikov and describes him. A verb-form used as description is called a participle.'],
+ ['pointing up at two corner windows of an old stucco building','PARTICIPLE PHRASE','“Pointing” looks like a verb but never says when — it can’t make a statement by itself. It borrows Baryshnikov and describes him. A verb-form used as description is called a participle.'],
  [' '],
  ['that was probably yellow once','ATTACHED MINI-STATEMENT','It has its own little subject and verb (“that was”) — but “that” pins it to the building, so it can’t stand alone.'],
  ['.”']]},
@@ -831,7 +832,7 @@ const EX = [
  ['Frank Sinatra','SUBJECT','Announced first — then made to wait while the interruption plays out.'],
  [',','PAIRED COMMA','Opens the interruption. Its partner after “the other” closes it — they work like brackets.'],
  [' '],
- ['holding a glass of bourbon in one hand and a cigarette in the other','MODIFIER (PARTICIPLE)','“Holding” never says when, so it can’t make a statement — it describes Sinatra, wedged between him and his verb. You wait for the verb the way the room waits for him.'],
+ ['holding a glass of bourbon in one hand and a cigarette in the other','PARTICIPLE PHRASE','“Holding” never says when, so it can’t make a statement — it describes Sinatra, wedged between him and his verb. You wait for the verb the way the room waits for him.'],
  [',','PAIRED COMMA','Closes the interruption.'],
  [' '],
  ['stood','VERB','Finally — the word that says what happened. Subject far back, verb here: the sentence held the pose in between.'],
@@ -948,12 +949,12 @@ const EX = [
 
 const GLOSS = [
 {k:'noun', t:'noun', d:'A word that names — a person, place, thing, or idea: “Sinatra,” “bar,” “silence.” Nouns are what sentences are about, and what verbs act on.', ex:'“a glass of bourbon,” “a cigarette,” “two attractive but fading blondes” — Talese'},
-{k:'adjective', t:'adjective', d:'A word that describes a noun: a “dark” corner, “fading” blondes. One kind of modifier — it adds to the noun without making a new statement.', ex:'“two attractive but fading blondes” — Talese'},
+{k:'adjective', t:'adjective', d:'A word that describes a noun: a “dark” corner, “fading” blondes. It adds to the noun without making a new statement.', ex:'“two attractive but fading blondes” — Talese'},
 {k:'adverb', t:'adverb', d:'A word that describes a verb, an adjective, or a whole sentence — how, when, how much: “slowly,” “never,” “certainly.” Fronted with a comma (“Certainly, …”), it sets the stance of everything that follows.', ex:'“Certainly, he had a point…” — Ross'},
 {k:'pronoun', t:'pronoun', d:'A word that stands in for a noun — he, she, it, they, who, that. Every pronoun points back at something.', ex:'“We smile when we see him” — Kael: “him” is Cary Grant.'},
 {k:'antecedent', t:'antecedent', d:'The noun a pronoun points back to. From Latin ante + cedere, “going before” — the antecedent usually goes before its pronoun. When it doesn’t, or when two nouns compete for the job, the pronoun wobbles.', ex:'“a God who spends four hours…” — Lockwood: “who” points back to “a God.”'},
-{k:'article', t:'article', d:'The smallest modifiers: a, an, the. “The” points at a known one, “a” at any one. Headlines drop them — and dropping one can change the meaning: Armstrong needed “one small step for A man.”', ex:'“MEN WALK ON MOON” — the Times, articles stripped.'},
-{k:'preposition', t:'preposition', d:'A small word that ties a noun into the sentence by relation — in, on, at, of, with, between, through. It opens a prepositional phrase, which works as a modifier.', ex:'“in a dark corner of the bar between two attractive but fading blondes” — Talese, three deep.'},
+{k:'article', t:'article', d:'The smallest words in the language: a, an, the. “The” points at a known one, “a” at any one. Headlines drop them — and dropping one can change the meaning: Armstrong needed “one small step for A man.”', ex:'“MEN WALK ON MOON” — the Times, articles stripped.'},
+{k:'preposition', t:'preposition', d:'A small word that ties a noun into the sentence by relation — in, on, at, of, with, between, through. It opens a prepositional phrase — “in a dark corner” — that describes whatever it attaches to.', ex:'“in a dark corner of the bar between two attractive but fading blondes” — Talese, three deep.'},
 {k:'conjunction', t:'joining word (conjunction)', d:'The seven small words that may hold two complete statements together with a comma: and, but, or, nor, for, so, yet. They also join list items. (“However” and “rather” are not on the list — those are pivot words.)', ex:'“…the most publicly seduced male the world has known, yet he has never become a public joke” — Kael'},
 {k:'infinitive', t:'infinitive', d:'“To” plus a verb: to be, to know. It names the action without saying when, so it can’t make a statement — and it can act as a noun.', ex:'“To be, or not to be” — the subject of Hamlet’s sentence is two infinitives.'},
 {k:'sentence', t:'sentence', d:'Tells you that someone or something did something, and closes with a period. At minimum: a subject and a verb.', ex:'“Gary Robinson died hungry.”'},
@@ -977,7 +978,6 @@ const GLOSS = [
 {k:'ellipsismark', t:'ellipsis (…)', d:'Three dots: words left out of a quotation, or a voice trailing off. Inside a quote it flags that something is missing — which is why this site quotes whole sentences.', ex:'“. . .” in Jacobson’s Dylan wish — the trail-off is the original’s.'},
 {k:'scarequotes', t:'scare quotes', d:'Quotation marks around a word nobody is actually quoting — the word held with tongs: their term, not mine.', ex:'“it would be ‘interesting’ to know which” — Didion'},
 {k:'appositive', t:'appositive', d:'A phrase set beside a noun to rename it. No verb of its own, so it can never stand alone — and it’s often mistaken for a comma splice. Beside a person’s name it can carry a whole claim about them in one phrase — the profile writer’s appositive. (Latin ad + positus: “placed beside.”)', ex:'A plain rename: “Riga, the capital of Latvia” — Acocella. A role: “Sarah Larson, his girlfriend” — Parker. A whole claim, made before the name even arrives: “Dictator of a nation devoted to splendid sausages, cigars, beer, and babies, Adolf Hitler is a vegetarian…” — Flanner'},
-{k:'modifier', t:'modifier', d:'The umbrella term for describing words and phrases — adjectives, adverbs, participle phrases, prepositional phrases. A modifier adds to a noun or a verb without making a new statement of its own.', ex:'“in a dark corner of the bar” — Talese'},
 {k:'participle', t:'participle', d:'An -ing verb-form doing describing work. In “Sinatra, holding a glass of bourbon, stood,” the verb is “stood” — it says when. “Holding” never says when, so it can’t make a statement of its own; it hangs off “Sinatra” and describes him. (An -ing word used as a noun instead — “a piece of nonfiction writing” — is a gerund.) From Latin particeps, “sharing”: it shares in being a verb and an adjective at once.', ex:'“Sinatra, holding a glass of bourbon…, stood” — Talese'},
 {k:'gerund', t:'gerund', d:'The other job an -ing word can do: be a noun. Same form, two jobs — describing a noun makes it a participle; being a noun makes it a gerund.', ex:'Malcolm’s “the consenting subject of a piece of nonfiction writing”: “consenting” describes the subject (participle); “writing” names a thing (gerund).'},
 {k:'pivotword', t:'pivot word (conjunctive adverb)', d:'However, rather, nevertheless, therefore: words that comment on a connection but can’t glue statements together with a comma. Safe at the start of a fresh sentence.', ex:'“Rather, it was a supremely cool crush…” — Brodesser-Akner'},
@@ -1002,7 +1002,7 @@ const GLOSSMAP = {}; GLOSS.forEach(g => GLOSSMAP[g.k] = g);
 const TERMRE = new RegExp('\\b(' + [
  'comma splices?','compound predicates?','conjunctive adverbs?','periodic sentences?','pivot words?','prepositional phrases?','prepositions?','conjunctions?','joining words?','infinitives?','imperatives?','hyphens?','scare quotes','parallel structure','chiasmus','similes?','metaphors?','understatement','rhetorical questions?','direct address','passive voice','active voice','predicates?',
  'polysyndeton','asyndeton','epistrophe','anaphora','tricolons?','interjections?',
- 'semicolons?','appositives?','modifiers?','participles?','gerunds?','pronouns?','antecedents?','fragments?','splices?','run-ons?','restrictive','nonrestrictive','colons?','dash(?:es)?'
+ 'semicolons?','appositives?','participles?','gerunds?','pronouns?','antecedents?','fragments?','splices?','run-ons?','restrictive','nonrestrictive','colons?','dash(?:es)?'
 ].join('|') + ')\\b', 'gi');
 function termKey(m){
   const s = m.toLowerCase();
@@ -1013,7 +1013,6 @@ function termKey(m){
   if (s.startsWith('run-on')) return 'runon';
   if (s.startsWith('semicolon')) return 'semicolon';
   if (s.startsWith('appositive')) return 'appositive';
-  if (s.startsWith('modifier')) return 'modifier';
   if (s.startsWith('participle')) return 'participle';
   if (s.startsWith('gerund')) return 'gerund';
   if (s.startsWith('pronoun')) return 'pronoun';
@@ -1051,7 +1050,7 @@ function hookTips(root){
   root.querySelectorAll('.hov').forEach(el => {
     if (el.dataset.hooked) return; el.dataset.hooked = '1';
     const fill = () => {
-      if (el.dataset.g){ const g = GLOSSMAP[el.dataset.g]; el.dataset.t = g.t; el.dataset.x = g.d + (g.ex ? ' <i>' + g.ex + '</i>' : ''); }
+      if (el.dataset.g){ const g = GLOSSMAP[el.dataset.g]; el.dataset.t = g.t; el.dataset.x = g.d + (g.ex ? '<i class="tip-ex">' + g.ex + '</i>' : ''); }
     };
     el.addEventListener('mouseenter', () => { if (!tipPinned){ fill(); showTip(el); } });
     el.addEventListener('mouseleave', () => { if (!tipPinned) hideTip(); });
@@ -1069,7 +1068,7 @@ const tip = () => document.getElementById('tip');
 let tipPinned = null;
 function showTip(el){
   const t = tip();
-  t.innerHTML = '' + el.dataset.t + '' + el.dataset.x;
+  t.innerHTML = '<span class="tip-label">' + el.dataset.t + '</span>' + el.dataset.x;
   t.style.display = 'block';
   const r = el.getBoundingClientRect(), tr = t.getBoundingClientRect();
   let x = r.left, y = r.bottom + 8;
@@ -1119,7 +1118,7 @@ function renderLines(){
   });
 }
 const GLOSS_GROUPS = [
- ['Words', ['noun','verb','adjective','adverb','pronoun','antecedent','article','preposition','conjunction','infinitive','modifier','participle','gerund','interjection','pivotword']],
+ ['Words', ['noun','verb','adjective','adverb','pronoun','antecedent','article','preposition','conjunction','infinitive','participle','gerund','interjection','pivotword']],
  ['Sentences', ['subject','predicate','object','sentence','statement','phrase','compoundpred','fragment','runon','splice','pinned','restrictive','appositive','imperative','tense','voice','directaddress','periodic']],
  ['Punctuation', ['semicolon','colon','dash','hyphen','ellipsismark','scarequotes']],
  ['Patterns', ['parallel','anaphora','epistrophe','asyndeton','polysyndeton','tricolon','chiasmus','simile','metaphor','understatement','rhetq']]
