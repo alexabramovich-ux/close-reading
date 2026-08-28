@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   :root{
-    --paper:#57068C; --card:#FFFFFF; --ink:#1D1C1A; --muted:#38352F; --faint:#59544C;
+    --paper:#57068C; --card:#FFFFFF; --ink:#1D1C1A; --muted:#1D1C1A; --faint:#1D1C1A;
     --onground:#FFFFFF; --onground-muted:#DCC6EF; --chip-on-bg:#FFFFFF; --chip-on-ink:#57068C;
     --tip-bg:#1D1C1A; --tip-ink:#FAFAF8;
     --line:#E5E2DA; --line-strong:#CFCBC1;
@@ -121,7 +121,8 @@
   .sentence b{font-weight:600}
   .mvq{font-family:'Newsreader',Georgia,serif; font-size:clamp(17px,2.6vw,19.5px); line-height:1.62; margin:12px 0 3px}
   .mvq b{font-weight:600}
-  .mv-cite{font-size:12.5px; color:var(--faint); font-style:italic; margin:0}
+  .mv-note{font-size:13.5px; line-height:1.55; margin:3px 0 2px; color:var(--muted); max-width:64ch}
+  .mv-cite{font-size:12.5px; color:var(--faint); font-style:italic; margin:0 0 4px}
   .mv-name{font:600 19px 'Archivo',sans-serif; margin:0 0 4px}
   .mv-def{font-size:14.5px; line-height:1.55; margin:0 0 4px; color:var(--muted); max-width:62ch}
   .g-row{border-top:1px solid var(--line); padding:13px 0 12px}
@@ -412,87 +413,123 @@ const BASICS = [
 const MOVES = [
 {name:'The fronted adverb', d:'A single adverb, then a comma, then the sentence. The word before the comma sets the sentence’s stance before a single fact arrives.',
  ex:[
- {s:'“<b>Certainly,</b> he had a point about Strauss’s remorseless performance of ‘Death and Transfiguration.’”', at:'Alex Ross, on Richard Taruskin, The New Yorker, 2022'},
- {s:'“<b>Rather,</b> it was a supremely cool crush — she walked through the world with the confidence of a woman who was not aspiring to have a man, even a superman, but like a woman who finally found a man who was worthy of her.”', at:'Taffy Brodesser-Akner, on Margot Kidder, The New York Times, 2018'},
- {s:'“<b>Maybe,</b> but he also plays more than a hundred shows a year…”', at:'Alex Ross, “The Wanderer,” The New Yorker, 1999'}]},
+ {s:'“<b>Certainly,</b> he had a point about Strauss’s remorseless performance of ‘Death and Transfiguration.’”', n:'One word grants the point; everything after the comma is the point being granted.', at:'Alex Ross, on Richard Taruskin, The New Yorker, 2022'},
+ {s:'“<b>Rather,</b> it was a supremely cool crush — she walked through the world with the confidence of a woman who was not aspiring to have a man, even a superman, but like a woman who finally found a man who was worthy of her.”', n:'“Rather” turns this sentence against the one before it — the turn is done before any new fact arrives.', at:'Taffy Brodesser-Akner, on Margot Kidder, The New York Times, 2018'},
+ {s:'“<b>Maybe,</b> but he also plays more than a hundred shows a year…”', n:'“Maybe” concedes; “but” pivots — two moves made before the sentence says anything new.', at:'Alex Ross, “The Wanderer,” The New Yorker, 1999'}]},
 {name:'Description first, name second', d:'The sentence opens with a description — an appositive or a participle phrase — and holds back who it belongs to. You read the costume before you meet the wearer.',
  ex:[
- {s:'“<b>Dictator of a nation devoted to splendid sausages, cigars, beer, and babies,</b> Adolf Hitler is a vegetarian, teetotaller, nonsmoker, and celibate.”', at:'Janet Flanner, “Führer,” The New Yorker, 1936'},
- {s:'“<b>A big, burly guy,</b> he had a macho strain in him—a pugilistic vision of intellectual life.”', at:'Alex Ross, on Richard Taruskin, The New Yorker, 2022'},
- {s:'“<b>Persuaded to wait his turn,</b> he reached the counter again five or ten minutes later, only to be told that Church’s had run out of fried chicken.”', at:'Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'}]},
+ {s:'“<b>Dictator of a nation devoted to splendid sausages, cigars, beer, and babies,</b> Adolf Hitler is a vegetarian, teetotaller, nonsmoker, and celibate.”', n:'The fronted phrase is an appositive — it renames “Adolf Hitler” before he is named. No verb in it; the statement starts at “is.”', at:'Janet Flanner, “Führer,” The New Yorker, 1936'},
+ {s:'“<b>A big, burly guy,</b> he had a macho strain in him—a pugilistic vision of intellectual life.”', n:'Same shape, shorter: “A big, burly guy” renames “he” before “he” arrives.', at:'Alex Ross, on Richard Taruskin, The New Yorker, 2022'},
+ {s:'“<b>Persuaded to wait his turn,</b> he reached the counter again five or ten minutes later, only to be told that Church’s had run out of fried chicken.”', n:'Here the fronted description is a participle phrase — “persuaded” describes “he,” who arrives with the verb “reached.”', at:'Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'}]},
 {name:'The same opener, again and again', d:'Sentences in a row starting with the same words — anaphora. Repetition as a drumbeat; the pattern itself becomes the point.',
  ex:[
- {s:'“<b>He</b> had some coffee. <b>He</b> read the newspaper. <b>He</b> dipped into a couple of books…”', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'},
- {s:'“IF COLIN DUFFY AND I WERE TO GET MARRIED, <b>we would</b> have matching superhero notebooks. <b>We would</b> wear shorts, big sneakers, and long, baggy T-shirts depicting famous athletes every single day, even in the winter. <b>We would</b> sleep in our clothes.”', at:'Susan Orlean, “The American Man at Age Ten,” Esquire, 1992'},
- {s:'“<b>It is more than</b> Hank Williams, Sr., Johnny Cash, and Glen Campbell combined. <b>It is more than</b> George Jones, Hank Snow, and Ray Price combined.”', at:'Bryan Di Salvatore, “Ornery,” The New Yorker, 1990'}]},
+ {s:'“<b>He</b> had some coffee. <b>He</b> read the newspaper. <b>He</b> dipped into a couple of books…”', n:'Each sentence restarts with “He” and a plain past verb. Nothing subordinated: three equal statements in a row.', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'},
+ {s:'“IF COLIN DUFFY AND I WERE TO GET MARRIED, <b>we would</b> have matching superhero notebooks. <b>We would</b> wear shorts, big sneakers, and long, baggy T-shirts depicting famous athletes every single day, even in the winter. <b>We would</b> sleep in our clothes.”', n:'“We would” restarts each sentence, and “would” marks the imagined routine.', at:'Susan Orlean, “The American Man at Age Ten,” Esquire, 1992'},
+ {s:'“<b>It is more than</b> Hank Williams, Sr., Johnny Cash, and Glen Campbell combined. <b>It is more than</b> George Jones, Hank Snow, and Ray Price combined.”', n:'The openers repeat (“It is more than”) and the endings repeat too (“combined”) — anaphora and its mirror, epistrophe, in one pair.', at:'Bryan Di Salvatore, “Ornery,” The New Yorker, 1990'}]},
 {name:'The semicolon', d:'Two complete statements held inside one sentence, no “and.” Two facts made to be read as one look.',
  ex:[
- {s:'“But he said <b>nothing; he</b> had been silent during much of the evening…”', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
- {s:'“In the dim kitchen, his face hung limp and <b>pale; his</b> eyes were dull and heavily lidded, barely visible beneath thick, ridged brows…”', at:'Bryan Di Salvatore, “Ornery,” The New Yorker, 1990'},
- {s:'“We smile when we see him, we laugh before he does <b>anything; it</b> makes us happy just to look at him.”', at:'Pauline Kael, “The Man from Dream City,” The New Yorker, 1975'}]},
+ {s:'“But he said <b>nothing; he</b> had been silent during much of the evening…”', n:'Both halves are complete statements. The semicolon holds them in one sentence, so the silence runs on without a full stop.', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
+ {s:'“In the dim kitchen, his face hung limp and <b>pale; his</b> eyes were dull and heavily lidded, barely visible beneath thick, ridged brows…”', n:'Face, then eyes: two complete statements, one look, held together by the semicolon.', at:'Bryan Di Salvatore, “Ornery,” The New Yorker, 1990'},
+ {s:'“We smile when we see him, we laugh before he does <b>anything; it</b> makes us happy just to look at him.”', n:'The comma after “see him” is a splice; the semicolon before the third statement is the standard join — both in one sentence.', at:'Pauline Kael, “The Man from Dream City,” The New Yorker, 1975'}]},
 {name:'The catalogue', d:'A list run past comfortable length — with commas, or with “and” piled up (polysyndeton) — until the list itself becomes the portrait.',
  ex:[
- {s:'“He <b>swallows</b> gruel for breakfast, <b>is fond of</b> oatmeal, <b>digests</b> milk and onion soup, <b>declines</b> meat, which even as an undernourished youth he avoided, <b>never touches</b> fish, <b>has given up</b> macaroni as fattening, <b>eats</b> one piece of bread at a meal, <b>favors</b> vegetables, greens, and salads, <b>drinks</b> lemonade, <b>likes</b> tea and cake, and <b>loves</b> a raw apple.”', at:'Janet Flanner, “Führer,” The New Yorker, 1936'},
- {s:'“Joe Gould was an odd <b>and</b> penniless <b>and</b> unemployable little man who came to the city in 1916 and <b>ducked and dodged and held on</b> as hard as he could for over thirty-five years.”', at:'Joseph Mitchell, “Professor Sea Gull,” The New Yorker, 1942'},
- {s:'“In New York City, especially in Greenwich Village, down among <b>the cranks and the misfits and the one-lungers and the has-beens and the might’ve-beens and the would-bes and the never-wills and the God-knows-whats,</b> I have always felt at home.”', at:'Joe Gould, quoted in Joseph Mitchell, “Professor Sea Gull,” The New Yorker, 1942'}]},
+ {s:'“He <b>swallows</b> gruel for breakfast, <b>is fond of</b> oatmeal, <b>digests</b> milk and onion soup, <b>declines</b> meat, which even as an undernourished youth he avoided, <b>never touches</b> fish, <b>has given up</b> macaroni as fattening, <b>eats</b> one piece of bread at a meal, <b>favors</b> vegetables, greens, and salads, <b>drinks</b> lemonade, <b>likes</b> tea and cake, and <b>loves</b> a raw apple.”', n:'One subject (“He”) runs eleven verbs. The commas separate items in a list, not statements — nothing after them could stand alone.', at:'Janet Flanner, “Führer,” The New Yorker, 1936'},
+ {s:'“Joe Gould was an odd <b>and</b> penniless <b>and</b> unemployable little man who came to the city in 1916 and <b>ducked and dodged and held on</b> as hard as he could for over thirty-five years.”', n:'The “and”s are piled on past need (polysyndeton) — first between the adjectives, then between the verbs.', at:'Joseph Mitchell, “Professor Sea Gull,” The New Yorker, 1942'},
+ {s:'“In New York City, especially in Greenwich Village, down among <b>the cranks and the misfits and the one-lungers and the has-beens and the might’ve-beens and the would-bes and the never-wills and the God-knows-whats,</b> I have always felt at home.”', n:'Eight coined nouns, each with its own “and the” — the list is held open on purpose.', at:'Joe Gould, quoted in Joseph Mitchell, “Professor Sea Gull,” The New Yorker, 1942'}]},
 {name:'The aside between dashes', d:'A pair of dashes (or one) drops a second thought into the middle of the sentence — an aside too big for commas.',
  ex:[
- {s:'“Clooney, who is unusual in being both very famous and, apparently, at ease with the fact<b>—he can sometimes look like a spokesman for celebrity itself—</b>was sitting on a long pale sofa, alongside Sarah Larson, his girlfriend.”', at:'Ian Parker, “Somebody Has to Be in Control,” The New Yorker, 2008'},
- {s:'“Edna Buchanan covered the murder for the Herald<b>—there are policemen in Miami who say that it wouldn’t be a murder without her—</b>and her story began with what the fried-chicken faction still regards as the classic Edna lead: ‘Gary Robinson died hungry.’”', at:'Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'},
- {s:'“He dipped into a couple of books: a Proust biography…, a novel by Jean Rhys that he recently came across in a secondhand bookstore<b>—he’s not a systematic reader</b>.”', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'}]},
+ {s:'“Clooney, who is unusual in being both very famous and, apparently, at ease with the fact<b>—he can sometimes look like a spokesman for celebrity itself—</b>was sitting on a long pale sofa, alongside Sarah Larson, his girlfriend.”', n:'The dashes fence off a complete statement dropped between the subject and its verb — “Clooney … was sitting” waits for it to finish.', at:'Ian Parker, “Somebody Has to Be in Control,” The New Yorker, 2008'},
+ {s:'“Edna Buchanan covered the murder for the Herald<b>—there are policemen in Miami who say that it wouldn’t be a murder without her—</b>and her story began with what the fried-chicken faction still regards as the classic Edna lead: ‘Gary Robinson died hungry.’”', n:'The aside between the dashes has its own subject and verb; the main sentence resumes at “and her story began.”', at:'Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'},
+ {s:'“He dipped into a couple of books: a Proust biography…, a novel by Jean Rhys that he recently came across in a secondhand bookstore<b>—he’s not a systematic reader</b>.”', n:'One dash, not a pair: it breaks off the list and attaches a new complete statement.', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'}]},
 {name:'The short sentence', d:'A very short sentence — sometimes a fragment — placed where a long one was expected. It sounds final.',
  ex:[
- {s:'“<b>Gary Robinson died hungry.</b>”', at:'Edna Buchanan’s lede, in Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'},
- {s:'“The man came to the village on a moped. Youssouf Malé watched him. <b>A man on a moped was unusual.</b>”', at:'Michael Finkel, “Is Youssouf Malé a Slave?,” The New York Times Magazine, 2001'},
- {s:'“<b>Penis with a thesaurus.</b>”', at:'David Foster Wallace, quoted in Patricia Lockwood, “Malfunctioning Sex Robot,” LRB, 2019'}]},
+ {s:'“<b>Gary Robinson died hungry.</b>”', n:'Subject, verb, one word of description: a complete sentence in four words.', at:'Edna Buchanan’s lede, in Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'},
+ {s:'“The man came to the village on a moped. Youssouf Malé watched him. <b>A man on a moped was unusual.</b>”', n:'Three short sentences, each complete: subject, verb. The third one is the point.', at:'Michael Finkel, “Is Youssouf Malé a Slave?,” The New York Times Magazine, 2001'},
+ {s:'“<b>Penis with a thesaurus.</b>”', n:'Not even a sentence — no verb — a fragment wearing a period.', at:'David Foster Wallace, quoted in Patricia Lockwood, “Malfunctioning Sex Robot,” LRB, 2019'}]},
 {name:'The colon', d:'A complete statement on the left; then the colon hands over what that statement promised — a list, a name, another statement.',
  ex:[
- {s:'“He dipped into a couple of <b>books:</b> a Proust biography that he bought five years ago but just started reading because it suddenly occurred to him to do so, a novel by Jean Rhys that he recently came across in a secondhand bookstore—he’s not a systematic reader.”', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'},
- {s:'“She’s a rare <b>combination:</b> a thin, long-limbed beauty with a trained analytic mind who dresses with cunning understatement.”', at:'Joan Juliet Buck, “A Rose in the Desert,” Vogue, 2011'},
- {s:'“Edna Buchanan covered the murder for the Herald—there are policemen in Miami who say that it wouldn’t be a murder without her—and her story began with what the fried-chicken faction still regards as the classic Edna <b>lead: ‘Gary Robinson died hungry.’</b>”', at:'Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'}]},
-{name:'The appositive', d:'A phrase set beside a noun to rename it — no verb of its own, so it can never stand alone. The comma in front of it is often mistaken for a splice.',
+ {s:'“He dipped into a couple of <b>books:</b> a Proust biography that he bought five years ago but just started reading because it suddenly occurred to him to do so, a novel by Jean Rhys that he recently came across in a secondhand bookstore—he’s not a systematic reader.”', n:'The statement before the colon is complete — which is what earns it the colon; then the two books are handed over.', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'},
+ {s:'“She’s a rare <b>combination:</b> a thin, long-limbed beauty with a trained analytic mind who dresses with cunning understatement.”', n:'Complete statement, colon, then the combination itself — one long noun phrase, no new verb.', at:'Joan Juliet Buck, “A Rose in the Desert,” Vogue, 2011'},
+ {s:'“Edna Buchanan covered the murder for the Herald—there are policemen in Miami who say that it wouldn’t be a murder without her—and her story began with what the fried-chicken faction still regards as the classic Edna <b>lead: ‘Gary Robinson died hungry.’</b>”', n:'The colon hands over what the statement promised: the lead itself, a whole quoted sentence.', at:'Calvin Trillin, “Covering the Cops,” The New Yorker, 1986'}]},
+{name:'The appositive', d:'A phrase set beside a noun to rename it — no verb of its own, so it can never stand alone. Beside a place it adds information; beside a person’s name it can file a whole verdict in a phrase.',
  ex:[
- {s:'“It is raining, and Mikhail Baryshnikov is standing in a courtyard in <b>Riga, the capital of Latvia,</b> pointing up at two corner windows of an old stucco building that was probably yellow once.”', at:'Joan Acocella, “The Soloist,” The New Yorker, 1998'},
- {s:'“It’s late <b>already, five or five-thirty</b>.”', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'},
- {s:'“It’s pure Tucker <b>Carlson, a move</b> I’ve seen hundreds of times in the over 40 hours of Tucker Carlson Tonight clips I’ve watched on Fox News in recent months.”', at:'Lyz Lenz, “The Mystery of Tucker Carlson,” Columbia Journalism Review, 2018'}]},
+ {s:'“It is raining, and Mikhail Baryshnikov is standing in a courtyard in <b>Riga, the capital of Latvia,</b> pointing up at two corner windows of an old stucco building that was probably yellow once.”', n:'“The capital of Latvia” renames Riga. No verb, so it can’t stand alone — the paired commas hold it in place.', at:'Joan Acocella, “The Soloist,” The New Yorker, 1998'},
+ {s:'“It’s late <b>already, five or five-thirty</b>.”', n:'“Five or five-thirty” renames “late.” The comma attaches a rename, not a second statement.', at:'Larissa MacFarquhar, “Present Waking Life,” The New Yorker, 2005'},
+ {s:'“It’s pure Tucker <b>Carlson, a move</b> I’ve seen hundreds of times in the over 40 hours of Tucker Carlson Tonight clips I’ve watched on Fox News in recent months.”', n:'“A move I’ve seen hundreds of times…” renames what just happened — an appositive that carries the evidence.', at:'Lyz Lenz, “The Mystery of Tucker Carlson,” Columbia Journalism Review, 2018'},
+ {s:'“Clooney, who is unusual in being both very famous and, apparently, at ease with the fact—he can sometimes look like a spokesman for celebrity itself—was sitting on a long pale sofa, alongside <b>Sarah Larson, his girlfriend</b>.”', n:'The person kind: “his girlfriend” files Sarah Larson’s entire role in the profile in two words, attached to her name by a comma.', at:'Ian Parker, “Somebody Has to Be in Control,” The New Yorker, 2008'}]},
 {name:'The dash before the last words', d:'A dash holds one beat, and the sentence’s final words land after it.',
  ex:[
- {s:'“Sinatra with a cold is Picasso without paint, Ferrari without fuel <b>— only worse</b>.”', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
- {s:'“A big, burly guy, he had a macho strain in him<b>—a pugilistic vision of intellectual life</b>.”', at:'Alex Ross, on Richard Taruskin, The New Yorker, 2022'},
- {s:'“Asma al-Assad is glamorous, young, and very chic<b>—the freshest and most magnetic of first ladies</b>.”', at:'Joan Juliet Buck, “A Rose in the Desert,” Vogue, 2011'}]},
+ {s:'“Sinatra with a cold is Picasso without paint, Ferrari without fuel <b>— only worse</b>.”', n:'The statement is complete before the dash; the dash holds one beat, then the correction lands.', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
+ {s:'“A big, burly guy, he had a macho strain in him<b>—a pugilistic vision of intellectual life</b>.”', n:'What follows the dash renames “a macho strain” — an appositive, delivered late.', at:'Alex Ross, on Richard Taruskin, The New Yorker, 2022'},
+ {s:'“Asma al-Assad is glamorous, young, and very chic<b>—the freshest and most magnetic of first ladies</b>.”', n:'Complete statement first; then the dash adds a superlative rename as the final words.', at:'Joan Juliet Buck, “A Rose in the Desert,” Vogue, 2011'}]},
 {name:'Three beats', d:'Three phrases or statements built the same way — a tricolon. Two is a pair; three is a pattern.',
  ex:[
- {s:'“The white house seems deserted, too; but occasionally, when the animals become too clamorous, <b>a light will flash on, a window will open, and a Coke bottle will come flying</b> through the darkness and smash against the cans.”', at:'Gay Talese, “The Loser,” Esquire, 1964'},
- {s:'“<b>Limited by physical temperament, trained in poverty, organically costive,</b> he has become the dietetic survivor of his poor health.”', at:'Janet Flanner, “Führer,” The New Yorker, 1936'},
- {s:'“<b>The man came to the village on a moped. Youssouf Malé watched him. A man on a moped was unusual.</b>”', at:'Michael Finkel, “Is Youssouf Malé a Slave?,” The New York Times Magazine, 2001'}]},
+ {s:'“The white house seems deserted, too; but occasionally, when the animals become too clamorous, <b>a light will flash on, a window will open, and a Coke bottle will come flying</b> through the darkness and smash against the cans.”', n:'Three matched statements — subject, “will,” verb — joined as a list: comma, comma, “and.”', at:'Gay Talese, “The Loser,” Esquire, 1964'},
+ {s:'“<b>Limited by physical temperament, trained in poverty, organically costive,</b> he has become the dietetic survivor of his poor health.”', n:'Three fronted descriptions of “he,” matched in shape, before the statement itself starts.', at:'Janet Flanner, “Führer,” The New Yorker, 1936'},
+ {s:'“<b>The man came to the village on a moped. Youssouf Malé watched him. A man on a moped was unusual.</b>”', n:'Three complete sentences in the same plain shape; the third one states the point.', at:'Michael Finkel, “Is Youssouf Malé a Slave?,” The New York Times Magazine, 2001'}]},
 {name:'The present tense', d:'Profiles usually run in the past tense. Switching to the present makes the scene happen while you read it.',
  ex:[
- {s:'“It <b>is raining</b>, and Mikhail Baryshnikov <b>is standing</b> in a courtyard in Riga, the capital of Latvia, pointing up at two corner windows of an old stucco building that was probably yellow once.”', at:'Joan Acocella, “The Soloist,” The New Yorker, 1998'},
- {s:'“He <b>saunters</b> out from shadows in the back of the stage, indistinguishable at first from the four other band members.”', at:'Alex Ross, “The Wanderer,” The New Yorker, 1999'},
- {s:'“Merle <b>stares</b> a lot; onstage, where he almost never talks between songs, he can seem oblivious of the audience.”', at:'Bryan Di Salvatore, “Ornery,” The New Yorker, 1990'}]},
+ {s:'“It <b>is raining</b>, and Mikhail Baryshnikov <b>is standing</b> in a courtyard in Riga, the capital of Latvia, pointing up at two corner windows of an old stucco building that was probably yellow once.”', n:'“Is raining,” “is standing”: present tense, so the scene runs as you read. The past (“was probably yellow once”) sits inside it.', at:'Joan Acocella, “The Soloist,” The New Yorker, 1998'},
+ {s:'“He <b>saunters</b> out from shadows in the back of the stage, indistinguishable at first from the four other band members.”', n:'“Saunters” is present tense — one verb puts the scene onstage now.', at:'Alex Ross, “The Wanderer,” The New Yorker, 1999'},
+ {s:'“Merle <b>stares</b> a lot; onstage, where he almost never talks between songs, he can seem oblivious of the audience.”', n:'Present tense as habit: “stares a lot” is what he always does, not one moment.', at:'Bryan Di Salvatore, “Ornery,” The New Yorker, 1990'}]},
 {name:'The habitual “would” (and “will”)', d:'“Would” — or “will” — for what happens over and over: not one scene but a routine, compressed into a single sentence.',
  ex:[
- {s:'“IF COLIN DUFFY AND I WERE TO GET MARRIED, we <b>would have</b> matching superhero notebooks. We <b>would wear</b> shorts, big sneakers, and long, baggy T-shirts depicting famous athletes every single day, even in the winter. We <b>would sleep</b> in our clothes.”', at:'Susan Orlean, “The American Man at Age Ten,” Esquire, 1992'},
- {s:'“The white house seems deserted, too; but occasionally, when the animals become too clamorous, a light <b>will flash</b> on, a window <b>will open</b>, and a Coke bottle <b>will come</b> flying through the darkness and smash against the cans.”', at:'Gay Talese, “The Loser,” Esquire, 1964'}]},
+ {s:'“IF COLIN DUFFY AND I WERE TO GET MARRIED, we <b>would have</b> matching superhero notebooks. We <b>would wear</b> shorts, big sneakers, and long, baggy T-shirts depicting famous athletes every single day, even in the winter. We <b>would sleep</b> in our clothes.”', n:'“Would” marks the imagined routine — every day, compressed into three sentences.', at:'Susan Orlean, “The American Man at Age Ten,” Esquire, 1992'},
+ {s:'“The white house seems deserted, too; but occasionally, when the animals become too clamorous, a light <b>will flash</b> on, a window <b>will open</b>, and a Coke bottle <b>will come</b> flying through the darkness and smash against the cans.”', n:'“Will” does the same job in the present: what happens whenever the animals become too clamorous — a routine, not one night.', at:'Gay Talese, “The Loser,” Esquire, 1964'}]},
 {name:'The sentence interrupted', d:'Something wedged between the subject and its verb — commas or dashes on both sides. You wait through the middle to reach what happened.',
  ex:[
- {s:'“Frank Sinatra, <b>holding a glass of bourbon in one hand and a cigarette in the other,</b> stood in a dark corner of the bar between two attractive but fading blondes who sat waiting for him to say something.”', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
- {s:'“Like the credulous widow who wakes up one day to find the charming young man and all her savings gone, so the consenting subject of a piece of nonfiction writing learns<b>—when the article or book appears—</b>his hard lesson.”', at:'Janet Malcolm, The Journalist and the Murderer, 1990'},
- {s:'“Clooney, <b>who is unusual in being both very famous and, apparently, at ease with the fact—he can sometimes look like a spokesman for celebrity itself—</b>was sitting on a long pale sofa, alongside Sarah Larson, his girlfriend.”', at:'Ian Parker, “Somebody Has to Be in Control,” The New Yorker, 2008'}]},
+ {s:'“Frank Sinatra, <b>holding a glass of bourbon in one hand and a cigarette in the other,</b> stood in a dark corner of the bar between two attractive but fading blondes who sat waiting for him to say something.”', n:'The participle phrase sits between “Frank Sinatra” and “stood” — subject announced, verb withheld while the description plays out.', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
+ {s:'“Like the credulous widow who wakes up one day to find the charming young man and all her savings gone, so the consenting subject of a piece of nonfiction writing learns<b>—when the article or book appears—</b>his hard lesson.”', n:'The dashes interrupt between the verb and its object: “learns … his hard lesson.”', at:'Janet Malcolm, The Journalist and the Murderer, 1990'},
+ {s:'“Clooney, <b>who is unusual in being both very famous and, apparently, at ease with the fact—he can sometimes look like a spokesman for celebrity itself—</b>was sitting on a long pale sofa, alongside Sarah Larson, his girlfriend.”', n:'A “who” clause with a dashed aside inside it — two layers of interruption between “Clooney” and “was sitting.”', at:'Ian Parker, “Somebody Has to Be in Control,” The New Yorker, 2008'}]},
 {name:'The comparison', d:'The subject explained through something it isn’t — like X, or X without Y. The likeness carries the information.',
  ex:[
- {s:'“Sinatra with a cold is <b>Picasso without paint, Ferrari without fuel</b> — only worse.”', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
- {s:'“<b>Like the credulous widow who wakes up one day to find the charming young man and all her savings gone,</b> so the consenting subject of a piece of nonfiction writing learns—when the article or book appears—his hard lesson.”', at:'Janet Malcolm, The Journalist and the Murderer, 1990'},
- {s:'“He is <b>like a God who spends four hours on the shading on Eve’s upper lip</b>, forgets to give her a clitoris.”', at:'Patricia Lockwood, “Malfunctioning Sex Robot,” LRB, 2019'}]},
+ {s:'“Sinatra with a cold is <b>Picasso without paint, Ferrari without fuel</b> — only worse.”', n:'Two likenesses built the same way — X without Y — then the dash corrects them both upward.', at:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966'},
+ {s:'“<b>Like the credulous widow who wakes up one day to find the charming young man and all her savings gone,</b> so the consenting subject of a piece of nonfiction writing learns—when the article or book appears—his hard lesson.”', n:'The comparison comes first, at full length; the sentence’s real subject doesn’t appear until after it.', at:'Janet Malcolm, The Journalist and the Murderer, 1990'},
+ {s:'“He is <b>like a God who spends four hours on the shading on Eve’s upper lip</b>, forgets to give her a clitoris.”', n:'The comparison is a clause with its own verbs — the God does things, and the thing he forgets is the point.', at:'Patricia Lockwood, “Malfunctioning Sex Robot,” LRB, 2019'}]},
 {name:'One subject, many verbs', d:'One subject runs a chain of verbs, commas between them. Nothing after the commas could stand alone — so it isn’t a splice.',
  ex:[
- {s:'“<b>We interpret</b> what we see, <b>select</b> the most workable of the multiple choices.”', at:'Joan Didion, “The White Album,” 1979'},
- {s:'“<b>He swallows</b> gruel for breakfast, <b>is fond of</b> oatmeal, <b>digests</b> milk and onion soup, <b>declines</b> meat, which even as an undernourished youth he avoided, <b>never touches</b> fish, <b>has given up</b> macaroni as fattening, <b>eats</b> one piece of bread at a meal, <b>favors</b> vegetables, greens, and salads, <b>drinks</b> lemonade, <b>likes</b> tea and cake, and <b>loves</b> a raw apple.”', at:'Janet Flanner, “Führer,” The New Yorker, 1936'},
- {s:'“<b>He is</b> like a God who <b>spends</b> four hours on the shading on Eve’s upper lip, <b>forgets</b> to give her a clitoris.”', at:'Patricia Lockwood, “Malfunctioning Sex Robot,” LRB, 2019'}]},
+ {s:'“<b>We interpret</b> what we see, <b>select</b> the most workable of the multiple choices.”', n:'One “we,” two verbs. The comma stands where “and” would — not a splice, because “select” has no subject of its own.', at:'Joan Didion, “The White Album,” 1979'},
+ {s:'“<b>He swallows</b> gruel for breakfast, <b>is fond of</b> oatmeal, <b>digests</b> milk and onion soup, <b>declines</b> meat, which even as an undernourished youth he avoided, <b>never touches</b> fish, <b>has given up</b> macaroni as fattening, <b>eats</b> one piece of bread at a meal, <b>favors</b> vegetables, greens, and salads, <b>drinks</b> lemonade, <b>likes</b> tea and cake, and <b>loves</b> a raw apple.”', n:'Eleven verbs, one “He.” List commas, not joins — a compound predicate run to its limit.', at:'Janet Flanner, “Führer,” The New Yorker, 1936'},
+ {s:'“<b>He is</b> like a God who <b>spends</b> four hours on the shading on Eve’s upper lip, <b>forgets</b> to give her a clitoris.”', n:'Inside the “who” clause, “spends” and “forgets” share one subject; the comma between them is the dropped “and.”', at:'Patricia Lockwood, “Malfunctioning Sex Robot,” LRB, 2019'}]},
 {name:'Where before who', d:'The sentence opens with place — sometimes several places deep — before anyone appears in it.',
  ex:[
- {s:'“<b>AT THE FOOT of a mountain in upstate New York, about sixty miles from Manhattan,</b> there is an abandoned country clubhouse with a dusty dance floor, upturned barstools, and an untuned piano; and the only sounds heard around the place at night come from the big white house behind it—the clanging sounds of garbage cans being toppled by raccoons, skunks, and stray cats making their nocturnal raids down from the mountain.”', at:'Gay Talese, “The Loser,” Esquire, 1964'},
- {s:'“<b>In New York City, especially in Greenwich Village, down among the cranks and the misfits and the one-lungers and the has-beens and the might’ve-beens and the would-bes and the never-wills and the God-knows-whats,</b> I have always felt at home.”', at:'Joe Gould, quoted in Joseph Mitchell, “Professor Sea Gull,” The New Yorker, 1942'}]}
+ {s:'“<b>AT THE FOOT of a mountain in upstate New York, about sixty miles from Manhattan,</b> there is an abandoned country clubhouse with a dusty dance floor, upturned barstools, and an untuned piano; and the only sounds heard around the place at night come from the big white house behind it—the clanging sounds of garbage cans being toppled by raccoons, skunks, and stray cats making their nocturnal raids down from the mountain.”', n:'Two location phrases deep before the statement starts at “there is.”', at:'Gay Talese, “The Loser,” Esquire, 1964'},
+ {s:'“<b>In New York City, especially in Greenwich Village, down among the cranks and the misfits and the one-lungers and the has-beens and the might’ve-beens and the would-bes and the never-wills and the God-knows-whats,</b> I have always felt at home.”', n:'Three widening place phrases — city, neighborhood, crowd — before subject and verb (“I have always felt”) arrive.', at:'Joe Gould, quoted in Joseph Mitchell, “Professor Sea Gull,” The New Yorker, 1942'}]}
+];
+const LINES = [
+{s:'“I can’t go <b>on, I’ll</b> go on.”',
+ n:'Two complete statements, opposite in meaning, held by a bare comma — a splice. A period would make the reversal a second thought; the comma makes it instantaneous.',
+ at:'Samuel Beckett, The Unnamable, 1953'},
+{s:'so much depends<br>upon<br><br>a red wheel<br>barrow<br><br>glazed with rain<br>water<br><br>beside the white<br>chickens',
+ n:'One complete sentence: subject (“so much”), verb (“depends”). No punctuation at all — the line breaks do the commas’ work, cutting the sentence into beats.',
+ at:'William Carlos Williams, “The Red Wheelbarrow,” 1923'},
+{s:'“<b>It was</b> the best of times, <b>it was</b> the worst of times, <b>it was</b> the age of wisdom, <b>it was</b> the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, <b>we had</b> everything before us, <b>we had</b> nothing before us, we were all going direct to Heaven, we were all going direct the other way—in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only.”',
+ n:'A splice chain run to its limit: fourteen complete statements, nothing but commas between them, every opener repeated (anaphora). The commas level every claim into one voice — then the dash finally breaks the pattern.',
+ at:'Charles Dickens, A Tale of Two Cities, 1859'},
+{s:'“<b>Call</b> me Ishmael.”',
+ n:'Three words and no stated subject: an imperative — the subject is you, the reader, ordered into the book.',
+ at:'Herman Melville, Moby-Dick, 1851'},
+{s:'“It is <b>a truth universally acknowledged</b>, that a single man in possession of a good fortune, must be in want of a wife.”',
+ n:'The verdict is filed up front — “a truth universally acknowledged” — before the actual subject arrives. (The commas before “that” and “must” are period conventions, not errors.)',
+ at:'Jane Austen, Pride and Prejudice, 1813'},
+{s:'“Rose is a rose <b>is a rose is a rose</b>.”',
+ n:'A chain with no commas at all — each “is a rose” latches onto the last as if the sentence can’t find a place to stop. Repetition as definition.',
+ at:'Gertrude Stein, “Sacred Emily,” 1913'},
+{s:'“…that government <b>of the people, by the people, for the people,</b> shall not perish from the earth.”',
+ n:'A tricolon that also repeats its ending — “the people” three times (epistrophe). The comma before “shall” is period style: a breath between the long subject and its verb.',
+ at:'Abraham Lincoln, Gettysburg Address, 1863'},
+{s:'“Mrs. Dalloway said she would buy the flowers <b>herself</b>.”',
+ n:'A plain report of speech — subject, verb, object — with the novel’s whole charge in the last word. Move “herself” anywhere else and the sentence loses its point.',
+ at:'Virginia Woolf, Mrs. Dalloway, 1925'},
+{s:'“It was a bright cold day in April, and the clocks were striking <b>thirteen</b>.”',
+ n:'An ordinary compound sentence — statement, comma-and, statement — running normally until its last word. The grammar stays calm so the last word can go off.',
+ at:'George Orwell, 1984, 1949'},
+{s:'“<b>124</b> was spiteful.”',
+ n:'Subject, verb, description — the plainest sentence shape there is, with a house number as the subject. The shape is ordinary; the subject is not.',
+ at:'Toni Morrison, Beloved, 1987'},
+{s:'“Isn’t it pretty to think <b>so</b>?”',
+ n:'A question as the last line. “So” points back at everything the sentence before it imagined; the book closes by doubting itself.',
+ at:'Ernest Hemingway, The Sun Also Rises, 1926'}
 ];
 const $ = id => document.getElementById(id);
 let misses = {}; try { misses = JSON.parse(localStorage.getItem('splice-misses2') || '{}'); } catch(e){}
@@ -510,6 +547,8 @@ function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.rand
 function newDeck(){
   if (mode === 'saved'){ paint(); renderSaved(); return; }
   if (mode === 'moves'){ paint(); renderMoves(); return; }
+  if (mode === 'gloss'){ paint(); renderGloss(); return; }
+  if (mode === 'lines'){ paint(); renderLines(); return; }
   if (mode === 'basics' && !basicsStarted){ paint(); renderBasics(); return; }
   const pool = mode === 'miss' ? ALL().filter(d => (misses[d.id]||0) > 0)
     : mode === 'basics' ? BASICS.slice() : DATA.slice();
@@ -530,6 +569,8 @@ function paint(){
   mk('Basics', 'basics');
   mk('Drill', 'all');
   mk('Moves', 'moves');
+  mk('Lines', 'lines');
+  mk('Glossary', 'gloss');
   mk('My misses (' + missTotal() + ')', 'miss', missTotal() === 0 && mode !== 'miss');
   mk('Saved (' + saved.length + ')', 'saved', saved.length === 0 && mode !== 'saved');
 }
@@ -859,7 +900,7 @@ function hideTip(){ tip().style.display = 'none'; document.querySelectorAll('.ho
 
 function moveToMd(m){
   let md = '## ' + m.name + '\n\n' + stripTags(m.d) + '\n\n';
-  m.ex.forEach(e => { md += '> ' + stripTags(e.s) + '\n> — ' + stripTags(e.at) + '\n\n'; });
+  m.ex.forEach(e => { md += '> ' + stripTags(e.s) + '\n> — ' + stripTags(e.at) + '\n\n' + (e.n ? stripTags(e.n) + '\n\n' : ''); });
   return md;
 }
 function renderMoves(){
@@ -870,11 +911,31 @@ function renderMoves(){
       '<div class="eyebrow">' + (i+1) + ' of ' + MOVES.length + '</div>' +
       '<p class="mv-name">' + m.name + '</p>' +
       '<p class="mv-def">' + m.d + '</p>' +
-      m.ex.map(e => '<p class="mvq">' + e.s + '</p><p class="mv-cite">— ' + e.at + '</p>').join('') +
+      m.ex.map(e => '<p class="mvq">' + e.s + '</p>' + (e.n ? '<p class="mv-note">' + e.n + '</p>' : '') + '<p class="mv-cite">— ' + e.at + '</p>').join('') +
       '<div class="actions" style="border-top:none;padding-top:6px"><button class="savebtn mv-copy">Copy as Markdown</button></div>';
     glossify(card.querySelector('.mv-def'));
+    card.querySelectorAll('.mv-note').forEach(glossify);
     const btn = card.querySelector('.mv-copy');
     btn.onclick = () => copyText(moveToMd(m), btn);
+    stage.appendChild(card);
+  });
+}
+function lineToMd(l){
+  return '> ' + stripTags(l.s.replace(/<br>/g, ' / ')) + '\n> — ' + stripTags(l.at) + '\n\n' + stripTags(l.n) + '\n\n';
+}
+function renderLines(){
+  const stage = $('stage'); stage.innerHTML = '';
+  LINES.forEach((l, i) => {
+    const card = document.createElement('div'); card.className = 'card';
+    card.innerHTML =
+      '<div class="eyebrow">' + (i+1) + ' of ' + LINES.length + '</div>' +
+      '<p class="mvq">' + l.s + '</p>' +
+      '<p class="mv-note">' + l.n + '</p>' +
+      '<p class="mv-cite">— ' + l.at + '</p>' +
+      '<div class="actions" style="border-top:none;padding-top:6px"><button class="savebtn mv-copy">Copy as Markdown</button></div>';
+    card.querySelectorAll('.mv-note').forEach(glossify);
+    const btn = card.querySelector('.mv-copy');
+    btn.onclick = () => copyText(lineToMd(l), btn);
     stage.appendChild(card);
   });
 }
