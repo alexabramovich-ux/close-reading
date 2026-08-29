@@ -50,6 +50,9 @@
   .stats{font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:13px; color:var(--onground-muted);
     display:flex; gap:16px; font-variant-numeric:tabular-nums}
   .stats b{color:var(--onground); font-weight:500}
+  #resetbtn{font:500 12px 'Archivo',sans-serif; background:none; border:none; cursor:pointer;
+    color:var(--onground-muted); text-decoration:underline dotted; text-underline-offset:3px; padding:0}
+  #resetbtn:hover{color:var(--onground)}
   .modes{display:flex; gap:8px; margin:14px 0 0; flex-wrap:wrap}
   .chip{font:500 13px 'Archivo',sans-serif; padding:6px 13px; border-radius:999px;
     border:1px solid var(--onground-muted); background:transparent; color:var(--onground-muted); cursor:pointer}
@@ -144,6 +147,7 @@
     <h1>Close Reading</h1>
     <div class="stats">
       <span id="scoreline">no answers yet</span>
+      <button id="resetbtn" hidden>reset</button>
     </div>
   </div>
   <div class="modes" id="modes"></div>
@@ -710,6 +714,13 @@ function newDeck(fresh){
 }
 function paint(){
   $('scoreline').textContent = answered ? ((runMode === 'miss' ? 'misses \u00b7 ' : '') + right + '/' + answered + ' \u00b7 ' + Math.round(100*right/answered) + '%') : 'no answers yet';
+  const rs = $('resetbtn');
+  rs.hidden = !answered;
+  rs.onclick = () => {
+    clearRun(runMode);
+    right = 0; answered = 0; streak = 0; wrong = {};
+    if (QUIZ.indexOf(mode) !== -1) newDeck(true); else paint();
+  };
   const box = $('modes'); box.innerHTML = '';
   const mk = (label, key, disabled) => {
     const b = document.createElement('button');
@@ -1189,24 +1200,12 @@ function renderBasics(){
       '<div class="g-row"><p class="g-term">' + g.t + '</p><p class="g-def">' + g.d + '</p>' +
       (g.ex ? '<p class="g-ex">' + g.ex + '</p>' : '') + '</div>').join('')
   ).join('');
-  h += '<div class="eyebrow" style="margin:30px 0 10px">From the readings, taken apart</div>';
-  for (const ex of EX){
-    h += '<div class="ex"><p class="sentence">' + ex.parts.map(p => p[0]).join('') + '</p>' +
-      '<p class="ex-cite">— ' + ex.cite + '</p>';
-    for (const p of ex.parts){
-      if (p.length === 1) continue;
-      const part = p[0].trim();
-      h += '<div class="anat"><span class="anat-part">' + part + '</span> <span class="anat-label">' + p[1] + '</span>' +
-        '<p class="anat-x">' + p[2] + '</p></div>';
-    }
-    h += '</div>';
-  }
+
 
 
   card.innerHTML = h;
   stage.innerHTML = ''; stage.appendChild(card);
-  card.querySelectorAll('.anat-x').forEach(glossify);
-  card.querySelectorAll('.anat-label').forEach(glossify);
+  card.querySelectorAll('.g-def').forEach(glossify);
   document.addEventListener('click', hideTip);
 }
 document.addEventListener('keydown', e => {
