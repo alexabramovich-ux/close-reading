@@ -415,7 +415,17 @@ const DATA = [
  q:'What is Ross’s second sentence doing?',
  o:['Flat report; the quote speaks for itself','Correcting his grammar for print','Mocking him in her own words','Explaining what the phrase meant'], a:0,
  w:'Ross prints the invented pidgin verbatim, then adds one flat observation — the accent, “despite the Indian talk” — and moves on. No adjective judges him. Readers have argued ever since about whether the profile is a portrait or a takedown; Ross maintained she was showing Hemingway as he was. Either way, this is the method in one pair of sentences: flat report, loaded material.',
- at:'Lillian Ross, &ldquo;How Do You Like It Now, Gentlemen?,&rdquo; The New Yorker, 1950'}
+ at:'Lillian Ross, &ldquo;How Do You Like It Now, Gentlemen?,&rdquo; The New Yorker, 1950'},
+{id:'ha1', cat:'fragments', s:'“Winter, 1973. Late afternoon: the entr’acte between dusk and darkness, when the people who conduct their business in the street—numbers runners in gray chesterfields, out-of-work barmaids playing the dozens, adolescents cultivating their cigarette jones and lust, small-time hustlers selling ‘authentic’ gold wristwatches that are platinum bright—look for a place to roost and to drink in the day’s sin.”',
+ q:'“Winter, 1973. Late afternoon:” — what are these two openings?',
+ o:['Fragments — time stamps with no verb, like a screenplay’s scene heading','Complete sentences, both of them','A comma splice and a colon error','One run-on split in two'], a:0,
+ w:'No verb in either: fragments used as scene-setting, the way a script stamps time and place before the action. The colon then delivers the scene, and a pair of dashes fences a four-item catalogue between the subject (“the people”) and its distant verb (“look”). Als opens a profile of a comedian in the grammar of film — the section is titled “Skin Flick.”',
+ at:'Hilton Als, &ldquo;A Pryor Love,&rdquo; The New Yorker, 1999'},
+{id:'ha2', cat:'word order', s:'“Young black guy, looks like the comedian Richard Pryor, walks into one of his hangouts, Opal’s Silver Spoon Café.”',
+ q:'“Young black guy, looks like…” — what happened to the article and the “who”?',
+ o:['Dropped on purpose — screenplay shorthand','It’s a comma splice at “looks”','A typo the magazine missed','A restrictive clause lost its commas'], a:0,
+ w:'Standard prose would read “A young black guy who looks like…” Als drops the “a” and the “who,” so the sentence reads like a casting note — the profile keeps writing Pryor’s life as scenes from movies never made. Grammar bent, on purpose, toward genre. (“Opal’s Silver Spoon Café” at the end is a plain appositive, renaming the hangout.)',
+ at:'Hilton Als, &ldquo;A Pryor Love,&rdquo; The New Yorker, 1999'}
 ];
 
 
@@ -698,7 +708,31 @@ const LINES = [
  at:'Variety front page, July 17, 1935'},
 {s:'“For sale: baby shoes, never worn.”',
  n:'A colon delivering, then a comma attaching a participle phrase (“never worn”) — and no statement anywhere: no subject-verb at all. The story happens in “never worn.” (Often attributed to Hemingway; the attribution is almost certainly false.)',
- at:'Author unknown'}
+ at:'Author unknown'},
+{s:'“You have seen how a man was made a slave; you shall see how a slave was made a man.”',
+ n:'The turning point of the Narrative, announcing the fight with Covey. A chiasmus — man/slave reversed to slave/man — balanced on a semicolon, with the tenses doing the work: have seen, shall see.',
+ at:'Frederick Douglass, Narrative of the Life of Frederick Douglass, 1845'},
+{s:'“How does it feel to be a problem?”',
+ n:'The question Du Bois says the other world is always silently asking him. Seven words, a rhetorical question — but reported as one he receives, not one he asks — carrying the book’s whole argument.',
+ at:'W. E. B. Du Bois, The Souls of Black Folk, 1903'},
+{s:'“I am an invisible man.”',
+ n:'The novel’s first sentence. Subject, verb, complement — the plainest shape — with the weight in the article: “an,” not “the”; one of many.',
+ at:'Ralph Ellison, Invisible Man, 1952'},
+{s:'“What happens to a dream deferred?”',
+ n:'The poem’s opening line. “Deferred” is a past participle set after its noun — poetry’s word order — and the poem answers only with more questions, one simile per line.',
+ at:'Langston Hughes, “Harlem,” 1951'},
+{s:'“this is how you sweep a corner”',
+ n:'One instruction from a story that is a single sentence long: a mother’s commands strung on semicolons, “this is how…” restarting again and again — anaphora as a voice that never yields a full stop.',
+ at:'Jamaica Kincaid, “Girl,” The New Yorker, 1978'},
+{s:'“In English my name means hope. In Spanish it means too many letters.”',
+ n:'Two sentences built on one frame — fronted language, subject, “means” — so the whole difference lands in the final words. Parallel structure as a portrait of living in two languages.',
+ at:'Sandra Cisneros, The House on Mango Street, 1984'},
+{s:'“I rise<br>I rise<br>I rise.”',
+ n:'The poem’s last three lines: the minimal sentence — subject, verb — three times, one per line. The rule of three built from the smallest statement there is.',
+ at:'Maya Angelou, “Still I Rise,” 1978'},
+{s:'“Time is how you spend your love.”',
+ n:'A definition sentence: “is” holds together two things logic can’t quite equate — a metaphor made of the plainest verb in the language.',
+ at:'Zadie Smith, On Beauty, 2005'}
 ];
 const $ = id => document.getElementById(id);
 let misses = {}; try { misses = JSON.parse(localStorage.getItem('splice-misses2') || '{}'); } catch(e){}
