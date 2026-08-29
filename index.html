@@ -50,9 +50,11 @@
   .stats{font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:13px; color:var(--onground-muted);
     display:flex; gap:16px; font-variant-numeric:tabular-nums}
   .stats b{color:var(--onground); font-weight:500}
-  #resetbtn{font:500 12px 'Archivo',sans-serif; background:none; border:none; cursor:pointer;
+  #resetbtn,#editbtn,#dlbtn,#discardbtn{font:500 12px 'Archivo',sans-serif; background:none; border:none; cursor:pointer;
     color:var(--onground-muted); text-decoration:underline dotted; text-underline-offset:3px; padding:0}
-  #resetbtn:hover{color:var(--onground)}
+  #resetbtn:hover,#editbtn:hover,#dlbtn:hover,#discardbtn:hover{color:var(--onground)}
+  [data-ek][contenteditable="true"]{outline:1.5px dashed var(--accent); outline-offset:3px; border-radius:3px; cursor:text}
+  [data-ek][contenteditable="true"]:focus{outline-style:solid; background:var(--accent-soft)}
   .modes{display:flex; gap:8px; margin:14px 0 0; flex-wrap:wrap}
   .chip{font:500 13px 'Archivo',sans-serif; padding:6px 13px; border-radius:999px;
     border:1px solid var(--onground-muted); background:transparent; color:var(--onground-muted); cursor:pointer}
@@ -148,6 +150,9 @@
     <div class="stats">
       <span id="scoreline">no answers yet</span>
       <button id="resetbtn" hidden>reset</button>
+      <button id="editbtn">edit</button>
+      <button id="dlbtn" hidden>download</button>
+      <button id="discardbtn" hidden>discard edits</button>
     </div>
   </div>
   <div class="modes" id="modes"></div>
@@ -170,7 +175,7 @@ const DATA = [
  w:'Two statements — “It is raining” and “Baryshnikov is standing…” — and comma + “and” is the normal, correct way to hold two statements in one sentence. The rest is description: “the capital of Latvia” renames Riga (an appositive), “pointing up…” shows what he’s doing. No new statements start, so it stays one long camera move.',
  at:'Joan Acocella, &ldquo;The Soloist,&rdquo; The New Yorker, 1998'},
 {id:'bd4', cat:'verb chains', s:'“He swallows gruel for breakfast, is fond of oatmeal, digests milk and onion soup, declines meat, which even as an undernourished youth he avoided, never touches fish, has given up macaroni as fattening, eats one piece of bread at a meal, favors vegetables, greens, and salads, drinks lemonade, likes tea and cake, and loves a raw apple.”',
- q:'A dozen commas. Why is this not a splice chain?', o:['One subject running a list of verbs','A splice chain — comma after comma','Each verb starts a new sentence','The final “and” makes it all right'], a:0,
+ q:'A dozen commas. What is this, grammatically?', o:['One sentence — one subject running a list of verbs','A splice chain — comma after comma','Twelve short sentences fused together','A run-on the final “and” rescues'], a:0,
  w:'Every verb — swallows, digests, declines, loves — belongs to the one “He” at the start. No verb gets its own new subject, so no new sentence ever starts. The commas just separate items in a list of things he does. It reads like an inventory of his diet, which is the point.',
  at:'Janet Flanner, &ldquo;F&uuml;hrer,&rdquo; The New Yorker, 1936'},
 {id:'bd5', cat:'appositives', s:'“It’s late already, five or five-thirty.”',
@@ -207,7 +212,7 @@ const DATA = [
  at:'Calvin Trillin, &ldquo;Covering the Cops,&rdquo; The New Yorker, 1986'},
 {id:'mv3', cat:'the dropped &ldquo;and&rdquo;', s:'“We interpret what we see, select the most workable of the multiple choices.”',
  q:'What happened between “interpret” and “select”?', o:['The “and” between the verbs was cut','It’s a comma splice','“Select” starts a new sentence','Nothing — commas do this normally'], a:0,
- w:'The “and” was deleted: “interpret what we see and select…” became “interpret…, select…” (asyndeton). It is not a comma splice, because a splice joins two complete statements, each with its own subject — here “select” has no subject of its own; it still belongs to “we.” One subject, two verbs, missing “and.”',
+ w:'Run the test: does what follows the comma have its own subject? A splice would read “we interpret what we see, we select…” — two complete statements, a “we” in each. Didion wrote “select” with no subject at all, so the verb still belongs to the first “we”: the comma sits inside one statement, between two verbs, where an “and” was deleted (asyndeton). Splice: two statements. This: one statement, two verbs.',
  at:'Joan Didion, &ldquo;The White Album,&rdquo; 1979'},
 {id:'mv4', cat:'lists', s:'“Joe Gould was an odd and penniless and unemployable little man who came to the city in 1916 and ducked and dodged and held on as hard as he could for over thirty-five years.”',
  q:'What are the repeated “ands” doing?', o:['Slowing the sentence down on purpose','Loose editing that survived revision','Just marking a list','Satisfying a comma rule'], a:0,
@@ -281,9 +286,9 @@ const DATA = [
  q:'What allows the colon?', o:['The complete statement on its left','The list on its right side','The capital letter after it','The “who” clause at the end'], a:0,
  w:'The rule: whatever sits to the left of a colon must work as a full sentence. “She’s a rare combination” does. So the colon may deliver what she’s a combination OF — and that delivery is the whole sales pitch of the piece.',
  at:'Joan Juliet Buck, &ldquo;A Rose in the Desert,&rdquo; Vogue, 2011'},
-{id:'pc6', cat:'lists', s:'“In New York City, especially in Greenwich Village, down among the cranks and the misfits and the one-lungers and the has-beens and the might’ve-beens and the would-bes and the never-wills and the God-knows-whats, I have always felt at home.”',
- q:'What are the hyphens doing?', o:['Coining nouns — a has-been, a never-will','Marking pauses in the list','Joining eight short sentences','Optional decoration on the list'], a:0,
- w:'Each hyphen glues words into a single new noun: a has-been, a never-will, a God-knows-what. Without the hyphens the phrases fall apart. Gould is inventing nouns for people nobody bothered to name.',
+{id:'pc6', cat:'word order', s:'“In New York City, especially in Greenwich Village, down among the cranks and the misfits and the one-lungers and the has-beens and the might’ve-beens and the would-bes and the never-wills and the God-knows-whats, I have always felt at home.”',
+ q:'Where does the main statement begin?', o:['At “I have always felt at home”','At “In New York City”','At “down among the cranks”','Nowhere — it’s a fragment'], a:0,
+ w:'Everything before “I” is place, stacked three layers deep — city, neighborhood, crowd — with no subject or verb anywhere in it. The statement itself is five words at the very end. (The hyphenated coinages — a has-been, a never-will — are Gould inventing nouns for people nobody bothered to name.)',
  at:'Joe Gould, quoted in Joseph Mitchell, &ldquo;Professor Sea Gull,&rdquo; The New Yorker, 1942'},
 {id:'pc7', cat:'dashes', s:'“Sinatra with a cold is Picasso without paint, Ferrari without fuel — only worse.”',
  q:'What is the dash doing?', o:['Cutting off the list for the last words','Joining two full statements','Setting off a liftable aside','Repairing an earlier comma'], a:0,
@@ -302,7 +307,7 @@ const DATA = [
  w:'A period would chop the look into two separate glances. A comma alone isn’t allowed between two full statements. The semicolon keeps face and eyes inside one steady stare — connected, but under control.',
  at:'Bryan Di Salvatore, &ldquo;Ornery,&rdquo; The New Yorker, 1990'},
 {id:'jd1', cat:'splices', s:'“We smile when we see him, we laugh before he does anything; it makes us happy just to look at him.”',
- q:'The first comma joins two full statements. Why does it hold up?', o:['Matching “we” clauses make it one reflex','It doesn’t — it stays an error','Matching shapes make it grammatical','The semicolon fixes it retroactively'], a:0,
+ q:'The first comma joins two full statements — a splice. Does it hold up?', o:['Matching “we” clauses make it one reflex','It doesn’t — it stays an error','Matching shapes make it grammatical','The semicolon fixes it retroactively'], a:0,
  w:'“We smile…” and “we laugh…” are both complete statements, so that comma is breaking the rule — a comma splice. It works because the two match so closely they read as one reflex: you don’t smile and then laugh, it’s one motion. The semicolon then joins the last part the standard way. One rule broken, one followed, both on purpose.',
  at:'Pauline Kael, &ldquo;The Man from Dream City,&rdquo; The New Yorker, 1975'},
 {id:'jd2', cat:'clause joins', s:'“The naked woman on the ledge outside the window on the sixteenth floor is a victim of accidie, or the naked woman is an exhibitionist, and it would be ‘interesting’ to know which.”',
@@ -310,7 +315,7 @@ const DATA = [
  w:'Nothing. Every join uses “or” or “and” the standard way. What unsettles is the tone: a possible suicide laid out like a quiz question, with “interesting” in quotes because Didion refuses to actually feel it.',
  at:'Joan Didion, &ldquo;The White Album,&rdquo; 1979'},
 {id:'jd3', cat:'fragments', s:'“I wish Bob Dylan died. Then Channel 5 would piece together an instant documentary on his life and times. . . . Just the immutable facts.”',
- q:'“Just the immutable facts.” Error or choice?', o:['Choice: a verbless fragment as dismissal','An error — attach it to the sentence','An error — it needs a verb','A transcription mistake'], a:0,
+ q:'He is wishing, perversely, for the plain documented facts of Dylan’s life — no myth. “Just the immutable facts.” Error or choice?', o:['Choice: a verbless fragment as dismissal','An error — attach it to the sentence','An error — it needs a verb','A transcription mistake'], a:0,
  w:'A choice. It has no verb — a fragment — and that’s the effect: a shrug, case closed. Give it a verb (“I just want the facts”) and it turns earnest, which is exactly what the writer didn’t want.',
  at:'Mark Jacobson, Village Voice, quoted in Alex Ross, &ldquo;The Wanderer,&rdquo; The New Yorker, 1999'},
 {id:'jd4', cat:'the dropped &ldquo;and&rdquo;', s:'“He is like a God who spends four hours on the shading on Eve’s upper lip, forgets to give her a clitoris.”',
@@ -676,6 +681,56 @@ const QUIZ = ['all','miss'];
 
 const ALL = () => DATA.concat(BASICS);
 const BYID = {}; ALL().forEach(d => BYID[d.id] = d);
+let editing = false;
+let edits = {};
+try { edits = Object.assign({}, window.__OVERRIDES || {}, JSON.parse(localStorage.getItem('cr-edits') || '{}')); } catch(e){ edits = Object.assign({}, window.__OVERRIDES || {}); }
+function applyEdits(){
+  for (const k in edits){
+    const v = edits[k], q = k.split(':');
+    try {
+      if (q[0] === 'card'){ const d = BYID[q[1]]; if (!d) continue;
+        if (q[2] === 'o') d.o[+q[3]] = v; else d[q[2]] = v; }
+      else if (q[0] === 'moves'){ const m = MOVES[+q[1]]; if (!m) continue;
+        if (q[2] === 'ex') m.ex[+q[3]][q[4]] = v; else m[q[2]] = v; }
+      else if (q[0] === 'lines'){ const l = LINES[+q[1]]; if (l) l[q[2]] = v; }
+      else if (q[0] === 'gloss'){ const g = GLOSSMAP[q[1]]; if (g) g[q[2]] = v; }
+      else if (q[0] === 'intro'){ INTRO[+q[1]] = v; }
+    } catch(e){}
+  }
+}
+function saveEdit(el){
+  let html = el.innerHTML
+    .replace(/<span class="hov[^>]*>([\s\S]*?)<\/span>/g, '$1')
+    .replace(/<span class="tip-label">[\s\S]*?<\/span>/g, '');
+  if (/:at$/.test(el.dataset.ek)) html = html.replace(/^\s*(—|&mdash;|\u2014)\s*/, '');
+  edits[el.dataset.ek] = html;
+  try { localStorage.setItem('cr-edits', JSON.stringify(edits)) } catch(e){}
+  applyEdits();
+}
+function armEdits(){
+  if (!editing) return;
+  document.querySelectorAll('#stage [data-ek]').forEach(el => {
+    el.contentEditable = 'true';
+    el.onblur = () => saveEdit(el);
+  });
+}
+function rerender(){
+  if (QUIZ.indexOf(mode) !== -1){ paint(); render(); } else newDeck();
+}
+function downloadSite(){
+  fetch(location.pathname).then(r => r.text()).then(txt => {
+    let out = txt.replace(/<script id="content-overrides">[\s\S]*?<\/script>\s*/, '');
+    const inj = '<scr' + 'ipt id="content-overrides">window.__OVERRIDES = ' +
+      JSON.stringify(edits).replace(/</g, '\\u003c') + ';</scr' + 'ipt>\n';
+    const at = out.indexOf('<script>');
+    out = at !== -1 ? out.slice(0, at) + inj + out.slice(at) : out + inj;
+    const blob = new Blob([out], {type: 'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'index.html';
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+}
+applyEdits();
 function saveRun(){
   if (QUIZ.indexOf(runMode) === -1) return;
   try { localStorage.setItem('cr-run:' + runMode, JSON.stringify({ids:deck.map(d=>d.id), pos:pos, right:right, answered:answered, streak:streak, wrong:wrong})) } catch(e){}
@@ -721,6 +776,15 @@ function paint(){
     right = 0; answered = 0; streak = 0; wrong = {};
     if (QUIZ.indexOf(mode) !== -1) newDeck(true); else paint();
   };
+  const eb = $('editbtn');
+  eb.textContent = editing ? 'done' : 'edit';
+  eb.onclick = () => { editing = !editing; rerender(); };
+  const dl = $('dlbtn');
+  dl.hidden = !(editing || Object.keys(edits).length);
+  dl.onclick = downloadSite;
+  const dc = $('discardbtn');
+  dc.hidden = !editing || !Object.keys(edits).length;
+  dc.onclick = () => { edits = {}; try { localStorage.removeItem('cr-edits') } catch(e){} location.reload(); };
   const box = $('modes'); box.innerHTML = '';
   const mk = (label, key, disabled) => {
     const b = document.createElement('button');
@@ -750,23 +814,27 @@ function render(){
   const d = deck[pos]; locked = false;
   const order = shuffle(d.o.map((_,i)=>i));
   const card = document.createElement('div'); card.className = 'card';
+  const ek = f => ' data-ek="card:' + d.id + ':' + f + '"';
   const body = d.rw
-    ? '<p class="fixlabel">The original</p><p class="sentence">' + d.s + '</p>' +
-      '<p class="fixlabel">An editor&rsquo;s rewrite</p><p class="sentence rwtext">' + d.rw + '</p>'
-    : '<p class="sentence">' + d.s + '</p>';
+    ? '<p class="fixlabel">The original</p><p class="sentence"' + ek('s') + '>' + d.s + '</p>' +
+      '<p class="fixlabel">An editor&rsquo;s rewrite</p><p class="sentence rwtext"' + ek('rw') + '>' + d.rw + '</p>'
+    : '<p class="sentence"' + ek('s') + '>' + d.s + '</p>';
   card.innerHTML =
     '<div class="eyebrow">' + (pos+1) + ' of ' + deck.length + '</div>' +
     body +
-    '<p class="ex-cite">&mdash; ' + d.at + '</p>' +
-    '<p class="prompt">' + d.q + '</p>' +
+    '<p class="ex-cite"' + ek('at') + '>&mdash; ' + d.at + '</p>' +
+    '<p class="prompt"' + ek('q') + '>' + d.q + '</p>' +
     '<div class="opts">' + order.map((oi,p) =>
-      '<button class="opt" data-i="' + oi + '"><span class="key">' + (p+1) + '</span><span>' + d.o[oi] + '</span></button>').join('') + '</div>' +
-    '<div id="verdict"></div>' +
+      '<button class="opt" data-i="' + oi + '"><span class="key">' + (p+1) + '</span><span' + ek('o:' + oi) + '>' + d.o[oi] + '</span></button>').join('') + '</div>' +
+    (editing
+      ? '<div class="verdict"><p class="call">Explanation</p><p class="why"' + ek('w') + '>' + d.w + '</p></div>'
+      : '<div id="verdict"></div>') +
     '<div class="actions"><span></span>' +
-    '<button class="next" id="nextbtn" disabled>Next</button></div>';
+    '<button class="next" id="nextbtn"' + (editing ? '' : ' disabled') + '>Next</button></div>';
   stage.innerHTML = ''; stage.appendChild(card);
-  card.querySelectorAll('.opt').forEach(b => b.onclick = () => answer(parseInt(b.dataset.i,10)));
+  card.querySelectorAll('.opt').forEach(b => b.onclick = () => { if (!editing) answer(parseInt(b.dataset.i,10)); });
   $('nextbtn').onclick = advance;
+  armEdits();
 }
 function answer(i){
   if (locked) return; locked = true;
@@ -1103,13 +1171,19 @@ function renderMoves(){
   MOVES.forEach((m, i) => {
     const card = document.createElement('div'); card.className = 'card';
     card.innerHTML =
-      '<p class="mv-name">' + m.name + '</p>' +
-      '<p class="mv-def">' + m.d + '</p>' +
-      m.ex.map(e => '<p class="mvq">' + e.s + '</p>' + (e.n ? '<p class="mv-note">' + e.n + '</p>' : '') + '<p class="mv-cite">— ' + e.at + '</p>').join('');
-    glossify(card.querySelector('.mv-def'));
-    card.querySelectorAll('.mv-note').forEach(glossify);
+      '<p class="mv-name" data-ek="moves:' + i + ':name">' + m.name + '</p>' +
+      '<p class="mv-def" data-ek="moves:' + i + ':d">' + m.d + '</p>' +
+      m.ex.map((e, j) =>
+        '<p class="mvq" data-ek="moves:' + i + ':ex:' + j + ':s">' + e.s + '</p>' +
+        (e.n ? '<p class="mv-note" data-ek="moves:' + i + ':ex:' + j + ':n">' + e.n + '</p>' : '') +
+        '<p class="mv-cite" data-ek="moves:' + i + ':ex:' + j + ':at">— ' + e.at + '</p>').join('');
+    if (!editing){
+      glossify(card.querySelector('.mv-def'));
+      card.querySelectorAll('.mv-note').forEach(glossify);
+    }
     stage.appendChild(card);
   });
+  armEdits();
 }
 function lineToMd(l){
   return '> ' + stripTags(l.s.replace(/<br>/g, ' / ')) + '\n> — ' + stripTags(l.at) + '\n\n' + stripTags(l.n) + '\n\n';
@@ -1121,17 +1195,23 @@ function renderLines(){
     if (LINES[i].pair && LINES[i+1]){ units.push([LINES[i], LINES[i+1]]); i++; }
     else units.push([LINES[i]]);
   }
-  shuffle(units);
+  if (!editing) shuffle(units);
   units.flat().forEach(l => {
+    const li = LINES.indexOf(l);
     const card = document.createElement('div'); card.className = 'card';
     card.innerHTML =
-      '<p class="mvq">' + l.s + '</p>' +
-      '<p class="mv-note">' + l.n + '</p>' +
-      '<p class="mv-cite">— ' + l.at + '</p>';
-    card.querySelectorAll('.mv-note').forEach(glossify);
+      '<p class="mvq" data-ek="lines:' + li + ':s">' + l.s + '</p>' +
+      '<p class="mv-note" data-ek="lines:' + li + ':n">' + l.n + '</p>' +
+      '<p class="mv-cite" data-ek="lines:' + li + ':at">— ' + l.at + '</p>';
+    if (!editing) card.querySelectorAll('.mv-note').forEach(glossify);
     stage.appendChild(card);
   });
+  armEdits();
 }
+const INTRO = [
+ 'A sentence has two parts: a <strong>subject</strong> — who or what it&rsquo;s about — and a <strong>predicate</strong>: the verb, the word that says what happened and when, plus everything attached to it. &ldquo;Gary Robinson died hungry&rdquo;: subject &ldquo;Gary Robinson,&rdquo; predicate &ldquo;died hungry.&rdquo; Subject plus verb makes a <strong>clause</strong> — a complete statement — and a sentence holds one clause or several.',
+ 'Every word belongs to a part of speech — noun, verb, adjective, adverb, pronoun, preposition, conjunction, article, interjection — and words build into <strong>phrases</strong> (no subject-verb pair of their own) and clauses (with one). Whatever isn&rsquo;t the subject or the verb is doing one of three jobs: <strong>modifying</strong> a noun or a verb, <strong>renaming</strong> one (&ldquo;Riga, the capital of Latvia&rdquo;), or <strong>joining</strong> clauses.'
+];
 const GLOSS_GROUPS = [
  ['Words', ['noun','verb','adjective','adverb','pronoun','antecedent','article','preposition','conjunction','infinitive','participle','gerund','interjection','pivotword']],
  ['Sentences', ['subject','predicate','object','sentence','statement','phrase','compoundpred','fragment','runon','splice','pinned','restrictive','appositive','imperative','tense','voice','directaddress','periodic']],
@@ -1192,23 +1272,26 @@ function renderBasics(){
   const stage = $('stage');
   const card = document.createElement('div'); card.className = 'card';
   let h = '<div class="eyebrow">Basics</div>' +
-    '<p class="why" style="font-size:15px">A sentence has two parts: a <strong>subject</strong> — who or what it&rsquo;s about — and a <strong>predicate</strong>: the verb, the word that says what happened and when, plus everything attached to it. &ldquo;Gary Robinson died hungry&rdquo;: subject &ldquo;Gary Robinson,&rdquo; predicate &ldquo;died hungry.&rdquo; Subject plus verb makes a <strong>clause</strong> — a complete statement — and a sentence holds one clause or several.</p>' +
-    '<p class="why" style="font-size:15px; margin-top:8px">Every word belongs to a part of speech — noun, verb, adjective, adverb, pronoun, preposition, conjunction, article, interjection — and words build into <strong>phrases</strong> (no subject-verb pair of their own) and clauses (with one). Whatever isn&rsquo;t the subject or the verb is doing one of three jobs: <strong>modifying</strong> a noun or a verb, <strong>renaming</strong> one (&ldquo;Riga, the capital of Latvia&rdquo;), or <strong>joining</strong> clauses.</p>';
+    '<p class="why" style="font-size:15px" data-ek="intro:0">' + INTRO[0] + '</p>' +
+    '<p class="why" style="font-size:15px; margin-top:8px" data-ek="intro:1">' + INTRO[1] + '</p>';
   h += GLOSS_GROUPS.map(grp =>
     '<div class="eyebrow" style="margin:26px 0 4px">' + grp[0] + '</div>' +
     grp[1].map(k => GLOSSMAP[k]).filter(Boolean).map(g =>
-      '<div class="g-row"><p class="g-term">' + g.t + '</p><p class="g-def">' + g.d + '</p>' +
-      (g.ex ? '<p class="g-ex">' + g.ex + '</p>' : '') + '</div>').join('')
+      '<div class="g-row"><p class="g-term" data-ek="gloss:' + g.k + ':t">' + g.t + '</p>' +
+      '<p class="g-def" data-ek="gloss:' + g.k + ':d">' + g.d + '</p>' +
+      (g.ex ? '<p class="g-ex" data-ek="gloss:' + g.k + ':ex">' + g.ex + '</p>' : '') + '</div>').join('')
   ).join('');
 
 
 
   card.innerHTML = h;
   stage.innerHTML = ''; stage.appendChild(card);
-  card.querySelectorAll('.g-def').forEach(glossify);
+  if (!editing) card.querySelectorAll('.g-def').forEach(glossify);
+  armEdits();
   document.addEventListener('click', hideTip);
 }
 document.addEventListener('keydown', e => {
+  if (editing) return;
   if (flashActive && !flashFlipped && (e.key === ' ' || e.key === 'Enter')){
     if ($('flipcard')){ e.preventDefault(); flipFlash(); return; }
   }
