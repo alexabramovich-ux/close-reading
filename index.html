@@ -115,6 +115,11 @@
     text-transform:uppercase; letter-spacing:.09em; margin-bottom:7px; opacity:.7}
   #tip i.tip-ex{display:block; margin-top:8px; font-family:'Newsreader',Georgia,serif; font-size:14px; opacity:.85}
   .ex-cite{font-size:12.5px; color:var(--faint); font-style:italic; margin:4px 0 0}
+  .anat{margin:12px 0 0; padding-left:14px; border-left:2px solid var(--line)}
+  .anat-part{font-family:'Newsreader',Georgia,serif; font-size:16.5px}
+  .anat-label{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--accent); margin-left:8px}
+  .anat-x{margin:3px 0 0; font-size:13.5px; line-height:1.5; max-width:62ch}
   .fixlabel{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.09em;
     text-transform:uppercase; color:var(--faint); margin:14px 0 4px}
   .fixlabel:first-of-type{margin-top:0}
@@ -515,7 +520,7 @@ const LINES = [
  n:'Subject, verb, and one adverb (“today”). The flatness is the shock: the most consequential fact arrives in the plainest sentence shape there is.',
  at:'Albert Camus, The Stranger, 1942 (tr. Stuart Gilbert)'},
 {s:'“Mrs. Dalloway said she would buy the flowers herself.”',
- n:'A plain report of speech — subject, verb, object — with the novel’s whole charge in the last word. Move “herself” anywhere else and the sentence loses its point.',
+ n:'The novel’s first line. A plain report — subject, verb, object — ending on “herself”: she will run the errand a servant would normally be sent on. The last word carries the decision.',
  at:'Virginia Woolf, Mrs. Dalloway, 1925'},
 {s:'“Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed.”',
  n:'Two adjectives march in front of the name, and a participle phrase (“bearing…”) trails after the verb. One statement — “Buck Mulligan came” — decorated at both ends.',
@@ -539,7 +544,7 @@ const LINES = [
  n:'The novel’s last sentence. “Boats against the current” is an appositive renaming “we”; “borne back” is a participle — the past kind — describing us. The statement itself is three words — “we beat on” — and everything after the first comma is the appositive and the participle.',
  at:'F. Scott Fitzgerald, The Great Gatsby, 1925'},
 {s:'“Isn’t it pretty to think so?”',
- n:'A question as the last line. “So” points back at everything the sentence before it imagined; the book closes by doubting itself.',
+ n:'The novel’s last line, replying to the claim that the two of them could have been happy together. “So” points back at that imagined life; the question doubts it.',
  at:'Ernest Hemingway, The Sun Also Rises, 1926'},
 {s:'“The horror! The horror!”',
  n:'Kurtz’s last words. Two identical fragments: no verb, no statement — a noun phrase said twice, standing in for everything he cannot put into a sentence.',
@@ -575,7 +580,7 @@ const LINES = [
  n:'Three complete statements, bare commas, no “and” anywhere — comma splices plus asyndeton plus a tricolon in six words. The grammar is the speed.',
  at:'Julius Caesar, 47 BC (“Veni, vidi, vici”)'},
 {s:'“I am large, I contain multitudes.”',
- n:'Two complete statements joined by a bare comma — a splice. The second statement is the first one’s explanation, and the comma treats the two as a single claim.',
+ n:'Whitman’s answer to his own question, “Do I contradict myself?” Two complete statements joined by a bare comma — a splice; the second statement is the first one’s explanation.',
  at:'Walt Whitman, “Song of Myself,” 1855'},
 {s:'“I am, I am, I am.”',
  n:'Esther, listening to her own heartbeat. Subject and verb only — the smallest complete statement there is — repeated three times with bare commas between: a splice chain of the minimal sentence.',
@@ -605,7 +610,7 @@ const LINES = [
  n:'The second line is not a sentence — no subject, no verb — just “with a bang” and “a whimper,” turned against each other by “but.”',
  at:'T. S. Eliot, “The Hollow Men,” 1925'},
 {s:'“The art of losing isn’t hard to master”',
- n:'An ordinary declarative with a negative (“isn’t hard”) — understatement built into the grammar. The poem repeats the line, with small variations, until it cracks.',
+ n:'The poem is a list of losses that keeps growing — keys, houses, cities, finally a person — while this line keeps claiming the losing is easy to handle. Saying less than the case calls for is understatement. The line repeats, with small variations, until the poem’s last word — “disaster” — breaks it.',
  at:'Elizabeth Bishop, “One Art,” 1976'},
 {s:'“Quoth the Raven ‘Nevermore.’”',
  n:'“Quoth the Raven” is inverted order — verb before subject, an old form. And the bird’s entire vocabulary is one adverb.',
@@ -635,7 +640,7 @@ const LINES = [
  n:'A sentence starting with “And” — attached, every night, to whatever preceded it. A sign-off built as a continuation.',
  at:'Walter Cronkite, CBS Evening News sign-off'},
 {s:'“Good night, and good luck.”',
- n:'Two items joined by “and” usually take no comma. Putting one in forces a pause — the farewell and the warning arrive separately.',
+ n:'Two items joined by “and” usually take no comma. Putting one in forces a pause, so the two halves land separately instead of as one formula.',
  at:'Edward R. Murrow, CBS, 1950s sign-off'},
 {s:'“DEWEY DEFEATS TRUMAN”',
  n:'Subject, verb, object — the cleanest sentence shape there is, printed with total confidence, and false. Grammar guarantees nothing about truth.',
@@ -704,7 +709,7 @@ function newDeck(fresh){
   paint(); render();
 }
 function paint(){
-  $('scoreline').textContent = answered ? ((runMode === 'miss' ? 'misses \u00b7 ' : '') + right + ' of ' + answered + ' right') : 'no answers yet';
+  $('scoreline').textContent = answered ? ((runMode === 'miss' ? 'misses \u00b7 ' : '') + right + '/' + answered + ' \u00b7 ' + Math.round(100*right/answered) + '%') : 'no answers yet';
   const box = $('modes'); box.innerHTML = '';
   const mk = (label, key, disabled) => {
     const b = document.createElement('button');
@@ -716,9 +721,9 @@ function paint(){
   };
   mk('Basics', 'basics');
   mk('Flashcards', 'flash');
-  mk('Drill', 'all');
-  mk('Moves', 'moves');
   mk('Lines', 'lines');
+  mk('Moves', 'moves');
+  mk('Quiz', 'all');
   mk('My misses (' + missTotal() + ')', 'miss', missTotal() === 0 && mode !== 'miss');
 }
 function stripTags(h){ const t = document.createElement('span'); t.innerHTML = h; return t.textContent; }
@@ -783,7 +788,7 @@ function renderDone(){
   const breakdown = tally.length
     ? '<div class="eyebrow" style="margin:14px 0 0">missed: ' + tally.map(t => t[0] + ' (' + t[1] + ')').join(' &middot; ') + '</div>'
     : '';
-  $('stage').innerHTML = '<div class="card done"><h2>' + right + ' of ' + answered + ' &mdash; ' + pct + '%</h2>' +
+  $('stage').innerHTML = '<div class="card done"><h2>' + pct + '%</h2><p style="margin-top:-4px">' + right + ' of ' + answered + ' right.</p>' +
     '<p>' + (missTotal() ? missTotal() + ' card' + (missTotal()>1?'s':'') + ' waiting in My misses.' : 'No standing misses.') + '</p>' +
     breakdown +
     '<button class="next" id="againbtn">Run it again</button></div>';
@@ -813,7 +818,7 @@ const EX = [
 {cite:'Joan Acocella, “The Soloist,” The New Yorker, 1998', parts:[
  ['“'],
  ['It is raining','STATEMENT ONE','A complete statement: subject (“it”) plus verb (“is raining”). It could end here with a period.'],
- [', and ','THE JOINER','Comma plus “and”: the standard way to hold two complete statements inside one sentence.'],
+ [', and ','COMMA + CONJUNCTION','Comma plus “and”: the standard way to hold two complete statements inside one sentence.'],
  ['Mikhail Baryshnikov','SUBJECT','Who the second statement is about.'],
  [' '],
  ['is standing','VERB','What he’s doing, right now — the second statement’s verb.'],
@@ -824,7 +829,7 @@ const EX = [
  [', '],
  ['pointing up at two corner windows of an old stucco building','PARTICIPLE PHRASE','“Pointing” looks like a verb but never says when — it can’t make a statement by itself. It borrows Baryshnikov and describes him. A verb-form used as description is called a participle.'],
  [' '],
- ['that was probably yellow once','ATTACHED MINI-STATEMENT','It has its own little subject and verb (“that was”) — but “that” pins it to the building, so it can’t stand alone.'],
+ ['that was probably yellow once','PINNED CLAUSE','It has its own little subject and verb (“that was”) — but “that” pins it to the building, so it can’t stand alone.'],
  ['.”']]},
 {cite:'Gay Talese, “Frank Sinatra Has a Cold,” Esquire, 1966', parts:[
  ['“'],
@@ -868,20 +873,20 @@ const EX = [
  [' '],
  ['was','VERB','Says what, and when: past.'],
  [' an odd'],
- [' and penniless and unemployable ','REPEATED “AND”','Normally you’d write “odd, penniless, and unemployable.” The extra “ands” (polysyndeton) slow the sentence down on purpose.'],
+ [' and penniless and unemployable ','POLYSYNDETON','Normally you’d write “odd, penniless, and unemployable.” The extra “ands” (polysyndeton) slow the sentence down on purpose.'],
  ['little man who came to the city in 1916 and '],
- ['ducked and dodged and held on','MORE “ANDS”','Same move with the verbs. The sentence trudges — you feel every one of the thirty-five years.'],
+ ['ducked and dodged and held on','POLYSYNDETON, AGAIN','Same move with the verbs. The sentence trudges — you feel every one of the thirty-five years.'],
  [' as hard as he could for over thirty-five years.”']]},
 {cite:'Pauline Kael, “The Man from Dream City,” The New Yorker, 1975', parts:[
  ['“'],
  ['We smile','STATEMENT ONE','Subject + verb: a complete statement.'],
  [' '],
- ['when we see him','TIME CLAUSE','Has its own subject and verb, but “when” pins it to “we smile” — it can’t stand alone.'],
- [',','THE SPLICE','This comma is holding two complete statements together all by itself. That job normally needs “and” or a semicolon — a bare comma there is called a comma splice. (With nothing there at all — not even a comma — it would be a run-on.) Kael does it on purpose: the smile and the laugh fuse into one reflex.'],
+ ['when we see him','PINNED CLAUSE','Has its own subject and verb, but “when” pins it to “we smile” — it can’t stand alone.'],
+ [',','COMMA SPLICE','This comma is holding two complete statements together all by itself. That job normally needs “and” or a semicolon — a bare comma there is called a comma splice. (With nothing there at all — not even a comma — it would be a run-on.) Kael does it on purpose: the smile and the laugh fuse into one reflex.'],
  [' '],
  ['we laugh','STATEMENT TWO','Another complete statement — which is what makes the comma before it a splice.'],
  [' '],
- ['before he does anything','TIME CLAUSE','Same as “when we see him”: pinned, not free-standing.'],
+ ['before he does anything','PINNED CLAUSE','Same as “when we see him”: pinned, not free-standing.'],
  [';','SEMICOLON','The standard way to join two complete statements without “and.” The comma broke the rule; the semicolon follows it — both in one sentence.'],
  [' '],
  ['it makes us happy just to look at him','STATEMENT THREE','Subject (“it”) + verb (“makes”): the third complete statement, seated by the semicolon.'],
@@ -889,7 +894,7 @@ const EX = [
 {cite:'Joan Didion, “The White Album,” 1979', parts:[
  ['“'],
  ['We interpret what we see','STATEMENT','Subject (“we”) + verb (“interpret”): complete.'],
- [',','THE MISSING “AND”','You’d expect “and select.” Deleting the “and” and letting a comma carry the join is called asyndeton — clipped, quick. (Not a splice: “select” has no subject of its own; it still belongs to “we.”)'],
+ [',','ASYNDETON','You’d expect “and select.” Deleting the “and” and letting a comma carry the join is called asyndeton — clipped, quick. (Not a splice: “select” has no subject of its own; it still belongs to “we.”)'],
  [' '],
  ['select the most workable of the multiple choices','SECOND VERB','Same subject, second verb — one “we” doing both.'],
  ['.”']]},
@@ -897,13 +902,13 @@ const EX = [
  ['“'],
  ['He','SUBJECT','One subject — and it owns every verb that follows.'],
  [' '],
- ['swallows','VERB ONE OF ELEVEN','The first of eleven verbs, all belonging to “He.” One subject with a chain of verbs is called a compound predicate.'],
+ ['swallows','COMPOUND PREDICATE, VERB ONE','The first of eleven verbs, all belonging to “He.” One subject with a chain of verbs is called a compound predicate.'],
  [' gruel for breakfast'],
  [',','LIST COMMA','Separates verbs in a list. It is not joining two statements — what follows has no subject of its own — so it isn’t a splice.'],
  [' is fond of oatmeal, digests milk and onion soup, declines meat'],
- [', which even as an undernourished youth he avoided,','ASIDE','Commas on both sides: a liftable aside about the meat. Remove it and the sentence still runs. (Compare a clause with no commas, which narrows instead of commenting.)'],
+ [', which even as an undernourished youth he avoided,','NONRESTRICTIVE ASIDE','Commas on both sides: a liftable aside about the meat. Remove it and the sentence still runs. (Compare a clause with no commas, which narrows instead of commenting.)'],
  [' never touches fish, has given up macaroni as fattening, eats one piece of bread at a meal, favors vegetables, greens, and salads, drinks lemonade, likes tea and cake, and '],
- ['loves a raw apple','THE LAST VERB','“And” before the final verb closes the list — eleven things, one subject doing all of them.'],
+ ['loves a raw apple','THE ELEVENTH VERB','“And” before the final verb closes the list — eleven things, one subject doing all of them.'],
  ['.”']]},
 {cite:'Janet Malcolm, The Journalist and the Murderer, 1990', parts:[
  ['“'],
@@ -922,19 +927,19 @@ const EX = [
  ['.”']]},
 {cite:'Bryan Di Salvatore, “Ornery,” The New Yorker, 1990', parts:[
  ['“'],
- ['It is more than','OPENER, FIRST TIME','A complete statement begins.'],
+ ['It is more than','ANAPHORA, FIRST TIME','A complete statement begins; watch its opening words.'],
  [' Hank Williams, Sr., Johnny Cash, and Glen Campbell combined. '],
- ['It is more than','OPENER, AGAIN','The same opening words, sentence after sentence — that repetition is called anaphora.'],
+ ['It is more than','ANAPHORA, AGAIN','The same opening words, sentence after sentence — that repetition is called anaphora.'],
  [' George Jones, Hank Snow, and Ray Price '],
- ['combined','THE REPEATED ENDING','Both sentences also end on the same word. Matched endings are the mirror of anaphora: epistrophe.'],
+ ['combined','EPISTROPHE','Both sentences also end on the same word. Matched endings are the mirror of anaphora: epistrophe.'],
  ['.”']]},
 {cite:'Gay Talese, “The Loser,” Esquire, 1964', parts:[
  ['“The white house seems deserted, too; but occasionally, when the animals become too clamorous, '],
- ['a light will flash on','BEAT ONE','First of three phrases built the same way: subject, “will,” verb. “Will” here means every night, not one night — a routine.'],
+ ['a light will flash on','TRICOLON, BEAT ONE','First of three phrases built the same way: subject, “will,” verb. “Will” here means every night, not one night — a routine.'],
  [', '],
- ['a window will open','BEAT TWO','Second beat, same shape.'],
+ ['a window will open','TRICOLON, BEAT TWO','Second beat, same shape.'],
  [', and '],
- ['a Coke bottle will come flying','BEAT THREE','Third beat. Three matched phrases in a row make a tricolon — two is a pair, three is a pattern.'],
+ ['a Coke bottle will come flying','TRICOLON, BEAT THREE','Third beat. Three matched phrases in a row make a tricolon — two is a pair, three is a pattern.'],
  [' through the darkness and smash against the cans.”']]},
 {cite:'Janet Malcolm, The Journalist and the Murderer, 1990', parts:[
  ['“Like the credulous widow who wakes up one day to find the charming young man and all her savings gone, so the '],
@@ -942,7 +947,7 @@ const EX = [
  [' subject of a piece of nonfiction '],
  ['writing','GERUND','The other job: “writing” here isn’t describing anything — it’s a thing, a noun. An -ing word working as a noun is called a gerund.'],
  [' learns—when the article or book appears—'],
- ['his hard lesson','THE HELD-BACK ENDING','The sentence’s whole point, kept for the last three words. A sentence that saves its main point for the end is called a periodic sentence — everything stacks up first, then this lands.'],
+ ['his hard lesson','PERIODIC ENDING','The sentence’s whole point, kept for the last three words. A sentence that saves its main point for the end is called a periodic sentence — everything stacks up first, then this lands.'],
  ['.”']]}
 ];
 
@@ -1142,7 +1147,7 @@ function renderFlash(){
   const stage = $('stage');
   if (!flashQueue.length){
     flashActive = false;
-    stage.innerHTML = '<div class="card done"><h2>All ' + flashTotal + ' terms,</h2><p>Run them again, or switch to Drill.</p>' +
+    stage.innerHTML = '<div class="card done"><h2>All ' + flashTotal + ' terms,</h2><p>Run them again, or switch to Quiz.</p>' +
       '<button class="next" id="againbtn">Run them again</button></div>';
     $('againbtn').onclick = () => { startFlash(); };
     $('againbtn').focus({preventScroll:true});
@@ -1184,23 +1189,24 @@ function renderBasics(){
       '<div class="g-row"><p class="g-term">' + g.t + '</p><p class="g-def">' + g.d + '</p>' +
       (g.ex ? '<p class="g-ex">' + g.ex + '</p>' : '') + '</div>').join('')
   ).join('');
-  h += '<div class="eyebrow" style="margin:30px 0 10px">From the readings &middot; hover the underlined parts</div>';
+  h += '<div class="eyebrow" style="margin:30px 0 10px">From the readings, taken apart</div>';
   for (const ex of EX){
-    h += '<div class="ex"><p class="sentence">';
+    h += '<div class="ex"><p class="sentence">' + ex.parts.map(p => p[0]).join('') + '</p>' +
+      '<p class="ex-cite">— ' + ex.cite + '</p>';
     for (const p of ex.parts){
-      if (p.length === 1) h += p[0];
-      else {
-        const sp = p[0].match(/^(\s*)([\s\S]*?)(\s*)$/);
-        h += sp[1] + '<span class="hov" tabindex="0" data-t="' + p[1] + '" data-x="' + p[2].replace(/"/g,'&quot;') + '">' + sp[2] + '</span>' + sp[3];
-      }
+      if (p.length === 1) continue;
+      const part = p[0].trim();
+      h += '<div class="anat"><span class="anat-part">' + part + '</span> <span class="anat-label">' + p[1] + '</span>' +
+        '<p class="anat-x">' + p[2] + '</p></div>';
     }
-    h += '</p><p class="ex-cite">— ' + ex.cite + '</p></div>';
+    h += '</div>';
   }
 
 
   card.innerHTML = h;
   stage.innerHTML = ''; stage.appendChild(card);
-  hookTips(card);
+  card.querySelectorAll('.anat-x').forEach(glossify);
+  card.querySelectorAll('.anat-label').forEach(glossify);
   document.addEventListener('click', hideTip);
 }
 document.addEventListener('keydown', e => {
